@@ -1,0 +1,118 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-5" style="margin-top: 70px;">
+      <div class="card">
+        <h5 class="card-title" style="margin: 10px;">Login</h5>
+
+        <div
+          style="padding-top: 30px; border: 1px solid #cccccc;"
+          class="card-body"
+        >
+          <form
+            [formGroup]="loginForm"
+            (ngSubmit)="login(loginForm.value, loginForm.valid)"
+            role="form"
+          >
+            <div class="form-group">
+              <div style="margin-bottom: 25px;" class="input-group">
+                <span class="input-group-addon">
+                  <i class="glyphicon glyphicon-envelope"></i>
+                </span>
+                <input
+                  formControlName="email"
+                  type="email"
+                  class="form-control"
+                  id="inputEmail"
+                  placeholder="Correo"
+                />
+              </div>
+              <div
+                *ngIf="loginForm.get('email').hasError('required') && submitted"
+                class="alert alert-danger alert-dismissible"
+                role="alert"
+              >
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="alert"
+                  aria-label="Close"
+                  (click)="closeError()"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                Ingrese su Correo
+              </div>
+              <div
+                *ngIf="loginForm.get('email').hasError('pattern') && submitted"
+                class="alert alert-danger alert-dismissible"
+                role="alert"
+              >
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="alert"
+                  aria-label="Close"
+                  (click)="closeError()"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                Formato de Email Invalido
+              </div>
+            </div>
+            <div class="form-group">
+              <div style="margin-bottom: 25px;" class="input-group">
+                <span class="input-group-addon">
+                  <i class="glyphicon glyphicon-lock"></i>
+                </span>
+                <input
+                  id="login-password"
+                  formControlName="password"
+                  type="password"
+                  class="form-control"
+                  name="password"
+                  placeholder="Clave"
+                />
+              </div>
+              <div
+                *ngIf="
+                  loginForm.get('password').hasError('required') && submitted
+                "
+                class="alert alert-danger alert-dismissible"
+                role="alert"
+              >
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="alert"
+                  aria-label="Close"
+                  (click)="closeError()"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                Ingrese su Password
+              </div>
+            </div>
+            <div
+              style="margin-top: 10px; text-align: center;"
+              class="form-group"
+            >
+              <!-- Button -->
+              <div class="col-sm-12">
+                <button class="btn btn-info" type="submit">
+                  <i class="fa fa-sign-in"></i> Login
+                </button>
+              </div>
+              <div class="btn btn-success col-sm-12 margin_login">
+                <a style="color: white;" href="/registro">Crear nueva cuenta</a>
+              </div>
+              <div class="col-sm-12 margin_login">
+                <a href="/olvido-clave">Olvido clave</a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <app-spinner-block></app-spinner-block>
+  </div>
+</div>

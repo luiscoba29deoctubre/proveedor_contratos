@@ -1,0 +1,39 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                id="home-tab"
+                href="#tab1info"
+                data-toggle="tab"
+                >Actualizar información personal</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#tab2info" data-toggle="tab"
+                >Cambiar clave</a
+              >
+            </li>
+          </ul>
+
+          <div class="tab-content">
+            <div
+              class="tab-pane fade show active"
+              id="tab1info"
+              aria-labelledby="home-tab"
+            >
+              <app-update-info-personal></app-update-info-personal>
+            </div>
+            <div class="tab-pane fade" id="tab2info">
+              <app-change-password></app-change-password>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+input {
+  border: 1px solid #ccc;
+}
+button{
+  width: 30%;
+
+}
+select{
+    padding: 4px 13px;
+    background-color: #F5F5F5;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-left: 5%;
+}

@@ -1,0 +1,48 @@
+<!-- ============================================================== -->
+<!-- sidebar -->
+<!-- ============================================================== -->
+<div class="user-profile">
+  <!-- User profile text-->
+  <!-- ============================================================== -->
+  <!-- Profile - style you can find in header.scss -->
+  <!-- ============================================================== -->
+  <div class="profile-text">
+    <a [matMenuTriggerFor]="sdprofile" class="">
+      {{ usuario }} <i class="ti-angle-down font-12 m-l-5"></i
+    ></a>
+  </div>
+  <mat-menu #sdprofile="matMenu" class="mymegamenu">
+    <button mat-menu-item routerLink="/admin">
+      <mat-icon>settings</mat-icon> Configuracion
+    </button>
+    <button mat-menu-item><mat-icon>account_box</mat-icon> Perfil</button>
+    <button mat-menu-item>
+      <mat-icon>notifications_off</mat-icon> Deshabilitar notificaciones
+    </button>
+    <button mat-menu-item><mat-icon>exit_to_app</mat-icon> Salir</button>
+  </mat-menu>
+</div>
+<mat-nav-list appAccordion>
+  <mat-list-item
+    appAccordionLink
+    *ngFor="let menuitem of menuItems.getMenuitem()"
+    routerLinkActive="selected"
+    group="{{ menuitem.state }}"
+  >
+    <a
+      class=""
+      appAccordionToggle
+      [routerLink]="['/', menuitem.state]"
+      *ngIf="menuitem.type === 'link'"
+    >
+      <mat-icon>{{ menuitem.icon }}</mat-icon>
+      <span>{{ menuitem.name }}</span>
+      <span fxFlex></span>
+      <span
+        class="label label-{{ badge.type }}"
+        *ngFor="let badge of menuitem.badge"
+        >{{ badge.value }}</span
+      >
+    </a>
+  </mat-list-item>
+</mat-nav-list>
