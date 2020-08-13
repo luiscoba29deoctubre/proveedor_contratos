@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { MatDialog } from "@angular/material";
 import { Router } from "@angular/router";
+import { NgxIndexedDBService } from "ngx-indexed-db";
 
 export interface DialogData {
   animal: string;
@@ -19,7 +20,11 @@ export class DialogExitComponent {
   apiDenariusService: any;
   perfilUsuarioDenarius: any;
 
-  constructor(private router: Router, public dialog: MatDialog) {}
+  constructor(
+    private router: Router,
+    public dialog: MatDialog,
+    private dbService: NgxIndexedDBService
+  ) {}
 
   openDialog(): void {
     this.dialog.open(DialogExitComponent, {
@@ -31,6 +36,18 @@ export class DialogExitComponent {
     sessionStorage.clear();
     this.router.navigate(["/"]);
     this.dialog.closeAll();
+
+    // ****************** eliminamos la base de datos
+    var DBDeleteRequest = window.indexedDB.deleteDatabase("Providers");
+
+    DBDeleteRequest.onerror = function (event) {
+      console.log("Error deleting database.");
+    };
+
+    DBDeleteRequest.onsuccess = function (event) {
+      console.log("Database deleted successfully");
+    };
+    // ******************
   }
 
   onNoClick(): void {

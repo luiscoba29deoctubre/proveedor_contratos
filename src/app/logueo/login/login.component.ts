@@ -9,6 +9,8 @@ import { NotificationService } from "../../shared/services/notification.service"
 import { Global } from "../../common/Global";
 import { ParamService } from "../../common/services/param.service";
 
+import { NgxIndexedDBService } from "ngx-indexed-db";
+
 /**
  * Componente Login de Usuario
  */
@@ -41,11 +43,22 @@ export class LoginComponent implements OnInit {
     private spinner: SpinnerBlockService,
     private loginService: LoginService,
     private notifyService: NotificationService,
-    private paramService: ParamService
+    private paramService: ParamService,
+    private dbService: NgxIndexedDBService
   ) {
-    console.log("inicia login");
-
     this.initForm();
+
+    this.dbService.add('people', { name: 'Luis', email: 'coba' }).then(
+      () => {
+          // Do something after the value was added
+          console.log('se ingresa mi nombre');
+      },
+      error => {
+          console.log(error);
+      }
+  );
+
+
   }
   // sacado de https://morioh.com/p/526559a86600 el Toast que muestra mensajes
   showToasterSuccess() {
@@ -90,13 +103,20 @@ export class LoginComponent implements OnInit {
       this.spinner.start();
       this.loginService.login(value.email, value.password).subscribe(
         (tokeninicial) => {
-
+          this.dbService.getByIndex('people', 'name', 'Luis').then(
+            person => {
+                console.log('imprime p',person);
+            },
+            error => {
+                console.log(error);
+            }
+        );
 
           console.log("tokeninicial", tokeninicial);
 
-            sessionStorage.setItem("token", tokeninicial.token);
+          sessionStorage.setItem("token", tokeninicial.token);
 
-             Global.identificacion = tokeninicial.identificacionDto;
+          Global.identificacion = tokeninicial.identificacionDto;
 
           // carga de los parametros de la app
           this.loadAllParameters();

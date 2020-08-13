@@ -20,10 +20,25 @@ import { ToastrModule } from "ngx-toastr";
 import { LogueoModule } from "./logueo/logueo.module";
 
 import { JwtModule } from "@auth0/angular-jwt";
+import { NgxIndexedDBModule, DBConfig } from 'ngx-indexed-db';
+
 
 export function tokenGetter() {
   return localStorage.getItem("token");
 }
+
+const dbConfig: DBConfig  = {
+  name: 'Providers',
+  version: 1,
+  objectStoresMeta: [{
+    store: 'people',
+    storeConfig: { keyPath: 'id', autoIncrement: true },
+    storeSchema: [
+      { name: 'name', keypath: 'name', options: { unique: false } },
+      { name: 'email', keypath: 'email', options: { unique: false } }
+    ]
+  }]
+};
 
 @NgModule({
   declarations: [
@@ -54,6 +69,9 @@ export function tokenGetter() {
         disallowedRoutes: ["http://example.com/examplebadroute/"],
       },
     }),
+
+    NgxIndexedDBModule.forRoot(dbConfig),
+
   ],
   providers: [
     {
