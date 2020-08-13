@@ -98,12 +98,18 @@
             >
               <!-- Button -->
               <div class="col-sm-12">
-                <button class="btn btn-info" type="submit">
+                <button
+                  [disabled]="loginForm.invalid"
+                  class="btn btn-info"
+                  type="submit"
+                >
                   <i class="fa fa-sign-in"></i> Login
                 </button>
               </div>
               <div class="col-sm-12 margin_login">
-                <a href="/olvido-clave">¿Has olvidado los datos de la cuenta?</a>
+                <a href="/olvido-clave"
+                  >¿Has olvidado los datos de la cuenta?</a
+                >
               </div>
               <div class="btn btn-success col-sm-12 margin_login">
                 <a style="color: white;" href="/registro">Crear nueva cuenta</a>
