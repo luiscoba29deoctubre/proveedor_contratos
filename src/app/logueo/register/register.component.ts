@@ -106,6 +106,8 @@ export class RegisterComponent implements OnInit {
   saveRegister(value: any, valid: boolean) {
     this.submitted = true;
 
+    this.validateEmail();
+
     console.log("valid", valid);
     // espacio
     console.log("this.registerForm", this.registerForm);
