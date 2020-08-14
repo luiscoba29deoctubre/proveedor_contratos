@@ -23,6 +23,8 @@ import { Base } from "../../shared/bd";
   styleUrls: ["./login.component.css"],
 })
 export class LoginComponent implements OnInit {
+  /** ojito del password */
+  hide = false;
   /** Formulario de Login */
   loginForm: FormGroup;
   /** Atributo usuario para el bind del formulario de login */
@@ -94,8 +96,6 @@ export class LoginComponent implements OnInit {
       this.spinner.start();
       this.loginService.login(value.email, value.password).subscribe(
         (tokeninicial) => {
-          
-
           console.log("tokeninicial", tokeninicial);
 
           sessionStorage.setItem("token", tokeninicial.token);

@@ -20,17 +20,15 @@ import { ToastrModule } from "ngx-toastr";
 import { LogueoModule } from "./logueo/logueo.module";
 
 import { JwtModule } from "@auth0/angular-jwt";
-import { NgxIndexedDBModule, DBConfig } from "ngx-indexed-db";
+import { NgxIndexedDBModule } from "ngx-indexed-db";
+
+import {dbConfig} from '../app/shared/bd'
 
 export function tokenGetter() {
   return localStorage.getItem("token");
 }
 
-const dbConfig: DBConfig = {
-  name: "Providers",
-  version: 1,
-  objectStoresMeta: [],
-};
+
 
 @NgModule({
   declarations: [
