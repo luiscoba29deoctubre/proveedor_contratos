@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { NgxIndexedDBService } from "ngx-indexed-db";
 
 export interface Menu {
   state: string;
@@ -67,6 +68,8 @@ const MENUITEMS = [
 
 @Injectable()
 export class MenuItems {
+  constructor() {}
+
   getMenuitem(): Menu[] {
     return MENUITEMS;
   }

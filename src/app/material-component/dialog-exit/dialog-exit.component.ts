@@ -38,7 +38,7 @@ export class DialogExitComponent {
     this.dialog.closeAll();
 
     // ****************** eliminamos la base de datos
-    var DBDeleteRequest = window.indexedDB.deleteDatabase("Providers");
+    const DBDeleteRequest = window.indexedDB.deleteDatabase("Providers");
 
     DBDeleteRequest.onerror = function (event) {
       console.log("Error deleting database.");

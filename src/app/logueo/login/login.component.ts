@@ -1,3 +1,4 @@
+import { IdentificacionDto } from "./../../common/DTO/form/IdentificacionDto";
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, Validators, FormBuilder } from "@angular/forms";
 import { Router } from "@angular/router";
@@ -10,6 +11,8 @@ import { Global } from "../../common/Global";
 import { ParamService } from "../../common/services/param.service";
 
 import { NgxIndexedDBService } from "ngx-indexed-db";
+import { buildDriverProvider } from "protractor/built/driverProviders";
+import { Base } from "../../shared/bd";
 
 /**
  * Componente Login de Usuario
@@ -47,18 +50,6 @@ export class LoginComponent implements OnInit {
     private dbService: NgxIndexedDBService
   ) {
     this.initForm();
-
-    this.dbService.add('people', { name: 'Luis', email: 'coba' }).then(
-      () => {
-          // Do something after the value was added
-          console.log('se ingresa mi nombre');
-      },
-      error => {
-          console.log(error);
-      }
-  );
-
-
   }
   // sacado de https://morioh.com/p/526559a86600 el Toast que muestra mensajes
   showToasterSuccess() {
@@ -103,14 +94,7 @@ export class LoginComponent implements OnInit {
       this.spinner.start();
       this.loginService.login(value.email, value.password).subscribe(
         (tokeninicial) => {
-          this.dbService.getByIndex('people', 'name', 'Luis').then(
-            person => {
-                console.log('imprime p',person);
-            },
-            error => {
-                console.log(error);
-            }
-        );
+          
 
           console.log("tokeninicial", tokeninicial);
 
@@ -139,8 +123,10 @@ export class LoginComponent implements OnInit {
       (allParameters) => {
         console.log("allParameters llega", allParameters);
 
+        const bd2: Base = new Base(this.dbService, allParameters);
+
         // cargamos 'identificacion'
-        Global.identificacion = allParameters.identificacionDTO;
+        Global.identificacion = allParameters.IdentificacionDto;
 
         // cargamos la lista de personas
         Global.lstTipoPersona = allParameters.lstTipoPersona;
