@@ -27,15 +27,14 @@ export class ApiEndpoints {
   public url_api_procesos: string = this.url_api + "/process";
 
   // Formulario
-  public url_api_formulario: string = this.url_api + "/form";
+  public url_api_formulario: string = this.url_api + "/forms";
 
   public url_api_validate_email_usuario: string =
     this.url_api_validaciones + "/validate-email";
   // obtiene el email
   public url_api_get_email: string = this.url_api_usuarios + "/get-email";
 
-  public url_api_find_usuario: string =
-    this.url_api_usuarios + "/find-user";
+  public url_api_find_usuario: string = this.url_api_usuarios + "/find-user";
 
   public url_api_change_pass_usuario: string =
     this.url_api_usuarios + "/change-pass";
@@ -47,8 +46,11 @@ export class ApiEndpoints {
   public url_api_verify_pass_usuario: string =
     this.url_api_validaciones + "/validate-pass";
 
-  // proceso de obtencción de parametros
+  // proceso de obtención de parametros
   public url_api_get_parameters: string = this.url_api_procesos + "/get-param";
+
+  // proceso de obtención de formularios
+  public url_api_get_forms: string = this.url_api_formulario + "/get-forms";
 
   // Crear nuevo usuario
   public url_api_new_user: string = this.url_api_usuarios + "/";

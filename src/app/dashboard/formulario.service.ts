@@ -32,4 +32,13 @@ export class FormularioService {
       identificacion
     );
   }
+
+  /**
+   * Obtiene formularios
+   *
+   * @param Identificacion registramos el formulario 'identificacion'
+   */
+  public getForms(): Observable<IdentificacionDto> {
+    return this.http.get(this.endpoints.url_api_get_forms);
+  }
 }

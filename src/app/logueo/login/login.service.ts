@@ -33,19 +33,19 @@ export class LoginService {
   }
 
   logout(): void {
-    localStorage.removeItem("token");
+    sessionStorage.removeItem("token");
     this.loggedIn.next(false);
   }
 
   private checkToken(): void {
-    const userToken = localStorage.getItem("token");
+    const userToken = sessionStorage.getItem("token");
     const isExpired = helper.isTokenExpired(userToken);
     console.log("isExpiredddddd", isExpired);
     isExpired ? this.logout() : this.loggedIn.next(true);
   }
 
   private saveToken(token: string): void {
-    localStorage.setItem("token", token);
+    sessionStorage.setItem("token", token);
   }
 
   private handlerError(err): Observable<never> {

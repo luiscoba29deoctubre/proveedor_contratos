@@ -6,10 +6,12 @@ import { Router } from "@angular/router";
 
 import { SpinnerBlockService } from "../../../common/components/spinner-block/spinner-block.service";
 import { NotificationService } from "../../../shared/services/notification.service";
-import { FormularioService } from "../../formulario.service";
-import { Global } from "../../../common/Global";
+import { FormularioService } from "../../../dashboard/formulario.service";
+
 import { Parameter } from "../../../common/domain/param/parameter";
-import { IdentificacionDto } from '../../../common/DTO/form/IdentificacionDto';
+
+import { ProcessIDB } from "../../../shared/process.indexedDB";
+import { NgxIndexedDBService } from 'ngx-indexed-db';
 
 interface ItemTipo {
   value: string;
@@ -24,12 +26,14 @@ interface ItemTipo {
 export class IdentificacionComponent implements OnInit {
   /** Formulario de identificacion */
   identificacionForm: FormGroup;
-  /** Atributo forumulario para el bind del formulario de idenficacion */
-  identificacion: IdentificacionDto;
+  /** Objeto processIDB para llenar todos los datos del usuario */
+  processIDB: ProcessIDB;
   /** Flag que indica si el formulario 'Identificacion' ya se hizo submit */
   submitted: boolean;
   /** Para almacenar la lista de tipopersona */
   personas: Parameter[];
+
+  store:string= 'identificacion'
 
   contribuyentes: ItemTipo[] = [
     { value: "0", viewValue: "Entidad" },
@@ -71,14 +75,11 @@ export class IdentificacionComponent implements OnInit {
     private router: Router,
     private spinner: SpinnerBlockService,
     private formularioService: FormularioService,
-    private notifyService: NotificationService
+    private notifyService: NotificationService,
+    private dbService: NgxIndexedDBService
   ) {
-    this.personas = Global.lstTipoPersona;
-
-    console.log("identificacion this.personas", this.personas);
-    console.log("identificacion Global.lstTipoPersona", Global.lstTipoPersona);
-
     this.initForm();
+    this.processIDB = new ProcessIDB(dbService);
   }
   // sacado de https://morioh.com/p/526559a86600 el Toast que muestra mensajes
   showToasterSuccess() {
@@ -92,14 +93,25 @@ export class IdentificacionComponent implements OnInit {
   ngOnInit(): void {
     // cargamos con la informacion inicial al componente
     this.identificacionForm.controls["rucrise"].setValue(
-      Global.identificacion.rucrise
+      this.getDato("rucrise")
     );
     this.identificacionForm.controls["nombrerazonsocial"].setValue(
-      Global.identificacion.nombrerazonsocial
+      this.getDato("nombrerazonsocial")
     );
     this.identificacionForm.controls["nombrecomercial"].setValue(
-      Global.identificacion.nombrecomercial
+      this.getDato("nombrecomercial")
     );
+  }
+
+  private getDato=( name) =>{
+    this.dbService.getByIndex(this.store, 'name', name).then(
+      person => {
+          console.log(person);
+      },
+      error => {
+          console.log(error);
+      }
+  );
   }
 
   private initForm() {
@@ -107,7 +119,7 @@ export class IdentificacionComponent implements OnInit {
       rucrise: [null, [Validators.required]],
       nombrerazonsocial: [null, [Validators.required]],
       nombrecomercial: [null, [Validators.required]],
-  //    persona: [null, [Validators.required]],
+      //    persona: [null, [Validators.required]],
       contribuyente: [null, [Validators.required]],
       proveedor: [null, [Validators.required]],
       categoria: [null, [Validators.required]],
@@ -122,7 +134,7 @@ export class IdentificacionComponent implements OnInit {
    */
   sendForm(value: any, valid: boolean) {
     this.submitted = true;
-
+/*
     // if (valid) {
     const identificaForm: IdentificacionDto = new IdentificacionDto();
     identificaForm.rucrise = value.rucrise;
@@ -154,6 +166,7 @@ export class IdentificacionComponent implements OnInit {
         this.spinner.stop();
       }
     );
+    */
   }
   // }
 

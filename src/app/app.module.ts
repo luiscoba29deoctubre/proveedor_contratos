@@ -26,7 +26,7 @@ import { NgxIndexedDBModule } from 'ngx-indexed-db';
 import { dbConfig } from './indexedDB';
 
 export function tokenGetter() {
-  return localStorage.getItem("token");
+  return sessionStorage.getItem("token");
 }
 
 @NgModule({

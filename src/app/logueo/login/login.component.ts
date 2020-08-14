@@ -1,4 +1,3 @@
-import { IdentificacionDto } from "./../../common/DTO/form/IdentificacionDto";
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, Validators, FormBuilder } from "@angular/forms";
 import { Router } from "@angular/router";
@@ -7,11 +6,11 @@ import { LoginService } from "./login.service";
 import { Usuario } from "../../common/domain/usuario";
 import { SpinnerBlockService } from "../../common/components/spinner-block/spinner-block.service";
 import { NotificationService } from "../../shared/services/notification.service";
-import { Global } from "../../common/Global";
+
 import { ParamService } from "../../common/services/param.service";
 
 import { NgxIndexedDBService } from "ngx-indexed-db";
-import {  FillingDataBase } from "../../shared/process.indexedDB";
+import { ProcessIDB } from "../../shared/process.indexedDB";
 
 /**
  * Componente Login de Usuario
@@ -22,16 +21,14 @@ import {  FillingDataBase } from "../../shared/process.indexedDB";
   styleUrls: ["./login.component.css"],
 })
 export class LoginComponent implements OnInit {
-  /** ojito del password */
-  hide = false;
   /** Formulario de Login */
   loginForm: FormGroup;
   /** Atributo usuario para el bind del formulario de login */
   usuarioLogin: Usuario;
   /** Flag que indica si el formulario ya se hizo submit */
   submitted: boolean;
-
-  headers: string[];
+  /** Objeto processIDB para llenar todos los parámetros del sistema */
+  processIDB: ProcessIDB;
   /**
    * Constructor del Componente {@link LoginComponent}
    *
@@ -51,6 +48,8 @@ export class LoginComponent implements OnInit {
     private dbService: NgxIndexedDBService
   ) {
     this.initForm();
+
+    this.processIDB = new ProcessIDB(dbService);
   }
   // sacado de https://morioh.com/p/526559a86600 el Toast que muestra mensajes
   showToasterSuccess() {
@@ -98,9 +97,6 @@ export class LoginComponent implements OnInit {
           console.log("tokeninicial", tokeninicial);
 
           sessionStorage.setItem("token", tokeninicial.token);
-
-          Global.identificacion = tokeninicial.identificacionDto;
-
           // carga de los parametros de la app
           this.loadAllParameters();
 
@@ -120,12 +116,8 @@ export class LoginComponent implements OnInit {
   loadAllParameters() {
     this.paramService.getParameters().subscribe(
       (allParameters) => {
-        console.log("allParameters llega", allParameters);
         // llenamos la base 'indexed-db'
-        const fillingDataBase: FillingDataBase = new FillingDataBase(
-          this.dbService,
-          allParameters
-        );
+        this.processIDB.fillingParameters(allParameters);
       },
       (error) => {
         console.log(error);
