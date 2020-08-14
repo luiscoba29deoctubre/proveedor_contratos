@@ -11,8 +11,7 @@ import { Global } from "../../common/Global";
 import { ParamService } from "../../common/services/param.service";
 
 import { NgxIndexedDBService } from "ngx-indexed-db";
-import { buildDriverProvider } from "protractor/built/driverProviders";
-import { Base } from "../../shared/bd";
+import {  FillingDataBase } from "../../shared/process.indexedDB";
 
 /**
  * Componente Login de Usuario
@@ -122,16 +121,11 @@ export class LoginComponent implements OnInit {
     this.paramService.getParameters().subscribe(
       (allParameters) => {
         console.log("allParameters llega", allParameters);
-
-        const bd2: Base = new Base(this.dbService, allParameters);
-
-        // cargamos 'identificacion'
-   /*     Global.identificacion = allParameters.IdentificacionDto;
-
-        // cargamos la lista de personas
-        Global.lstTipoPersona = allParameters.lstTipoPersona;
-
-        console.log("Global.lstTipoPersona", Global.lstTipoPersona);*/
+        // llenamos la base 'indexed-db'
+        const fillingDataBase: FillingDataBase = new FillingDataBase(
+          this.dbService,
+          allParameters
+        );
       },
       (error) => {
         console.log(error);

@@ -23,7 +23,7 @@ import { JwtModule } from "@auth0/angular-jwt";
 import { NgxIndexedDBModule } from 'ngx-indexed-db';
 
 //import { dbConfig } from "./shared/bd";
-import { dbConfig } from './db';
+import { dbConfig } from './indexedDB';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
