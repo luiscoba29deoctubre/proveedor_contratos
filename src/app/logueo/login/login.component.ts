@@ -126,12 +126,12 @@ export class LoginComponent implements OnInit {
         const bd2: Base = new Base(this.dbService, allParameters);
 
         // cargamos 'identificacion'
-        Global.identificacion = allParameters.IdentificacionDto;
+   /*     Global.identificacion = allParameters.IdentificacionDto;
 
         // cargamos la lista de personas
         Global.lstTipoPersona = allParameters.lstTipoPersona;
 
-        console.log("Global.lstTipoPersona", Global.lstTipoPersona);
+        console.log("Global.lstTipoPersona", Global.lstTipoPersona);*/
       },
       (error) => {
         console.log(error);
