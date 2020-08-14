@@ -118,7 +118,7 @@ export class ChangePasswordComponent implements OnInit {
   verifyPass() {
     const valuePass0 = this.changePassForm.get("pass0").value;
 
-    this.usuarioService.verifyPassUsuario(valuePass0).subscribe(
+    this.usuarioService.validatePassUsuario(valuePass0).subscribe(
       (data) => {
         this.errorPass0 = data ? false : true;
         this.spinner.stop();

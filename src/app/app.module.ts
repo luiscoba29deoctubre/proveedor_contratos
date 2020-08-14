@@ -20,10 +20,9 @@ import { ToastrModule } from "ngx-toastr";
 import { LogueoModule } from "./logueo/logueo.module";
 
 import { JwtModule } from "@auth0/angular-jwt";
-import { NgxIndexedDBModule } from 'ngx-indexed-db';
+import { NgxIndexedDBModule } from "ngx-indexed-db";
 
-//import { dbConfig } from "./shared/bd";
-import { dbConfig } from './indexedDB';
+import { dbConfig } from "./indexedDB";
 
 export function tokenGetter() {
   return sessionStorage.getItem("token");
@@ -53,9 +52,10 @@ export function tokenGetter() {
 
     JwtModule.forRoot({
       config: {
+        headerName: "auth",
         tokenGetter: tokenGetter,
-        allowedDomains: ["example.com"],
-        disallowedRoutes: ["http://example.com/examplebadroute/"],
+        whitelistedDomains: ["localhost:3000", "foo.com", "bar.com"],
+        blacklistedRoutes: ["http://example.com/examplebadroute/"],
       },
     }),
 

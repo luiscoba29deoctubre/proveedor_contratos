@@ -54,7 +54,8 @@ export class UsuarioService {
    *
    * @param clave Clave a verificar
    */
-  public verifyPassUsuario(password: string): Observable<any> {
+  public validatePassUsuario(password: string): Observable<any> {
+    console.log("aqui esta", sessionStorage.getItem("token"));
     return this.http.post(this.endpoints.url_api_verify_pass_usuario, password);
   }
 
@@ -64,9 +65,7 @@ export class UsuarioService {
    * @param email
    */
   public findUsuario(): Observable<Usuario> {
-    return this.http.get(
-      this.endpoints.url_api_find_usuario
-    );
+    return this.http.get(this.endpoints.url_api_find_usuario);
   }
 
   /**
