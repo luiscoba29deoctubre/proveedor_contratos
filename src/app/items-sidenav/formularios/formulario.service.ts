@@ -1,8 +1,8 @@
+import { IdentificacionDto } from './../../common/dtos/form/IdentificacionDto';
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/Observable";
 import { HttpClient } from "@angular/common/http";
-import { ApiEndpoints } from "../logueo/api.endpoints";
-import { IdentificacionDto } from "../common/DTO/form/IdentificacionDto";
+import { ApiEndpoints } from "../../logueo/api.endpoints";
 
 /**
  * Servicio para el manejo del formulario que ingresa el proveedor

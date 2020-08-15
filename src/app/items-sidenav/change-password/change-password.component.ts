@@ -1,8 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { Validators, FormGroup, FormBuilder } from "@angular/forms";
 import { Usuario } from "../../common/domain/usuario";
-import { SpinnerBlockService } from "../../common/components/spinner-block/spinner-block.service";
+
 import { UsuarioService } from "../../common/services/usuario.service";
+
+import { NgxSpinnerService } from "ngx-spinner";
 
 /**
  * Componente para la actualización de password de usuarios
@@ -34,7 +36,7 @@ export class ChangePasswordComponent implements OnInit {
    */
   constructor(
     private fb: FormBuilder,
-    private spinner: SpinnerBlockService,
+    private spinner: NgxSpinnerService,
     private usuarioService: UsuarioService
   ) {
     this.initForm();
@@ -81,7 +83,7 @@ export class ChangePasswordComponent implements OnInit {
         this.alerts.error = "Las nuevas claves no coinciden";
       } else {
         this.alerts.error = "";
-        this.spinner.start();
+        this.spinner.show();
 
         const valuePass1 = this.changePassForm.get("pass1").value;
 
@@ -94,13 +96,13 @@ export class ChangePasswordComponent implements OnInit {
               this.alerts.msg = null;
               this.alerts.error = "Ocurrio un error al actualizar la clave";
             }
-            this.spinner.stop();
+            this.spinner.hide();
           },
           (error) => {
             console.log(error);
             this.alerts.msg = null;
             this.alerts.error = "Ocurrio un error al actualizar la clave";
-            this.spinner.stop();
+            this.spinner.hide();
           }
         );
       }
@@ -118,17 +120,18 @@ export class ChangePasswordComponent implements OnInit {
 
     console.log("imprimimos el contenido", valuePass0);
     if (valuePass0 !== "" && valuePass0 !== null) {
+      this.spinner.show();
       console.log("no es vacío");
       this.usuarioService.validatePassUsuario(valuePass0).subscribe(
         (data) => {
           this.errorPass0 = data ? false : true;
-          this.spinner.stop();
+            this.spinner.hide();
         },
         (error) => {
           console.log(error);
           this.alerts.msg = null;
           this.alerts.error = "Ocurrio un Error al actualizar el Password";
-          this.spinner.stop();
+          this.spinner.hide();
         }
       );
     } else {

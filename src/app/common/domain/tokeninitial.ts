@@ -1,4 +1,4 @@
-import { IdentificacionDto } from "../DTO/form/IdentificacionDto";
+import { IdentificacionDto } from "../dtos/form/IdentificacionDto";
 
 /**
  * Token de respuesta del servidor

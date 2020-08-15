@@ -1,8 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, Validators, FormBuilder } from "@angular/forms";
 import { Usuario } from "../../common/domain/usuario";
-import { SpinnerBlockService } from "../../common/components/spinner-block/spinner-block.service";
+
 import { UsuarioService } from "../../common/services/usuario.service";
+
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: "app-register",
@@ -37,7 +39,7 @@ export class RegisterComponent implements OnInit {
    */
   constructor(
     private fb: FormBuilder,
-    private spinner: SpinnerBlockService,
+    private spinner: NgxSpinnerService,
     private usuarioService: UsuarioService
   ) {
     this.initForm();
@@ -113,7 +115,7 @@ export class RegisterComponent implements OnInit {
     console.log("this.registerForm", this.registerForm);
 
     if (valid) {
-      this.spinner.start();
+      this.spinner.show();
 
       const usuario: Usuario = new Usuario();
       usuario.correo = value.correo;
@@ -128,12 +130,12 @@ export class RegisterComponent implements OnInit {
             data.correo +
             " y su clave ha sido enviada a su correo";
           this.registrado = true;
-          this.spinner.stop();
+          this.spinner.hide();
         },
         (error) => {
           this.alerts.error = "Ocurrio un error al registrar el usuario";
           this.registrado = false;
-          this.spinner.stop();
+          this.spinner.hide();
         }
       );
     }

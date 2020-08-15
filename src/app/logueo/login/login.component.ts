@@ -4,7 +4,6 @@ import { Router } from "@angular/router";
 
 import { LoginService } from "./login.service";
 import { Usuario } from "../../common/domain/usuario";
-import { SpinnerBlockService } from "../../common/components/spinner-block/spinner-block.service";
 import { NotificationService } from "../../shared/services/notification.service";
 
 import { ParamService } from "../../common/services/param.service";
@@ -43,8 +42,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    //   private spinner: SpinnerBlockService,
-    private loginService: LoginService,
+     private loginService: LoginService,
     private notifyService: NotificationService,
     private paramService: ParamService,
     private dbService: NgxIndexedDBService,
@@ -66,7 +64,9 @@ export class LoginComponent implements OnInit {
   /**
    * Método que se ejecuta al iniciar el componente
    */
-  ngOnInit() {}
+  ngOnInit() {
+
+  }
 
   /**
    * Inicializa el Formulario de Login
@@ -94,15 +94,8 @@ export class LoginComponent implements OnInit {
     this.submitted = true;
     if (valid) {
       console.log("pasa la validacion");
-      // this.spinner.start();
 
       this.spinner.show();
-
-      setTimeout(() => {
-        /** spinner ends after 5 seconds */
-        this.spinner.hide();
-        console.log("entra al timer");
-      }, 19000);
 
       this.loginService.login(value.email, value.password).subscribe(
         (tokeninicial) => {
@@ -111,7 +104,7 @@ export class LoginComponent implements OnInit {
 
           this.router.navigate(["/dashboard"]);
           this.showToasterSuccess();
-          //    this.spinner.stop();
+
 
           this.spinner.hide();
         },

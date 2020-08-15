@@ -1,8 +1,9 @@
 import { Component, AfterViewInit, OnInit } from "@angular/core";
-import { FormularioService } from "./formulario.service";
+
 import { ProcessIDB } from "../shared/process.indexedDB";
 import { NotificationService } from "../shared/services/notification.service";
 import { NgxIndexedDBService } from "ngx-indexed-db";
+import { FormularioService } from '../items-sidenav/formularios/formulario.service';
 
 @Component({
   selector: "app-dashboard",

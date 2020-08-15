@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
 import { Parameter } from "../../../common/domain/param/parameter";
-import { IdentificacionDto } from '../../../common/DTO/form/IdentificacionDto';
+import { IdentificacionDto } from '../../../common/dtos/form/IdentificacionDto';
 
 interface ItemTipo {
   value: string;

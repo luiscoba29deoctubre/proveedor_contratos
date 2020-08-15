@@ -1,8 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { Validators, FormGroup, FormBuilder } from "@angular/forms";
 import { Usuario } from "../../common/domain/usuario";
-import { SpinnerBlockService } from "../../common/components/spinner-block/spinner-block.service";
+
 import { UsuarioService } from "../../common/services/usuario.service";
+
+import { NgxSpinnerService } from "ngx-spinner";
 
 /**
  * Componente del formulario de actualización de datos del usuario
@@ -33,7 +35,7 @@ export class UpdateInfoPersonalComponent implements OnInit {
    */
   constructor(
     private fb: FormBuilder,
-    private spinner: SpinnerBlockService,
+    private spinner: NgxSpinnerService,
     private usuarioService: UsuarioService
   ) {
     this.initForm();
@@ -64,7 +66,7 @@ export class UpdateInfoPersonalComponent implements OnInit {
    * Carga la información del usuario
    */
   private loadInfoUsuario() {
-    this.spinner.start();
+    this.spinner.show();
     this.usuarioService
       .findUsuario()
       .subscribe(
@@ -74,11 +76,11 @@ export class UpdateInfoPersonalComponent implements OnInit {
           this.updateInfoForm.get("apellidos").setValue(this.usuario.apellidos);
           this.updateInfoForm.get("correo").setValue(this.usuario.correo);
           this.updateInfoForm.get("telefono").setValue(this.usuario.telefono);
-          this.spinner.stop();
+          this.spinner.hide();
         },
         (error) => {
           console.log(error);
-          this.spinner.stop();
+          this.spinner.hide();
         }
       );
   }
@@ -99,7 +101,7 @@ export class UpdateInfoPersonalComponent implements OnInit {
 
     console.log("dentro de update", valid);
     if (valid) {
-      this.spinner.start();
+      this.spinner.show();
 
       sessionStorage.setItem("usuario", value.usuario);
 
@@ -112,13 +114,13 @@ export class UpdateInfoPersonalComponent implements OnInit {
         (data) => {
           this.usuario = data;
           this.alerts.msg = "Información actualizada";
-          this.spinner.stop();
+          this.spinner.hide();
           console.log("llegaaaaaaaaaaaaaa");
         },
         (error) => {
           console.log(error);
           this.alerts.error = "Error al actualizar la información";
-          this.spinner.stop();
+          this.spinner.hide();
           this.alerts.msg = "";
         }
       );

@@ -4,7 +4,7 @@ import { CommonModule } from "@angular/common";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { RouterModule, Router } from "@angular/router";
 import { LogueoRoutes } from "./logueo.routing";
-import { SpinnerBlockService } from "../common/components/spinner-block/spinner-block.service";
+
 import { LoginService } from "./login/login.service";
 import { ApiEndpoints } from "./api.endpoints";
 import { AuthGuardService } from "../common/services/auth/auth-guard.service";
@@ -53,7 +53,6 @@ import { ForgotPassComponent } from "./forgot-pass/forgot-pass.component";
 
   providers: [
     ApiEndpoints,
-    SpinnerBlockService,
     AuthGuardService,
     LoginService,
     UsuarioService,

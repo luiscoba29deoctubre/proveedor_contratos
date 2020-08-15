@@ -4,14 +4,17 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 import { Router } from "@angular/router";
 
-import { SpinnerBlockService } from "../../../common/components/spinner-block/spinner-block.service";
+
 import { NotificationService } from "../../../shared/services/notification.service";
-import { FormularioService } from "../../../dashboard/formulario.service";
+
 
 import { Parameter } from "../../../common/domain/param/parameter";
 
 import { ProcessIDB } from "../../../shared/process.indexedDB";
 import { NgxIndexedDBService } from 'ngx-indexed-db';
+
+import { NgxSpinnerService } from "ngx-spinner";
+import { FormularioService } from '../formulario.service';
 
 interface ItemTipo {
   value: string;
@@ -73,7 +76,7 @@ export class IdentificacionComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private spinner: SpinnerBlockService,
+    private spinner: NgxSpinnerService,
     private formularioService: FormularioService,
     private notifyService: NotificationService,
     private dbService: NgxIndexedDBService

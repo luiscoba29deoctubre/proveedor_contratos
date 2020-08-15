@@ -1,8 +1,10 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { FormGroup, Validators, FormBuilder } from "@angular/forms";
 import { Router } from "@angular/router";
-import { SpinnerBlockService } from "../../common/components/spinner-block/spinner-block.service";
+
 import { ForgotPassService } from "./forgot-pass.service";
+
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: "app-forgot-pass",
@@ -37,7 +39,7 @@ export class ForgotPassComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private spinner: SpinnerBlockService,
+    private spinner: NgxSpinnerService,
     private forgotPassService: ForgotPassService
   ) {
     this.initForm();
@@ -73,7 +75,7 @@ export class ForgotPassComponent implements OnInit {
     this.submitted = true;
 
     if (valid) {
-      this.spinner.start();
+      this.spinner.show();
 
       this.forgotPassService.sendMail(value.correo).subscribe(
         (data) => {
@@ -82,12 +84,12 @@ export class ForgotPassComponent implements OnInit {
             "Envío de clave exitoso. Se ha enviado una clave temporal a su correo: " +
             data.correo;
           this.enviado = true;
-          this.spinner.stop();
+          this.spinner.hide();
         },
         (error) => {
           this.alerts.error = "Ocurrio un error al enviar la clave temporal";
           this.enviado = false;
-          this.spinner.stop();
+          this.spinner.hide();
         }
       );
     }
