@@ -18,9 +18,7 @@ export const AppRoutes: Routes = [
         path: "",
         component: FullComponent,
         loadChildren: () =>
-          import("./items-sidenav/sidenav.module").then(
-            (m) => m.MaterialComponentsModule
-          ),
+          import("./items-sidenav/sidenav.module").then((m) => m.SidenavModule),
       },
       {
         path: "login",
@@ -33,12 +31,6 @@ export const AppRoutes: Routes = [
         loadChildren: () =>
           import("./dashboard/dashboard.module").then((m) => m.DashboardModule),
       },
-      /*{
-        path: "",
-        component: FullComponent,
-        loadChildren: () =>
-          import("./material-component/formularios/formularios.module").then((m) => m.FormulariosModule),
-      },*/
     ],
   },
   {
