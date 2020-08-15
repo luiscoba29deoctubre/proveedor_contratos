@@ -1,6 +1,6 @@
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import 'hammerjs';
+import 'src/app/items-sidenav/node_modules/hammerjs';
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 

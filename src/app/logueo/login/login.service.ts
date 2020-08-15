@@ -8,7 +8,7 @@ import { TokenInitial } from "../../common/domain/tokeninitial";
 import { throwError, BehaviorSubject } from "rxjs";
 import { catchError } from "rxjs/internal/operators/catchError";
 import { map } from "rxjs/internal/operators/map";
-import { JwtHelperService } from "@auth0/angular-jwt";
+import { JwtHelperService } from "src/app/items-sidenav/node_modules/@auth0/angular-jwt";
 
 const helper = new JwtHelperService();
 /**

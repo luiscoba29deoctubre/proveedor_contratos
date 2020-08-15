@@ -10,8 +10,6 @@ import { CdkTableModule } from "@angular/cdk/table";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { FlexLayoutModule } from "@angular/flex-layout";
 
-import { MaterialRoutes } from "./material.routing";
-
 import { AdminComponent } from "./admin/admin.component";
 import { LogueoModule } from "../logueo/logueo.module";
 import { ChangePasswordComponent } from "./change-password/change-password.component";
@@ -22,17 +20,15 @@ import { InfoContactoComponent } from "./formularios/info-contacto/info-contacto
 import { EmpresarialComponent } from "./formularios/empresarial/empresarial.component";
 import { FinancieroComponent } from "./formularios/financiero/financiero.component";
 import { OperativoComponent } from "./formularios/operativo/operativo.component";
-import { ComercialComponent } from './formularios/comercial/comercial.component';
-import { DocumentalComponent } from './formularios/documental/documental.component';
-import { AceptacionComponent } from './formularios/aceptacion/aceptacion.component';
-import { JwtModule } from '@auth0/angular-jwt';
-
-
+import { ComercialComponent } from "./formularios/comercial/comercial.component";
+import { DocumentalComponent } from "./formularios/documental/documental.component";
+import { AceptacionComponent } from "./formularios/aceptacion/aceptacion.component";
+import { SidenavRoutes } from "./sidenav.routing";
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild(MaterialRoutes),
+    RouterModule.forChild(SidenavRoutes),
     DemoMaterialModule,
     HttpClientModule,
     FormsModule,
@@ -63,4 +59,4 @@ import { JwtModule } from '@auth0/angular-jwt';
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class MaterialComponentsModule {}
+export class SidenavModule {}

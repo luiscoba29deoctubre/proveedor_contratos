@@ -18,7 +18,7 @@ export const AppRoutes: Routes = [
         path: "",
         component: FullComponent,
         loadChildren: () =>
-          import("./material-component/material.module").then(
+          import("./items-sidenav/sidenav.module").then(
             (m) => m.MaterialComponentsModule
           ),
       },

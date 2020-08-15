@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { MatDialog } from "@angular/material";
-import { DialogExitComponent } from "../../../material-component/dialog-exit/dialog-exit.component";
+import { DialogExitComponent } from "../../../items-sidenav/dialog-exit/dialog-exit.component";
 
 @Component({
   selector: "app-header",

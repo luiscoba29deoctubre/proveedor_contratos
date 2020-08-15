@@ -12,7 +12,7 @@ import { ComercialComponent } from "./formularios/comercial/comercial.component"
 import { DocumentalComponent } from "./formularios/documental/documental.component";
 import { AceptacionComponent } from "./formularios/aceptacion/aceptacion.component";
 
-export const MaterialRoutes: Routes = [
+export const SidenavRoutes: Routes = [
   {
     path: "admin",
     component: AdminComponent,
