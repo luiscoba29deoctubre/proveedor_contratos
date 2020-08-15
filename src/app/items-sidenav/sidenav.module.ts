@@ -24,6 +24,11 @@ import { ComercialComponent } from "./formularios/comercial/comercial.component"
 import { DocumentalComponent } from "./formularios/documental/documental.component";
 import { AceptacionComponent } from "./formularios/aceptacion/aceptacion.component";
 import { SidenavRoutes } from "./sidenav.routing";
+import { JwtModule } from '@auth0/angular-jwt';
+
+export function tokenGetter() {
+  return sessionStorage.getItem("token");
+}
 
 @NgModule({
   imports: [
@@ -37,6 +42,15 @@ import { SidenavRoutes } from "./sidenav.routing";
     CdkTableModule,
 
     LogueoModule,
+
+    JwtModule.forRoot({
+      config: {
+        headerName: "auth",
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ["localhost:3000", "foo.com", "bar.com"],
+        blacklistedRoutes: ["http://example.com/examplebadroute/"],
+      },
+    }),
   ],
   providers: [],
   entryComponents: [],

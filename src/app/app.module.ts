@@ -22,7 +22,6 @@ import { LogueoModule } from "./logueo/logueo.module";
 import { NgxIndexedDBModule } from "ngx-indexed-db";
 
 import { dbConfig } from "./indexedDB";
-import { SidenavModule } from "./items-sidenav/sidenav.module";
 import { JwtModule } from "@auth0/angular-jwt";
 
 export function tokenGetter() {
@@ -50,16 +49,8 @@ export function tokenGetter() {
     RouterModule.forRoot(AppRoutes),
 
     LogueoModule,
-    SidenavModule,
 
-    JwtModule.forRoot({
-      config: {
-        headerName: "auth",
-        tokenGetter: tokenGetter,
-        whitelistedDomains: ["localhost:3000", "foo.com", "bar.com"],
-        blacklistedRoutes: ["http://example.com/examplebadroute/"],
-      },
-    }),
+    
 
     NgxIndexedDBModule.forRoot(dbConfig),
   ],
