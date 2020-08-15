@@ -44,16 +44,14 @@ export class ChangePasswordComponent implements OnInit {
    * Método que se ejecuta al iniciar el componente
    */
   ngOnInit() {
-    this.usuarioService
-      .getEmail()
-      .subscribe(
-        (usuario) => {
-          this.usuario = usuario;
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+    this.usuarioService.getEmail().subscribe(
+      (usuario) => {
+        this.usuario = usuario;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   /**
@@ -118,17 +116,23 @@ export class ChangePasswordComponent implements OnInit {
   verifyPass() {
     const valuePass0 = this.changePassForm.get("pass0").value;
 
-    this.usuarioService.validatePassUsuario(valuePass0).subscribe(
-      (data) => {
-        this.errorPass0 = data ? false : true;
-        this.spinner.stop();
-      },
-      (error) => {
-        console.log(error);
-        this.alerts.msg = null;
-        this.alerts.error = "Ocurrio un Error al actualizar el Password";
-        this.spinner.stop();
-      }
-    );
+    console.log("imprimimos el contenido", valuePass0);
+    if (valuePass0 !== "" && valuePass0 !== null) {
+      console.log("no es vacío");
+      this.usuarioService.validatePassUsuario(valuePass0).subscribe(
+        (data) => {
+          this.errorPass0 = data ? false : true;
+          this.spinner.stop();
+        },
+        (error) => {
+          console.log(error);
+          this.alerts.msg = null;
+          this.alerts.error = "Ocurrio un Error al actualizar el Password";
+          this.spinner.stop();
+        }
+      );
+    } else {
+      console.log("es vacio");
+    }
   }
 }
