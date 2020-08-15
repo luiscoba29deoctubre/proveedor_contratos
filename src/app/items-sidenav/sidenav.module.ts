@@ -4,7 +4,7 @@ import { RouterModule } from "@angular/router";
 import { HttpClientModule } from "@angular/common/http";
 import { CommonModule } from "@angular/common";
 
-import { DemoMaterialModule } from "../demo-material-module";
+import { MaterialModule } from "../material-module";
 import { CdkTableModule } from "@angular/cdk/table";
 
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -34,7 +34,7 @@ export function tokenGetter() {
   imports: [
     CommonModule,
     RouterModule.forChild(SidenavRoutes),
-    DemoMaterialModule,
+    MaterialModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,

@@ -9,7 +9,7 @@ import { LoginService } from "./login/login.service";
 import { ApiEndpoints } from "./api.endpoints";
 import { AuthGuardService } from "../common/services/auth/auth-guard.service";
 import { UsuarioService } from "../common/services/usuario.service";
-import { DemoMaterialModule } from "../demo-material-module";
+import { MaterialModule } from "../material-module";
 import { FlexLayoutModule } from "@angular/flex-layout";
 
 import { HttpClientModule } from "@angular/common/http";
@@ -24,8 +24,6 @@ import { RegisterComponent } from "./register/register.component";
 import { ForgotPassService } from "./forgot-pass/forgot-pass.service";
 import { ForgotPassComponent } from "./forgot-pass/forgot-pass.component";
 
-
-
 @NgModule({
   declarations: [
     LoginComponent,
@@ -36,19 +34,16 @@ import { ForgotPassComponent } from "./forgot-pass/forgot-pass.component";
     ForgotPassComponent,
   ],
   imports: [
-    DemoMaterialModule,
-    FormsModule,
+    ReactiveFormsModule,
     FlexLayoutModule,
     HttpClientModule,
+    FlexLayoutModule,
+    MaterialModule,
     SharedModule,
     CommonModule,
-    ReactiveFormsModule,
     FormsModule,
-    DemoMaterialModule,
-    FlexLayoutModule,
 
     RouterModule.forChild(LogueoRoutes),
-
   ],
 
   providers: [

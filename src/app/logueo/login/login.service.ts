@@ -48,31 +48,12 @@ export class LoginService {
     sessionStorage.setItem("token", token);
   }
 
-  private handlerError(err): Observable<never> {
-    let errorMessage = "An error occured retrieving data";
-    if (err) {
-      errorMessage = `Error:code ${err.message}`;
-    }
-    window.alert(errorMessage);
-    return throwError(errorMessage);
-  }
-
-  /**
+   /**
    * Llama el servicio de autenticación de credenciales
    *
    * @param email Email del usuario
    * @param password Password del usuario
    */
-  /*login(email: string, password: string): Observable<TokenInitial> {
-    const data: any = {
-      email: email,
-      password: password,
-    };
-    return this.http
-      .post<TokenInitial>(this.endpoints.url_api_auth_login, data)
-      .pipe(catchError(this.handleError("login", email)));
-  }*/
-
   public login(email: string, password: string): Observable<TokenInitial> {
     const authData: any = {
       email: email,
@@ -81,10 +62,10 @@ export class LoginService {
     return this.http
       .post<TokenInitial>(this.endpoints.url_api_auth_login, authData)
       .pipe(
-        map((res: TokenInitial) => {
-          this.saveToken(res.token);
+        map((response: TokenInitial) => {
+          this.saveToken(response.token);
           this.loggedIn.next(true);
-          return res;
+          return response;
         }),
         catchError((err) => this.handleError(err))
       );

@@ -49,7 +49,6 @@ export class LoginComponent implements OnInit {
     private spinner: NgxSpinnerService
   ) {
     this.initForm();
-
     this.processIDB = new ProcessIDB(dbService);
   }
   // sacado de https://morioh.com/p/526559a86600 el Toast que muestra mensajes
