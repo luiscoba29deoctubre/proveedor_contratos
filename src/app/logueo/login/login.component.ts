@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-     private loginService: LoginService,
+    private loginService: LoginService,
     private notifyService: NotificationService,
     private paramService: ParamService,
     private dbService: NgxIndexedDBService,
@@ -64,9 +64,7 @@ export class LoginComponent implements OnInit {
   /**
    * Método que se ejecuta al iniciar el componente
    */
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   /**
    * Inicializa el Formulario de Login
@@ -105,14 +103,11 @@ export class LoginComponent implements OnInit {
           this.router.navigate(["/dashboard"]);
           this.showToasterSuccess();
 
-
           this.spinner.hide();
         },
         (error) => {
           console.log(error);
           this.showToasterError();
-          //   this.spinner.stop();
-
           this.spinner.hide();
         }
       );
@@ -127,11 +122,8 @@ export class LoginComponent implements OnInit {
       },
       (error) => {
         console.log(error);
-        this.showToasterError();
 
         this.spinner.hide();
-
-        // this.spinner.stop();
       }
     );
   }
