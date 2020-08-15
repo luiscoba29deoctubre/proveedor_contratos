@@ -25,6 +25,9 @@ import { OperativoComponent } from "./formularios/operativo/operativo.component"
 import { ComercialComponent } from './formularios/comercial/comercial.component';
 import { DocumentalComponent } from './formularios/documental/documental.component';
 import { AceptacionComponent } from './formularios/aceptacion/aceptacion.component';
+import { JwtModule } from '@auth0/angular-jwt';
+
+
 
 @NgModule({
   imports: [

@@ -94,12 +94,9 @@ export class LoginComponent implements OnInit {
       this.spinner.start();
       this.loginService.login(value.email, value.password).subscribe(
         (tokeninicial) => {
-          console.log("tokeninicial", tokeninicial);
-
-          sessionStorage.setItem("token", tokeninicial.token);
           // carga de los parametros de la app
           this.loadAllParameters();
-
+          
           this.router.navigate(["/dashboard"]);
           this.showToasterSuccess();
           this.spinner.stop();

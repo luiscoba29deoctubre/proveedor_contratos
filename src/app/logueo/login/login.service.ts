@@ -82,7 +82,6 @@ export class LoginService {
       .post<TokenInitial>(this.endpoints.url_api_auth_login, authData)
       .pipe(
         map((res: TokenInitial) => {
-          console.log("resss ", res);
           this.saveToken(res.token);
           this.loggedIn.next(true);
           return res;

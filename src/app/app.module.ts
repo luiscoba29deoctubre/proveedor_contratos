@@ -23,6 +23,7 @@ import { JwtModule } from "@auth0/angular-jwt";
 import { NgxIndexedDBModule } from "ngx-indexed-db";
 
 import { dbConfig } from "./indexedDB";
+import { MaterialComponentsModule } from './material-component/material.module';
 
 export function tokenGetter() {
   return sessionStorage.getItem("token");
@@ -49,6 +50,7 @@ export function tokenGetter() {
     RouterModule.forRoot(AppRoutes),
 
     LogueoModule,
+    MaterialComponentsModule,
 
     JwtModule.forRoot({
       config: {
