@@ -24,7 +24,7 @@ import { ComercialComponent } from "./formularios/comercial/comercial.component"
 import { DocumentalComponent } from "./formularios/documental/documental.component";
 import { AceptacionComponent } from "./formularios/aceptacion/aceptacion.component";
 import { SidenavRoutes } from "./sidenav.routing";
-import { JwtModule } from '@auth0/angular-jwt';
+import { JwtModule } from "@auth0/angular-jwt";
 
 export function tokenGetter() {
   return sessionStorage.getItem("token");

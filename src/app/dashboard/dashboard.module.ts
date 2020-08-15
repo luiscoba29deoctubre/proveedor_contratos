@@ -5,6 +5,11 @@ import { DemoMaterialModule } from "../demo-material-module";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { DashboardComponent } from "./dashboard.component";
 import { DashboardRoutes } from "./dashboard.routing";
+import { JwtModule } from "@auth0/angular-jwt";
+
+export function tokenGetter() {
+  return sessionStorage.getItem("token");
+}
 
 @NgModule({
   imports: [
@@ -12,6 +17,15 @@ import { DashboardRoutes } from "./dashboard.routing";
     DemoMaterialModule,
     FlexLayoutModule,
     RouterModule.forChild(DashboardRoutes),
+
+    JwtModule.forRoot({
+      config: {
+        headerName: "auth",
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ["localhost:3000", "foo.com", "bar.com"],
+        blacklistedRoutes: ["http://example.com/examplebadroute/"],
+      },
+    }),
   ],
   declarations: [DashboardComponent],
 })

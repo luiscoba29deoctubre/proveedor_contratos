@@ -12,6 +12,8 @@ import { ParamService } from "../../common/services/param.service";
 import { NgxIndexedDBService } from "ngx-indexed-db";
 import { ProcessIDB } from "../../shared/process.indexedDB";
 
+import { NgxSpinnerService } from "ngx-spinner";
+
 /**
  * Componente Login de Usuario
  */
@@ -41,11 +43,12 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private spinner: SpinnerBlockService,
+    //   private spinner: SpinnerBlockService,
     private loginService: LoginService,
     private notifyService: NotificationService,
     private paramService: ParamService,
-    private dbService: NgxIndexedDBService
+    private dbService: NgxIndexedDBService,
+    private spinner: NgxSpinnerService
   ) {
     this.initForm();
 
@@ -91,20 +94,33 @@ export class LoginComponent implements OnInit {
     this.submitted = true;
     if (valid) {
       console.log("pasa la validacion");
-      this.spinner.start();
+      // this.spinner.start();
+
+      this.spinner.show();
+
+      setTimeout(() => {
+        /** spinner ends after 5 seconds */
+        this.spinner.hide();
+        console.log("entra al timer");
+      }, 19000);
+
       this.loginService.login(value.email, value.password).subscribe(
         (tokeninicial) => {
           // carga de los parametros de la app
           this.loadAllParameters();
-          
+
           this.router.navigate(["/dashboard"]);
           this.showToasterSuccess();
-          this.spinner.stop();
+          //    this.spinner.stop();
+
+          this.spinner.hide();
         },
         (error) => {
           console.log(error);
           this.showToasterError();
-          this.spinner.stop();
+          //   this.spinner.stop();
+
+          this.spinner.hide();
         }
       );
     }
@@ -119,7 +135,10 @@ export class LoginComponent implements OnInit {
       (error) => {
         console.log(error);
         this.showToasterError();
-        this.spinner.stop();
+
+        this.spinner.hide();
+
+        // this.spinner.stop();
       }
     );
   }

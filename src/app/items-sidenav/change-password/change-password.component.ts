@@ -113,7 +113,7 @@ export class ChangePasswordComponent implements OnInit {
    * @param value Valor del formulario
    * @param valid Estado del formulario
    */
-  verifyPass() {
+  validatePass() {
     const valuePass0 = this.changePassForm.get("pass0").value;
 
     console.log("imprimimos el contenido", valuePass0);

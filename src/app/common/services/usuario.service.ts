@@ -3,7 +3,10 @@ import { Observable } from "rxjs/Observable";
 
 import { Usuario } from "../domain/usuario";
 import { ApiEndpoints } from "../../logueo/api.endpoints";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { map } from "rxjs/internal/operators/map";
+import { catchError } from "rxjs/operators";
+import { throwError } from "rxjs";
 
 /**
  * Servicio para el manejo de la data de usuarios
@@ -54,9 +57,32 @@ export class UsuarioService {
    *
    * @param clave Clave a verificar
    */
-  public validatePassUsuario(password: string): Observable<any> {
-    console.log("aqui esta", sessionStorage.getItem("token"));
-    return this.http.post(this.endpoints.url_api_verify_pass_usuario, password);
+  public validatePassUsuario(clave: string): Observable<any> {
+    console.log("claaave", clave);
+    return this.http
+      .post<Boolean>(this.endpoints.url_api_validate_pass_usuario, { clave })
+      .pipe(
+        map((res: Boolean) => {
+          console.log("entra a responder RES");
+          return res;
+        }),
+        catchError((err) => this.handleError(err))
+      );
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error("An error occurred:", error.error.message);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong.
+      console.error(
+        `Backend returned code ${error.status}, ` + `body was: ${error.error}`
+      );
+    }
+    // Return an observable with a user-facing error message.
+    return throwError("Something bad happened; please try again later.");
   }
 
   /**

@@ -43,7 +43,7 @@ export class ApiEndpoints {
   public url_api_forgot_pass_usuario: string =
     this.url_api_procesos + "/forgot-pass";
 
-  public url_api_verify_pass_usuario: string =
+  public url_api_validate_pass_usuario: string =
     this.url_api_validaciones + "/validate-pass";
 
   // proceso de obtención de parametros
