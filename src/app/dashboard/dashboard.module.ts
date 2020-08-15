@@ -1,4 +1,4 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { CommonModule } from "@angular/common";
 import { MaterialModule } from "../material-module";
@@ -6,6 +6,7 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { DashboardComponent } from "./dashboard.component";
 import { DashboardRoutes } from "./dashboard.routing";
 import { JwtModule } from "@auth0/angular-jwt";
+import { ParamService } from './param.service';
 
 export function tokenGetter() {
   return sessionStorage.getItem("token");
@@ -20,7 +21,7 @@ export function tokenGetter() {
 
     JwtModule.forRoot({
       config: {
-        headerName: "auth2",
+        headerName: "auth",
         tokenGetter: tokenGetter,
         whitelistedDomains: ["localhost:3000", "foo.com", "bar.com"],
         blacklistedRoutes: ["http://example.com/examplebadroute/"],
@@ -28,6 +29,8 @@ export function tokenGetter() {
     }),
   ],
   declarations: [DashboardComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [
+    ParamService
+  ],
 })
 export class DashboardModule {}

@@ -25,6 +25,8 @@ import { DocumentalComponent } from "./formularios/documental/documental.compone
 import { AceptacionComponent } from "./formularios/aceptacion/aceptacion.component";
 import { SidenavRoutes } from "./sidenav.routing";
 import { JwtModule } from "@auth0/angular-jwt";
+import { NgxSpinnerModule } from "ngx-spinner";
+import { FormularioService } from "./formularios/formulario.service";
 
 export function tokenGetter() {
   return sessionStorage.getItem("token");
@@ -41,19 +43,20 @@ export function tokenGetter() {
     FlexLayoutModule,
     CdkTableModule,
 
+    NgxSpinnerModule,
+
     LogueoModule,
 
     JwtModule.forRoot({
       config: {
-        headerName: "auth",
+        headerName: "auth2",
         tokenGetter: tokenGetter,
         whitelistedDomains: ["localhost:3000", "foo.com", "bar.com"],
         blacklistedRoutes: ["http://example.com/examplebadroute/"],
       },
     }),
   ],
-  providers: [],
-  entryComponents: [],
+  providers: [FormularioService],
   declarations: [
     AdminComponent,
 
@@ -71,6 +74,5 @@ export function tokenGetter() {
     DocumentalComponent,
     AceptacionComponent,
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class SidenavModule {}

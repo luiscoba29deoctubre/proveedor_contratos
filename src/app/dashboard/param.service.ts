@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { ApiEndpoints } from "../../logueo/api.endpoints";
+import { ApiEndpoints } from "../logueo/api.endpoints";
 import { Observable } from "rxjs";
 
 /**

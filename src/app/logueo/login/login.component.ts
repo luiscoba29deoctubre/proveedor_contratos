@@ -6,7 +6,7 @@ import { LoginService } from "./login.service";
 import { Usuario } from "../../common/domain/usuario";
 import { NotificationService } from "../../shared/services/notification.service";
 
-import { ParamService } from "../../common/services/param.service";
+import { ParamService } from "../../dashboard/param.service";
 
 import { NgxIndexedDBService } from "ngx-indexed-db";
 import { ProcessIDB } from "../../shared/process.indexedDB";

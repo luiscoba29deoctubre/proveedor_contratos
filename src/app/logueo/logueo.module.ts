@@ -17,7 +17,6 @@ import { SharedModule } from "../shared/shared.module";
 
 import { LoginComponent } from "./login/login.component";
 
-import { HrefDirective } from "../common/directives/href/href.directive";
 import { OnlyNumbersDirective } from "../common/directives/only-numbers/only-numbers.directive";
 import { RegisterComponent } from "./register/register.component";
 import { ForgotPassService } from "./forgot-pass/forgot-pass.service";
@@ -27,7 +26,7 @@ import { ForgotPassComponent } from "./forgot-pass/forgot-pass.component";
   declarations: [
     LoginComponent,
     RegisterComponent,
-    HrefDirective,
+
     OnlyNumbersDirective,
     ForgotPassComponent,
   ],
@@ -42,8 +41,6 @@ import { ForgotPassComponent } from "./forgot-pass/forgot-pass.component";
     FormsModule,
 
     RouterModule.forChild(LogueoRoutes),
-
-
   ],
 
   providers: [
