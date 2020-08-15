@@ -4,17 +4,15 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 import { Router } from "@angular/router";
 
-
 import { NotificationService } from "../../../shared/services/notification.service";
-
 
 import { Parameter } from "../../../common/domain/param/parameter";
 
 import { ProcessIDB } from "../../../shared/process.indexedDB";
-import { NgxIndexedDBService } from 'ngx-indexed-db';
+import { NgxIndexedDBService } from "ngx-indexed-db";
 
 import { NgxSpinnerService } from "ngx-spinner";
-import { FormularioService } from '../formulario.service';
+import { FormularioService } from "../formulario.service";
 
 interface ItemTipo {
   value: string;
@@ -36,7 +34,7 @@ export class IdentificacionComponent implements OnInit {
   /** Para almacenar la lista de tipopersona */
   personas: Parameter[];
 
-  store:string= 'identificacion'
+  store: string = "identificacion";
 
   contribuyentes: ItemTipo[] = [
     { value: "0", viewValue: "Entidad" },
@@ -77,12 +75,24 @@ export class IdentificacionComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private spinner: NgxSpinnerService,
-    private formularioService: FormularioService,
+    private formsService: FormularioService,
     private notifyService: NotificationService,
     private dbService: NgxIndexedDBService
   ) {
     this.initForm();
     this.processIDB = new ProcessIDB(dbService);
+
+    this.formsService.getForms().subscribe(
+      (allForms) => {
+        console.log(" llega allForms", allForms);
+        // llenamos la base 'indexed-db'
+        // this.processIDB.fillingForms(allForms);
+      },
+      (error) => {
+        console.log(error);
+        this.spinner.hide();
+      }
+    );
   }
   // sacado de https://morioh.com/p/526559a86600 el Toast que muestra mensajes
   showToasterSuccess() {
@@ -106,16 +116,16 @@ export class IdentificacionComponent implements OnInit {
     );
   }
 
-  private getDato=( name) =>{
-    this.dbService.getByIndex(this.store, 'name', name).then(
-      person => {
-          console.log(person);
+  private getDato = (name) => {
+    this.dbService.getByIndex(this.store, "name", name).then(
+      (person) => {
+        console.log(person);
       },
-      error => {
-          console.log(error);
+      (error) => {
+        console.log(error);
       }
-  );
-  }
+    );
+  };
 
   private initForm() {
     this.identificacionForm = this.fb.group({
@@ -137,7 +147,7 @@ export class IdentificacionComponent implements OnInit {
    */
   sendForm(value: any, valid: boolean) {
     this.submitted = true;
-/*
+    /*
     // if (valid) {
     const identificaForm: IdentificacionDto = new IdentificacionDto();
     identificaForm.rucrise = value.rucrise;

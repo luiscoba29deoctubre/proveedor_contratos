@@ -118,10 +118,9 @@ export class ChangePasswordComponent implements OnInit {
   validatePass() {
     const valuePass0 = this.changePassForm.get("pass0").value;
 
-    console.log("imprimimos el contenido", valuePass0);
     if (valuePass0 !== "" && valuePass0 !== null) {
       this.spinner.show();
-      console.log("no es vacío");
+
       this.usuarioService.validatePassUsuario(valuePass0).subscribe(
         (data) => {
           this.errorPass0 = data ? false : true;

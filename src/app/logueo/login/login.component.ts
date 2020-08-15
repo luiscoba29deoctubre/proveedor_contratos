@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private loginService: LoginService,
     private notifyService: NotificationService,
-    private paramService: ParamService,
+
     private dbService: NgxIndexedDBService,
     private spinner: NgxSpinnerService
   ) {
@@ -96,8 +96,7 @@ export class LoginComponent implements OnInit {
 
       this.loginService.login(value.email, value.password).subscribe(
         (tokeninicial) => {
-          // carga de los parametros de la app
-          this.loadAllParameters();
+
 
           this.router.navigate(["/dashboard"]);
           this.showToasterSuccess();
@@ -113,19 +112,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  loadAllParameters() {
-    this.paramService.getParameters().subscribe(
-      (allParameters) => {
-        // llenamos la base 'indexed-db'
-        this.processIDB.fillingParameters(allParameters);
-      },
-      (error) => {
-        console.log(error);
 
-        this.spinner.hide();
-      }
-    );
-  }
 
   closeError() {
     this.submitted = false;

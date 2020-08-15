@@ -58,7 +58,6 @@ export class UsuarioService {
    * @param clave Clave a verificar
    */
   public validatePassUsuario(clave: string): Observable<any> {
-    console.log("claaave", clave);
     return this.http
       .post<Boolean>(this.endpoints.url_api_validate_pass_usuario, { clave })
       .pipe(

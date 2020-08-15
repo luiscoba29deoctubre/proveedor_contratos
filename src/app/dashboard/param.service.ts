@@ -11,7 +11,7 @@ import { Observable } from "rxjs";
 })
 export class ParamService {
   /**
-   * Contructos del servicio {@link UsuarioService}
+   * Contructos del servicio {@link ParamService}
    *
    * @param http
    * @param endpoints

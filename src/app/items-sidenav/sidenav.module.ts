@@ -1,5 +1,5 @@
 import "hammerjs";
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { HttpClientModule } from "@angular/common/http";
 import { CommonModule } from "@angular/common";
@@ -27,6 +27,7 @@ import { SidenavRoutes } from "./sidenav.routing";
 import { JwtModule } from "@auth0/angular-jwt";
 import { NgxSpinnerModule } from "ngx-spinner";
 import { FormularioService } from "./formularios/formulario.service";
+import { ApiEndpoints } from "../logueo/api.endpoints";
 
 export function tokenGetter() {
   return sessionStorage.getItem("token");
@@ -49,14 +50,14 @@ export function tokenGetter() {
 
     JwtModule.forRoot({
       config: {
-        headerName: "auth2",
+        headerName: "auth",
         tokenGetter: tokenGetter,
         whitelistedDomains: ["localhost:3000", "foo.com", "bar.com"],
         blacklistedRoutes: ["http://example.com/examplebadroute/"],
       },
     }),
   ],
-  providers: [FormularioService],
+  providers: [ApiEndpoints, FormularioService],
   declarations: [
     AdminComponent,
 

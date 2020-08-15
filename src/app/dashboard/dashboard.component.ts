@@ -6,6 +6,7 @@ import { NgxIndexedDBService } from "ngx-indexed-db";
 import { FormularioService } from "../items-sidenav/formularios/formulario.service";
 
 import { NgxSpinnerService } from "ngx-spinner";
+import { ParamService } from "./param.service";
 
 @Component({
   selector: "app-dashboard",
@@ -18,7 +19,7 @@ export class DashboardComponent implements OnInit {
   constructor(
     private notifyService: NotificationService,
     private dbService: NgxIndexedDBService,
-    private formsService: FormularioService,
+    private paramService: ParamService,
     private spinner: NgxSpinnerService
   ) {
     this.processIDB = new ProcessIDB(dbService);
@@ -33,12 +34,17 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.formsService.getForms().subscribe(
-      (allForms) => {
-        console.log(" llega allForms", allForms);
-        // llenamos la base 'indexed-db'
+    // carga de los parametros de la app
+    this.loadAllParameters();
+  }
 
-        // this.processIDB.fillingForms(allForms);
+  loadAllParameters() {
+    this.spinner.show();
+    this.paramService.getParameters().subscribe(
+      (allParameters) => {
+        // llenamos la base 'indexed-db'
+        this.processIDB.fillingParameters(allParameters);
+        this.spinner.hide();
       },
       (error) => {
         console.log(error);

@@ -1,3 +1,4 @@
+import "hammerjs";
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { CommonModule } from "@angular/common";
@@ -6,7 +7,10 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { DashboardComponent } from "./dashboard.component";
 import { DashboardRoutes } from "./dashboard.routing";
 import { JwtModule } from "@auth0/angular-jwt";
-import { ParamService } from './param.service';
+import { ParamService } from "./param.service";
+import { ApiEndpoints } from "../logueo/api.endpoints";
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
+import { HttpClientModule } from "@angular/common/http";
 
 export function tokenGetter() {
   return sessionStorage.getItem("token");
@@ -15,9 +19,12 @@ export function tokenGetter() {
 @NgModule({
   imports: [
     CommonModule,
-    MaterialModule,
-    FlexLayoutModule,
     RouterModule.forChild(DashboardRoutes),
+    MaterialModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    FlexLayoutModule,
 
     JwtModule.forRoot({
       config: {
@@ -29,8 +36,6 @@ export function tokenGetter() {
     }),
   ],
   declarations: [DashboardComponent],
-  providers: [
-    ParamService
-  ],
+  providers: [ApiEndpoints, ParamService],
 })
 export class DashboardModule {}
