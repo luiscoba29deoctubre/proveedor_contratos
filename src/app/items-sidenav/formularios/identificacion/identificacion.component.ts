@@ -81,12 +81,14 @@ export class IdentificacionComponent implements OnInit {
   ) {
     this.initForm();
     this.processIDB = new ProcessIDB(dbService);
-
-    this.formsService.getForms().subscribe(
-      (allForms) => {
-        console.log(" llega allForms", allForms);
-        // llenamos la base 'indexed-db'
-        // this.processIDB.fillingForms(allForms);
+    console.log("entra en formsServices");
+    this.formsService.getIdentificacion().subscribe(
+      (identificacionDto) => {
+        console.log(" llega allForms", identificacionDto);
+        if (identificacionDto) {
+          // llenamos la base 'indexed-db'
+          // this.processIDB.fillingForms(identificacionDto);
+        }
       },
       (error) => {
         console.log(error);

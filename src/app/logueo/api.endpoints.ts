@@ -49,8 +49,9 @@ export class ApiEndpoints {
   // proceso de obtención de parametros
   public url_api_get_parameters: string = this.url_api_procesos + "/get-param";
 
-  // proceso de obtención de formularios
-  public url_api_get_forms: string = this.url_api_formulario + "/get-forms";
+  // proceso de obtención del formulario 'identificacion'
+  public url_api_get_identificacion: string =
+    this.url_api_formulario + "/get-identifica";
 
   // Crear nuevo usuario
   public url_api_new_user: string = this.url_api_usuarios + "/";

@@ -41,10 +41,11 @@ export class FormularioService {
    *
    * @param Identificacion registramos el formulario 'identificacion'
    */
-  public getForms(): Observable<IdentificacionDto> {
-    return this.http.get(this.endpoints.url_api_get_forms).pipe(
-      map((response: IdentificacionDto) => {
-        return response;
+  public getIdentificacion(): Observable<IdentificacionDto> {
+    return this.http.get(this.endpoints.url_api_get_identificacion).pipe(
+      map((identificacionDto: IdentificacionDto) => {
+        console.log("vienneeeeeee", identificacionDto);
+        return identificacionDto;
       }),
       catchError((err) => this.handleError(err))
     );

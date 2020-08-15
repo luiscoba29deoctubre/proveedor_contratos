@@ -61,11 +61,25 @@ export const dbConfig: DBConfig = {
     },
     // cada uno de los formularios
     {
-      store: "lstCatalogocategoriaDto",
+      store: "identificacionDto",
       storeConfig: { keyPath: "id", autoIncrement: false },
       storeSchema: [
-        { name: "id", keypath: "id", options: { unique: false } },
-        { name: "name", keypath: "name", options: { unique: false } },
+        { name: "rucrise", keypath: "rucrise", options: { unique: false } },
+        {
+          name: "nombrerazonsocial",
+          keypath: "nombrerazonsocial",
+          options: { unique: false },
+        },
+        {
+          name: "nombrecomercial",
+          keypath: "nombrecomercial",
+          options: { unique: false },
+        },
+        {
+          name: "idtipopersona",
+          keypath: "idtipopersona",
+          options: { unique: false },
+        },
       ],
     },
   ],
