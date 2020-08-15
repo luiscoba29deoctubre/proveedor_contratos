@@ -36,8 +36,17 @@ export class DialogExitComponent {
     sessionStorage.clear();
     this.router.navigate(["/"]);
     this.dialog.closeAll();
-
+    console.log("entra a eliminar la baaaaaaaaseeeee");
     // ****************** eliminamos la base de datos
+    this.dbService.deleteDatabase().then(
+      () => {
+        console.log("Database deleted successfully with NgxIndexedDBService");
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
     const DBDeleteRequest = window.indexedDB.deleteDatabase("Providers");
 
     DBDeleteRequest.onerror = function (event) {

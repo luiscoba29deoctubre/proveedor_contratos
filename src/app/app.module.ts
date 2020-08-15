@@ -18,13 +18,9 @@ import { SharedModule } from "./shared/shared.module";
 import { SpinnerComponent } from "./shared/spinner.component";
 import { ToastrModule } from "ngx-toastr";
 import { LogueoModule } from "./logueo/logueo.module";
-
-import { NgxIndexedDBModule } from "ngx-indexed-db";
-
-import { dbConfig } from "./indexedDB";
-
 import { NgxSpinnerModule } from "ngx-spinner";
-import { JwtModule } from "@auth0/angular-jwt";
+import { NgxIndexedDBModule } from "ngx-indexed-db";
+import { dbConfig } from "./dashboard/indexedDB";
 
 export function tokenGetter() {
   return sessionStorage.getItem("token");
@@ -49,15 +45,9 @@ export function tokenGetter() {
     HttpClientModule,
     SharedModule,
     RouterModule.forRoot(AppRoutes),
-
     LogueoModule,
-
-
     NgxSpinnerModule,
-
     NgxIndexedDBModule.forRoot(dbConfig),
-
-
   ],
   providers: [
     {

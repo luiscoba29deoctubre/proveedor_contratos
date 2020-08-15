@@ -5,7 +5,7 @@ export class ProcessIDB {
   constructor(private dbService: NgxIndexedDBService) {}
 
   fillingParameters = (allParameters) => {
-    // console.log("allParameters bdd", allParameters);
+    console.log("allParameters bdddddd", allParameters);
 
     // tslint:disable-next-line: forin
     for (let key in allParameters) {

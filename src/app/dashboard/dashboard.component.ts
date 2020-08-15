@@ -40,8 +40,12 @@ export class DashboardComponent implements OnInit {
 
   loadAllParameters() {
     this.spinner.show();
+
+    console.log("entra en loadAllParameters");
+
     this.paramService.getParameters().subscribe(
       (allParameters) => {
+        console.log("allParameterssssssssss", allParameters);
         // llenamos la base 'indexed-db'
         this.processIDB.fillingParameters(allParameters);
         this.spinner.hide();

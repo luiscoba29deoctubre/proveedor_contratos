@@ -2,14 +2,6 @@ import { DBConfig } from "ngx-indexed-db";
 export const dbConfig: DBConfig = {
   name: "Providers",
   version: 1,
-  /*
-        lstTipoPersonaDto,
-        lstTipoProveedorDto,
-        lstTipocontribuyenteDto,
-        lstActividadDto,
-        lstCategoriaDto,
-        lstCatalogocategoriaDto,
-  */
   objectStoresMeta: [
     {
       store: "lstTipoPersonaDto",
@@ -57,29 +49,6 @@ export const dbConfig: DBConfig = {
       storeSchema: [
         { name: "id", keypath: "id", options: { unique: false } },
         { name: "name", keypath: "name", options: { unique: false } },
-      ],
-    },
-    // cada uno de los formularios
-    {
-      store: "identificacionDto",
-      storeConfig: { keyPath: "id", autoIncrement: false },
-      storeSchema: [
-        { name: "rucrise", keypath: "rucrise", options: { unique: false } },
-        {
-          name: "nombrerazonsocial",
-          keypath: "nombrerazonsocial",
-          options: { unique: false },
-        },
-        {
-          name: "nombrecomercial",
-          keypath: "nombrecomercial",
-          options: { unique: false },
-        },
-        {
-          name: "idtipopersona",
-          keypath: "idtipopersona",
-          options: { unique: false },
-        },
       ],
     },
   ],

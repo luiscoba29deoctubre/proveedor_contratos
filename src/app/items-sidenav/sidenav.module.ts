@@ -28,6 +28,8 @@ import { JwtModule } from "@auth0/angular-jwt";
 import { NgxSpinnerModule } from "ngx-spinner";
 import { FormularioService } from "./formularios/formulario.service";
 import { ApiEndpoints } from "../logueo/api.endpoints";
+import { dbConfig } from '../dashboard/indexedDB';
+import { NgxIndexedDBModule } from 'ngx-indexed-db';
 
 export function tokenGetter() {
   return sessionStorage.getItem("token");
@@ -45,7 +47,7 @@ export function tokenGetter() {
     CdkTableModule,
 
     NgxSpinnerModule,
-
+   // NgxIndexedDBModule.forRoot(dbConfig),
     LogueoModule,
 
     JwtModule.forRoot({
