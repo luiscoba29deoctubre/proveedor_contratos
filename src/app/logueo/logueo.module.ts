@@ -16,7 +16,6 @@ import { HttpClientModule } from "@angular/common/http";
 import { SharedModule } from "../shared/shared.module";
 
 import { LoginComponent } from "./login/login.component";
-import { LogoutComponent } from "./logout/logout.component";
 
 import { HrefDirective } from "../common/directives/href/href.directive";
 import { OnlyNumbersDirective } from "../common/directives/only-numbers/only-numbers.directive";
@@ -30,7 +29,6 @@ import { ForgotPassComponent } from "./forgot-pass/forgot-pass.component";
     RegisterComponent,
     HrefDirective,
     OnlyNumbersDirective,
-    LogoutComponent,
     ForgotPassComponent,
   ],
   imports: [
@@ -44,6 +42,8 @@ import { ForgotPassComponent } from "./forgot-pass/forgot-pass.component";
     FormsModule,
 
     RouterModule.forChild(LogueoRoutes),
+
+
   ],
 
   providers: [

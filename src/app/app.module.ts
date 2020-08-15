@@ -24,6 +24,7 @@ import { NgxIndexedDBModule } from "ngx-indexed-db";
 import { dbConfig } from "./indexedDB";
 
 import { NgxSpinnerModule } from "ngx-spinner";
+import { JwtModule } from "@auth0/angular-jwt";
 
 export function tokenGetter() {
   return sessionStorage.getItem("token");
@@ -51,9 +52,12 @@ export function tokenGetter() {
 
     LogueoModule,
 
+
     NgxSpinnerModule,
 
     NgxIndexedDBModule.forRoot(dbConfig),
+
+
   ],
   providers: [
     {

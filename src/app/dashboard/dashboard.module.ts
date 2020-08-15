@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { CommonModule } from "@angular/common";
 import { MaterialModule } from "../material-module";
@@ -20,7 +20,7 @@ export function tokenGetter() {
 
     JwtModule.forRoot({
       config: {
-        headerName: "auth",
+        headerName: "auth2",
         tokenGetter: tokenGetter,
         whitelistedDomains: ["localhost:3000", "foo.com", "bar.com"],
         blacklistedRoutes: ["http://example.com/examplebadroute/"],
@@ -28,5 +28,6 @@ export function tokenGetter() {
     }),
   ],
   declarations: [DashboardComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class DashboardModule {}
