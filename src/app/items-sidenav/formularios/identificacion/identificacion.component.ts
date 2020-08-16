@@ -13,6 +13,7 @@ import { NgxIndexedDBService } from "ngx-indexed-db";
 
 import { NgxSpinnerService } from "ngx-spinner";
 import { FormularioService } from "../formulario.service";
+import { IdentificacionDto } from "../../../common/dtos/form/IdentificacionDto";
 
 interface ItemTipo {
   value: string;
@@ -87,7 +88,7 @@ export class IdentificacionComponent implements OnInit {
         console.log(" llega allForms", identificacionDto);
         if (identificacionDto.id) {
           // llenamos la base 'indexed-db'
-          this.processIDB.fillingForms(identificacionDto);
+          this.processIDB.fillingForm(identificacionDto);
           this.loadIdentificacion();
         }
       },
@@ -152,41 +153,36 @@ export class IdentificacionComponent implements OnInit {
    */
   sendForm(value: any, valid: boolean) {
     this.submitted = true;
-    /*
-    // if (valid) {
-    const identificaForm: IdentificacionDto = new IdentificacionDto();
-    identificaForm.rucrise = value.rucrise;
-    identificaForm.nombrerazonsocial = value.nombrerazonsocial;
-    identificaForm.nombrecomercial = value.nombrecomercial;
-    identificaForm.idtipopersona = +value.persona.value;
 
-    console.log(" value.persona", value.persona.value);
+    if (valid) {
+      this.spinner.show();
 
-    console.log("identificaForm", identificaForm);
+      const identificaForm: IdentificacionDto = new IdentificacionDto();
+      identificaForm.rucrise = value.rucrise;
+      identificaForm.nombrerazonsocial = value.nombrerazonsocial;
+      identificaForm.nombrecomercial = value.nombrecomercial;
+      //    identificaForm.idtipopersona = +value.persona.value;
 
-    this.formularioService.saveIdentificacion(identificaForm).subscribe(
-      (identificacion) => {
-        console.log("regresa Identificacion", identificacion);
+      //   console.log(" value.persona", value.persona.value);
+      console.log("identificaForm", identificaForm);
 
-        Global.identificacion = identificaForm;
+      this.formsService.saveIdentificacion(identificaForm).subscribe(
+        (identificacionDto:IdentificacionDto) => {
+          console.log("regresa Identificacion", );
 
-        console.log(
-          "se imprime Global.globalIdentificacion",
-          Global.identificacion
-        );
+          this.processIDB.fillingForm(identificacionDto);
 
-        this.router.navigate(["/infocontacto"]);
+          this.router.navigate(["/infocontacto"]);
 
-        this.spinner.stop();
-      },
-      (error) => {
-        console.log(error);
-        this.spinner.stop();
-      }
-    );
-    */
+          this.spinner.hide();
+        },
+        (error) => {
+          console.log(error);
+          this.spinner.hide();
+        }
+      );
+    }
   }
-  // }
 
   test() {
     console.log("imprime ");

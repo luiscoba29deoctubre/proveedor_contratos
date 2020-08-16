@@ -5,9 +5,7 @@ export class ProcessIDB {
   constructor(private dbService: NgxIndexedDBService) {}
 
   fillingParameters = (allParameters) => {
-    console.log("allParameters bdddddd", allParameters);
-
-    // tslint:disable-next-line: forin
+    // console.log("allParameters bdddddd", allParameters);
     for (let key in allParameters) {
       if (allParameters.hasOwnProperty(key)) {
         // console.log(key + " -> " + allParameters[key]); // tomado del sistema 'responsable'
@@ -34,19 +32,16 @@ export class ProcessIDB {
     );
   }
 
-  fillingForms = (allParameters) => {
-    // console.log("allParameters bdd", allParameters);
+  fillingForm = (objetoPadre: Object) => {
+    const arrayNombre = Object.getOwnPropertyNames(objetoPadre);
+    let store: string = objetoPadre.toString();
+    store = arrayNombre[0];
 
-    // tslint:disable-next-line: forin
-    for (let key in allParameters) {
-      if (allParameters.hasOwnProperty(key)) {
-        console.log(key + " -> " + allParameters[key]); // tomado del sistema 'responsable'
-        //   this.createSchema(key); // no vale crear schemas
-        let vector = allParameters[key];
-        // tslint:disable-next-line: forin
-        for (let index in vector) {
-          // console.log("index[posicion]", vector[index].name);
-          this.addElementsToDB(key, vector[index].id, vector[index].name);
+    for (const key in objetoPadre) {
+      if (objetoPadre.hasOwnProperty(key)) {
+        const objHijo = objetoPadre[key];
+        for (let index in objHijo) {
+          this.addElementsToDB(store, objHijo[index].id, objHijo[index].name);
         }
       }
     }

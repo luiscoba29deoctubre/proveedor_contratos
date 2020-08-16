@@ -30,10 +30,12 @@ export class FormularioService {
   public saveIdentificacion(
     identificacion: IdentificacionDto
   ): Observable<IdentificacionDto> {
-    return this.http.post(
-      this.endpoints.url_api_save_identification,
-      identificacion
-    );
+    return this.http.post(      this.endpoints.url_api_save_identification,      identificacion    ).pipe(
+      map((identificacionDto: IdentificacionDto) => {
+        console.log("vienneeeeeee", identificacionDto);
+        return identificacionDto;
+      }),
+      catchError((err) => this.handleError(err)));
   }
 
   /**

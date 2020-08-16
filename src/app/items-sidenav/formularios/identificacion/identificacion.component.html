@@ -137,7 +137,11 @@
       >
         <!-- Button -->
         <div class="col">
-          <button class="btn btn-info" type="submit">
+          <button
+            [disabled]="identificacionForm.invalid"
+            class="btn btn-info"
+            type="submit"
+          >
             <i class="fa fa-sign-in"></i>Guardar y Continuar
           </button>
         </div>
@@ -145,13 +149,13 @@
     </div>
   </form>
   <ngx-spinner
-  bdColor="rgba(51,51,51,0.8)"
-  size="medium"
-  color="#fff"
-  type="ball-scale-multiple"
->
-  <p style="font-size: 20px; color: white;">Cargando...</p>
-</ngx-spinner>
+    bdColor="rgba(51,51,51,0.8)"
+    size="medium"
+    color="#fff"
+    type="ball-scale-multiple"
+  >
+    <p style="font-size: 20px; color: white;">Cargando...</p>
+  </ngx-spinner>
   <pre>{{ identificacionForm.status }}</pre>
   <pre>{{ identificacionForm.value | json }}</pre>
 </div>
