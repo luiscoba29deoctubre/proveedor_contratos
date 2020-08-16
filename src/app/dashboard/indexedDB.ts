@@ -57,7 +57,7 @@ export const dbConfig: DBConfig = {
     // cada uno de los formularios
     {
       store: formularios[0],
-      storeConfig: { keyPath: "id", autoIncrement: false },
+      storeConfig: { keyPath: "id", autoIncrement: true },
       storeSchema: [
         { name: "id", keypath: "id", options: { unique: false } },
         { name: "rucrise", keypath: "rucrise", options: { unique: false } },

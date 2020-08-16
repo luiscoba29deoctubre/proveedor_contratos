@@ -90,7 +90,7 @@ export class IdentificacionComponent implements OnInit {
           // llenamos la base 'indexed-db'
           console.log("componente ", identificacionDto);
           this.processIDB.fillingIdentificacion(identificacionDto); // llenamos el store 'identificacionDto'
-          this.loadIdentificacion(); // carga los datos en pantalla
+      //    this.loadIdentificacion(); // carga los datos en pantalla
         }
       },
       (error) => {

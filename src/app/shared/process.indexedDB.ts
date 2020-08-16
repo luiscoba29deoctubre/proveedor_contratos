@@ -34,33 +34,27 @@ export class ProcessIDB {
     );
   }
 
-  fillingIdentificacion = (objetoPadre: IdentificacionDto) => {
-    for (const key in objetoPadre) {
-      if (objetoPadre.hasOwnProperty(key)) {
-        const i = objetoPadre[key];
-
-        this.dbService
-          .add("identificacionDto", {
-            id: i.id,
-            rucrise: i.rucrise,
-            nombrerazonsocial: i.nombrerazonsocial,
-            nombrecomercial: i.nombrecomercial,
-            idtipopersona: i.idtipopersona,
-          })
-          .then(
-            () => {
-              // Do something after the value was added
-              console.log("exito se llena store identificacionDto");
-            },
-            (error) => {
-              console.log(error);
-            }
-          );
-      }
-    }
+  fillingIdentificacion = (i: IdentificacionDto) => {
+    this.dbService
+      .add("identificacionDto", {
+        rucrise: i.rucrise,
+        nombrerazonsocial: i.nombrerazonsocial,
+        nombrecomercial: i.nombrecomercial,
+        idtipopersona: i.idtipopersona,
+      })
+      .then(
+        () => {
+          // Do something after the value was added
+          console.log("exito se llena store identificacionDto");
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
   };
 
   clearIndexedDB = () => {
+    console.log("entra en clear");
     formularios.forEach((store) => {
       this.dbService.clear(store).then(
         () => {

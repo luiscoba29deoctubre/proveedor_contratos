@@ -2,11 +2,7 @@ import { Component } from "@angular/core";
 import { MatDialog } from "@angular/material";
 import { Router } from "@angular/router";
 import { NgxIndexedDBService } from "ngx-indexed-db";
-
-export interface DialogData {
-  animal: string;
-  name: string;
-}
+import { ProcessIDB } from "../../shared/process.indexedDB";
 
 @Component({
   selector: "app-dialog-exit",
@@ -14,17 +10,15 @@ export interface DialogData {
   styleUrls: ["./dialog-exit.component.scss"],
 })
 export class DialogExitComponent {
-  animal: string;
-  name: string;
-  dialogRef;
-  apiDenariusService: any;
-  perfilUsuarioDenarius: any;
-
+  /** Objeto processIDB para llenar todos los datos del usuario */
+  processIDB: ProcessIDB;
   constructor(
     private router: Router,
     public dialog: MatDialog,
     private dbService: NgxIndexedDBService
-  ) {}
+  ) {
+    this.processIDB = new ProcessIDB(dbService);
+  }
 
   openDialog(): void {
     this.dialog.open(DialogExitComponent, {
@@ -38,8 +32,9 @@ export class DialogExitComponent {
     this.dialog.closeAll();
     console.log("entra a eliminar la baaaaaaaaseeeee");
 
-    // ****************** eliminamos la base de datos
-    this.dbService.deleteDatabase().then(
+    //this.processIDB.clearIndexedDB(); para borrar los stores del indexedDB
+     // ****************** eliminamos la base de datos
+     this.dbService.deleteDatabase().then(
       () => {
         console.log("Database deleted successfully with NgxIndexedDBService");
       },
