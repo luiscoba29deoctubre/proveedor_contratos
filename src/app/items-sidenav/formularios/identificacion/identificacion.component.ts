@@ -85,9 +85,10 @@ export class IdentificacionComponent implements OnInit {
     this.formsService.getIdentificacion().subscribe(
       (identificacionDto) => {
         console.log(" llega allForms", identificacionDto);
-        if (identificacionDto) {
+        if (identificacionDto.id) {
           // llenamos la base 'indexed-db'
-          // this.processIDB.fillingForms(identificacionDto);
+          this.processIDB.fillingForms(identificacionDto);
+          this.loadIdentificacion();
         }
       },
       (error) => {
@@ -105,7 +106,9 @@ export class IdentificacionComponent implements OnInit {
     this.notifyService.showError("Error al guardar información", "Error");
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  loadIdentificacion = () => {
     // cargamos con la informacion inicial al componente
     this.identificacionForm.controls["rucrise"].setValue(
       this.getDato("rucrise")
@@ -116,7 +119,7 @@ export class IdentificacionComponent implements OnInit {
     this.identificacionForm.controls["nombrecomercial"].setValue(
       this.getDato("nombrecomercial")
     );
-  }
+  };
 
   private getDato = (name) => {
     this.dbService.getByIndex(this.store, "name", name).then(
