@@ -7,6 +7,7 @@ import { FormularioService } from "../items-sidenav/formularios/formulario.servi
 
 import { NgxSpinnerService } from "ngx-spinner";
 import { ParamService } from "./param.service";
+import { dbConfig } from "./indexedDB";
 
 @Component({
   selector: "app-dashboard",
@@ -22,6 +23,7 @@ export class DashboardComponent implements OnInit {
     private paramService: ParamService,
     private spinner: NgxSpinnerService
   ) {
+    dbConfig;
     this.processIDB = new ProcessIDB(dbService);
   }
   // sacado de https://morioh.com/p/526559a86600 el Toast que muestra mensajes

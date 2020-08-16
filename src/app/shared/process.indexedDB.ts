@@ -1,4 +1,6 @@
+import { IdentificacionDto } from "./../common/dtos/form/IdentificacionDto";
 import { NgxIndexedDBService } from "ngx-indexed-db";
+import { formularios } from "../dashboard/indexedDB";
 
 // manejaremos la bd
 export class ProcessIDB {
@@ -14,13 +16,13 @@ export class ProcessIDB {
         // tslint:disable-next-line: forin
         for (let index in vector) {
           // console.log("index[posicion]", vector[index].name);
-          this.addElementsToDB(key, vector[index].id, vector[index].name);
+          this.addParameterToDB(key, vector[index].id, vector[index].name);
         }
       }
     }
   };
 
-  addElementsToDB(store, id, name): void {
+  addParameterToDB(store, id, name): void {
     this.dbService.add(store, { id: id, name: name }).then(
       () => {
         // Do something after the value was added
@@ -32,30 +34,42 @@ export class ProcessIDB {
     );
   }
 
-  fillingForm = (objetoPadre: Object) => {
-    const arrayNombre = Object.getOwnPropertyNames(objetoPadre);
-    let store: string = objetoPadre.toString();
-    store = arrayNombre[0];
-
+  fillingIdentificacion = (objetoPadre: IdentificacionDto) => {
     for (const key in objetoPadre) {
       if (objetoPadre.hasOwnProperty(key)) {
-        const objHijo = objetoPadre[key];
-        for (let index in objHijo) {
-          this.addElementsToDB(store, objHijo[index].id, objHijo[index].name);
-        }
+        const i = objetoPadre[key];
+
+        this.dbService
+          .add("identificacionDto", {
+            id: i.id,
+            rucrise: i.rucrise,
+            nombrerazonsocial: i.nombrerazonsocial,
+            nombrecomercial: i.nombrecomercial,
+            idtipopersona: i.idtipopersona,
+          })
+          .then(
+            () => {
+              // Do something after the value was added
+              console.log("exito se llena store identificacionDto");
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
       }
     }
   };
 
-  /* se lo intento, pero no funcionó automatizar la creacion de tablas en IDB
-  createSchema(store: string) {
-    const storeSchema: ObjectStoreMeta = {
-      store: store,
-      storeConfig: { keyPath: "id", autoIncrement: false },
-      storeSchema: [
-        { name: "id", keypath: "id", options: { unique: false } },
-        { name: "name", keypath: "name", options: { unique: false } },
-      ],
-    };
-  }*/
+  clearIndexedDB = () => {
+    formularios.forEach((store) => {
+      this.dbService.clear(store).then(
+        () => {
+          // Do something after clear
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    });
+  };
 }

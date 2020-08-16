@@ -86,10 +86,11 @@ export class IdentificacionComponent implements OnInit {
     this.formsService.getIdentificacion().subscribe(
       (identificacionDto) => {
         console.log(" llega allForms", identificacionDto);
-        if (identificacionDto.id) {
+        if (identificacionDto.estado) {
           // llenamos la base 'indexed-db'
-          this.processIDB.fillingForm(identificacionDto);
-          this.loadIdentificacion();
+          console.log("componente ", identificacionDto);
+          this.processIDB.fillingIdentificacion(identificacionDto); // llenamos el store 'identificacionDto'
+          this.loadIdentificacion(); // carga los datos en pantalla
         }
       },
       (error) => {
@@ -153,10 +154,8 @@ export class IdentificacionComponent implements OnInit {
    */
   sendForm(value: any, valid: boolean) {
     this.submitted = true;
-
     if (valid) {
       this.spinner.show();
-
       const identificaForm: IdentificacionDto = new IdentificacionDto();
       identificaForm.rucrise = value.rucrise;
       identificaForm.nombrerazonsocial = value.nombrerazonsocial;
@@ -167,10 +166,10 @@ export class IdentificacionComponent implements OnInit {
       console.log("identificaForm", identificaForm);
 
       this.formsService.saveIdentificacion(identificaForm).subscribe(
-        (identificacionDto:IdentificacionDto) => {
-          console.log("regresa Identificacion", );
+        (identificacionDto: IdentificacionDto) => {
+          console.log("regresa Identificacion", identificacionDto);
 
-          this.processIDB.fillingForm(identificacionDto);
+          this.processIDB.fillingIdentificacion(identificacionDto);
 
           this.router.navigate(["/infocontacto"]);
 

@@ -1,4 +1,7 @@
 import { DBConfig } from "ngx-indexed-db";
+
+export const formularios = ["identificacionDto"];
+
 export const dbConfig: DBConfig = {
   name: "Providers",
   version: 1,
@@ -51,8 +54,9 @@ export const dbConfig: DBConfig = {
         { name: "name", keypath: "name", options: { unique: false } },
       ],
     },
+    // cada uno de los formularios
     {
-      store: "identificacionDto",
+      store: formularios[0],
       storeConfig: { keyPath: "id", autoIncrement: false },
       storeSchema: [
         { name: "id", keypath: "id", options: { unique: false } },

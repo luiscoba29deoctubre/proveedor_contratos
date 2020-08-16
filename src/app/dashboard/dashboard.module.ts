@@ -11,8 +11,8 @@ import { ParamService } from "./param.service";
 import { ApiEndpoints } from "../logueo/api.endpoints";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
-//import { NgxIndexedDBModule } from "ngx-indexed-db";
-//import { dbConfig } from "./indexedDB";
+import { dbConfig } from './indexedDB';
+import { NgxIndexedDBModule } from 'ngx-indexed-db';
 
 export function tokenGetter() {
   return sessionStorage.getItem("token");
@@ -27,7 +27,9 @@ export function tokenGetter() {
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-    // NgxIndexedDBModule.forRoot(dbConfig),
+
+    //NgxIndexedDBModule.forRoot(dbConfig),
+
     JwtModule.forRoot({
       config: {
         headerName: "auth",
