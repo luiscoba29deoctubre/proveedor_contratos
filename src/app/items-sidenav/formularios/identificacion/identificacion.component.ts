@@ -67,7 +67,7 @@ export class IdentificacionComponent implements OnInit {
 
     this.loadCombos();
     this.initForm();
-    this.processIDB = new ProcessIDB(dbService);
+    this.processIDB = new ProcessIDB(dbService);// creamos una instancia para manejar la base de datos
     console.log("entra en formsServices");
     this.formsService.getIdentificacion().subscribe(
       (identificacionDto) => {
