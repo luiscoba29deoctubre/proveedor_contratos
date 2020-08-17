@@ -38,7 +38,12 @@ export class IdentificacionComponent implements OnInit {
   /** Para almacenar el nombre del store que almacena este componente */
   store: string;
 
-  contribuyentes: ItemTipo[] = [
+  contribuyentes: ItemTipo[];
+  proveedores: ItemTipo[];
+  categorias: ItemTipo[];
+  detalleCategoria: ItemTipo[];
+
+  /*  contribuyentes: ItemTipo[] = [
     { value: "0", viewValue: "Entidad" },
     { value: "1", viewValue: "Especial" },
     { value: "2", viewValue: "Sociedad" },
@@ -62,7 +67,7 @@ export class IdentificacionComponent implements OnInit {
     { value: "0", viewValue: "Abrillantadoras" },
     { value: "1", viewValue: "Aires acondicionados" },
     { value: "2", viewValue: "Amplificadores de audio" },
-  ];
+  ];*/
 
   /**
    * Constructor del Componente {@link IdentificacionComponent}
@@ -81,7 +86,9 @@ export class IdentificacionComponent implements OnInit {
     private notifyService: NotificationService,
     private dbService: NgxIndexedDBService
   ) {
+    this.spinner.show();
     this.store = formularios[0];
+    this.loadCombos();
     this.initForm();
     this.processIDB = new ProcessIDB(dbService);
     console.log("entra en formsServices");
@@ -94,6 +101,7 @@ export class IdentificacionComponent implements OnInit {
           this.processIDB.fillingIdentificacion(identificacionDto); // llenamos el store 'identificacionDto'
           this.loadIdentificacion(identificacionDto.id); // carga los datos en pantalla
         }
+        this.spinner.hide();
       },
       (error) => {
         console.log(error);
@@ -125,7 +133,6 @@ export class IdentificacionComponent implements OnInit {
         this.identificacionForm.controls["nombrecomercial"].setValue(
           form.nombrecomercial
         );
-        
       },
       (error) => {
         console.log("getdata error", error);
@@ -133,28 +140,22 @@ export class IdentificacionComponent implements OnInit {
     );
   };
 
-  private getData = (id) => {
-    this.dbService.getByIndex(this.store, "id", id).then(
-      (person) => {
-        console.log("getdata person", person.rucrise);
-        return person;
-      },
-      (error) => {
-        console.log("getdata error", error);
-      }
-    );
-  };
-
-  private getDato = (name) => {
-    this.dbService.getByIndex(this.store, "name", name).then(
-      (person) => {
-        console.log(person);
+  private loadCombos() {
+    this.dbService.getAll("lstTipoPersonaDto").then(
+      (people) => {
+        this.personas = people;
+        console.log("lstTipoPersonaDtoddddddddd", people);
       },
       (error) => {
         console.log(error);
       }
     );
-  };
+
+    //  this.contribuyentes =
+    /*proveedores
+  categorias
+  detalleCategoria*/
+  }
 
   private initForm() {
     this.identificacionForm = this.fb.group({
