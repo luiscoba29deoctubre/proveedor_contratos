@@ -94,8 +94,6 @@ export class LoginComponent implements OnInit {
 
       this.loginService.login(value.email, value.password).subscribe(
         (tokeninicial) => {
-
-
           this.router.navigate(["/dashboard"]);
           this.showToasterSuccess();
 
@@ -109,8 +107,6 @@ export class LoginComponent implements OnInit {
       );
     }
   }
-
-
 
   closeError() {
     this.submitted = false;

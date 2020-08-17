@@ -14,6 +14,7 @@ import { NgxIndexedDBService } from "ngx-indexed-db";
 import { NgxSpinnerService } from "ngx-spinner";
 import { FormularioService } from "../formulario.service";
 import { IdentificacionDto } from "../../../common/dtos/form/IdentificacionDto";
+import { formularios } from "../../../dashboard/indexedDB";
 
 interface ItemTipo {
   value: string;
@@ -34,8 +35,8 @@ export class IdentificacionComponent implements OnInit {
   submitted: boolean;
   /** Para almacenar la lista de tipopersona */
   personas: Parameter[];
-
-  store: string = "identificacion";
+  /** Para almacenar el nombre del store que almacena este componente */
+  store: string;
 
   contribuyentes: ItemTipo[] = [
     { value: "0", viewValue: "Entidad" },
@@ -80,6 +81,7 @@ export class IdentificacionComponent implements OnInit {
     private notifyService: NotificationService,
     private dbService: NgxIndexedDBService
   ) {
+    this.store = formularios[0];
     this.initForm();
     this.processIDB = new ProcessIDB(dbService);
     console.log("entra en formsServices");
@@ -90,7 +92,7 @@ export class IdentificacionComponent implements OnInit {
           // llenamos la base 'indexed-db'
           console.log("componente ", identificacionDto);
           this.processIDB.fillingIdentificacion(identificacionDto); // llenamos el store 'identificacionDto'
-      //    this.loadIdentificacion(); // carga los datos en pantalla
+          this.loadIdentificacion(identificacionDto.id); // carga los datos en pantalla
         }
       },
       (error) => {
@@ -110,16 +112,36 @@ export class IdentificacionComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  loadIdentificacion = () => {
+  loadIdentificacion = (id) => {
     // cargamos con la informacion inicial al componente
-    this.identificacionForm.controls["rucrise"].setValue(
-      this.getDato("rucrise")
+    this.dbService.getByIndex(this.store, "id", id).then(
+      (form) => {
+        console.log("getdata form", form);
+
+        this.identificacionForm.controls["rucrise"].setValue(form.rucrise);
+        this.identificacionForm.controls["nombrerazonsocial"].setValue(
+          form.nombrerazonsocial
+        );
+        this.identificacionForm.controls["nombrecomercial"].setValue(
+          form.nombrecomercial
+        );
+        
+      },
+      (error) => {
+        console.log("getdata error", error);
+      }
     );
-    this.identificacionForm.controls["nombrerazonsocial"].setValue(
-      this.getDato("nombrerazonsocial")
-    );
-    this.identificacionForm.controls["nombrecomercial"].setValue(
-      this.getDato("nombrecomercial")
+  };
+
+  private getData = (id) => {
+    this.dbService.getByIndex(this.store, "id", id).then(
+      (person) => {
+        console.log("getdata person", person.rucrise);
+        return person;
+      },
+      (error) => {
+        console.log("getdata error", error);
+      }
     );
   };
 
