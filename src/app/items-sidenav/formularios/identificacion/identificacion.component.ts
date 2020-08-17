@@ -116,6 +116,11 @@ export class IdentificacionComponent implements OnInit {
         this.identificacionForm.controls["nombrecomercial"].setValue(
           form.nombrecomercial
         );
+        /*if (form.idtipopersona !== null) {
+          this.identificacionForm.controls["idtipopersona"].setValue(
+            form.idtipopersona
+          );
+        }*/
       },
       (error) => {
         console.log("getdata error", error);
@@ -124,6 +129,8 @@ export class IdentificacionComponent implements OnInit {
   };
 
   private loadCombos() {
+    /*const p1: Parameter = new Parameter(88, "ddddd");
+    this.personas.push(p1);*/
     this.dbService.getAll(listas[0]).then(
       (personas) => {
         this.personas = personas;
@@ -181,6 +188,7 @@ export class IdentificacionComponent implements OnInit {
       nombrecomercial: [null, [Validators.required]],
       persona: [null, [Validators.required]],
       contribuyente: [null, [Validators.required]],
+      actividad: [null, [Validators.required]],
       proveedor: [null, [Validators.required]],
       categoria: [null, [Validators.required]],
       detalle: [null, [Validators.required]],
@@ -196,6 +204,9 @@ export class IdentificacionComponent implements OnInit {
     this.submitted = true;
     if (valid) {
       this.spinner.show();
+
+      console.log("this.identificacionFormffff", this.identificacionForm);
+
       const identificaForm: IdentificacionDto = new IdentificacionDto();
       identificaForm.rucrise = value.rucrise;
       identificaForm.nombrerazonsocial = value.nombrerazonsocial;

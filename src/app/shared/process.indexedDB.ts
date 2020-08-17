@@ -37,6 +37,7 @@ export class ProcessIDB {
   fillingIdentificacion = (i: IdentificacionDto) => {
     this.dbService
       .add("identificacionDto", {
+        id: i.id,
         rucrise: i.rucrise,
         nombrerazonsocial: i.nombrerazonsocial,
         nombrecomercial: i.nombrecomercial,
