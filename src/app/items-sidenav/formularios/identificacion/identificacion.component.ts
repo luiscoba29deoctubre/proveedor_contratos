@@ -14,7 +14,7 @@ import { NgxIndexedDBService } from "ngx-indexed-db";
 import { NgxSpinnerService } from "ngx-spinner";
 import { FormularioService } from "../formulario.service";
 import { IdentificacionDto } from "../../../common/dtos/form/IdentificacionDto";
-import { formularios, listas } from '../../../dashboard/indexedDB';
+import { formularios, listas } from "../../../dashboard/indexedDB";
 
 @Component({
   selector: "app-identificacion",
@@ -39,7 +39,11 @@ export class IdentificacionComponent implements OnInit {
   categorias: Parameter[];
   catalogocategorias: Parameter[];
 
-    /**
+  // Seleccionamos o iniciamos el valor '0' del <select>
+  opcionSeleccionado: Parameter;
+  verSeleccion: string;
+
+  /**
    * Constructor del Componente {@link IdentificacionComponent}
    *
    * @param fb Builder de Formularios
@@ -93,11 +97,17 @@ export class IdentificacionComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  capturar() {
+    // Pasamos el valor seleccionado a la variable verSeleccion
+    this.verSeleccion = this.opcionSeleccionado.name;
+    console.log("this.opcionSeleccionado", this.opcionSeleccionado.name);
+  }
+
   loadIdentificacion = (id) => {
     // cargamos con la informacion inicial al componente
     this.dbService.getByIndex(this.store, "id", id).then(
       (form) => {
-        console.log("getdata form", form);
+        console.log("loadIdentificacion", form);
 
         this.identificacionForm.controls["rucrise"].setValue(form.rucrise);
         this.identificacionForm.controls["nombrerazonsocial"].setValue(
@@ -139,22 +149,14 @@ export class IdentificacionComponent implements OnInit {
       }
     );
     this.dbService.getAll(listas[3]).then(
-      (categorias) => {
-        this.categorias = categorias;
+      (actividades) => {
+        this.actividades = actividades;
       },
       (error) => {
         console.log(error);
       }
     );
     this.dbService.getAll(listas[4]).then(
-      (actividades) => {
-        this.contribuyentes = actividades;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-    this.dbService.getAll(listas[5]).then(
       (categorias) => {
         this.categorias = categorias;
       },
@@ -162,7 +164,7 @@ export class IdentificacionComponent implements OnInit {
         console.log(error);
       }
     );
-    this.dbService.getAll(listas[6]).then(
+    this.dbService.getAll(listas[5]).then(
       (catalogocategorias) => {
         this.catalogocategorias = catalogocategorias;
       },

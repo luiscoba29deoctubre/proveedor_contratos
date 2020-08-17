@@ -56,12 +56,18 @@
         <div class="col">
           <div class="form-group">
             <label for="persona">Persona: </label>
-            <select formControlName="persona" class="select">
+            <select
+              formControlName="persona"
+              class="select"
+              [(ngModel)]="opcionSeleccionado"
+              (change)="capturar()"
+            >
               <option [ngValue]="null" disabled>Escoger persona </option>
               <option *ngFor="let persona of personas" [ngValue]="persona">
                 {{ persona.name }}
               </option>
             </select>
+            <p>Haz seleccionado la opción # {{ verSeleccion }}</p>
           </div>
         </div>
 
@@ -99,34 +105,55 @@
         <div class="col"></div>
       </div>
 
-      <div class="row">
-        <div class="col">
-          <div class="form-group">
-            <label for="categoria">Categoria: </label>
-            <select formControlName="categoria" class="select">
-              <option [ngValue]="null" disabled>Escoger categor&iacute;a </option>
-              <option
-                *ngFor="let categoria of categorias"
-                [ngValue]="categoria"
-              >
-                {{ categoria.name }}
-              </option>
-            </select>
-          </div>
-        </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label for="actividad">Actividad: </label>
+                <select formControlName="actividad" class="select">
+                  <option [ngValue]="null" disabled>Escoger actividad </option>
+                  <option
+                    *ngFor="let actividad of actividades"
+                    [ngValue]="actividad"
+                  >
+                    {{ actividad.name }}
+                  </option>
+                </select>
+              </div>
+            </div>
 
-        <div class="col">
-          <div class="form-group">
-            <label for="detalle">Detalle: </label>
-            <select formControlName="detalle" class="select">
-              <option [ngValue]="null" disabled>Escoger detalle </option>
-              <option
-                *ngFor="let detalle of catalogocategorias"
-                [ngValue]="detalle"
-              >
-                {{ detalle.name }}
-              </option>
-            </select>
+            <div class="col">
+              <div class="form-group">
+                <label for="categoria">Categor&iacute;a: </label>
+                <select formControlName="categoria" class="select">
+                  <option [ngValue]="null" disabled
+                    >Escoger categor&iacute;a
+                  </option>
+                  <option
+                    *ngFor="let categoria of categorias"
+                    [ngValue]="categoria"
+                  >
+                    {{ categoria.name }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="form-group">
+                <label for="detalle">Detalle: </label>
+                <select formControlName="detalle" class="select">
+                  <option [ngValue]="null" disabled>Escoger detalle </option>
+                  <option
+                    *ngFor="let detalle of catalogocategorias"
+                    [ngValue]="detalle"
+                  >
+                    {{ detalle.name }}
+                  </option>
+                </select>
+              </div>
+            </div>
           </div>
         </div>
       </div>
