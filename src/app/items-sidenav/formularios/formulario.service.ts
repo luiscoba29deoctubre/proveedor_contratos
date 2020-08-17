@@ -27,9 +27,7 @@ export class FormularioService {
    *
    * @param Identificacion registramaso el formulario 'identificacion'
    */
-  public saveIdentificacion(
-    identificacion: IdentificacionDto
-  ): Observable<IdentificacionDto> {
+  public saveIdentificacion(identificacion): Observable<IdentificacionDto> {
     return this.http
       .post(this.endpoints.url_api_save_identification, identificacion)
       .pipe(

@@ -107,8 +107,10 @@ export class UsuarioService {
    *
    * @param usuario
    */
-  public changePass(usuario: Usuario) {
-    return this.http.put(this.endpoints.url_api_change_pass_usuario, usuario);
+  public changePass(clave: string) {
+    return this.http.put(this.endpoints.url_api_change_pass_usuario, {
+      clave,
+    });
   }
 
   /**

@@ -85,7 +85,7 @@ export class ChangePasswordComponent implements OnInit {
         this.alerts.error = "";
         this.spinner.show();
 
-        const valuePass1 = this.changePassForm.get("pass1").value;
+        const valuePass1:string = this.changePassForm.get("pass1").value;
 
         this.usuarioService.changePass(valuePass1).subscribe(
           (data) => {

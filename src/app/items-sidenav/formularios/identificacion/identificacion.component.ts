@@ -40,7 +40,7 @@ export class IdentificacionComponent implements OnInit {
   catalogocategorias: Parameter[];
 
   // Seleccionamos o iniciamos el valor '0' del <select>
-  opcionSeleccionado: Parameter;
+  personaSeleccionado: Parameter;
   verSeleccion: string;
 
   /**
@@ -97,10 +97,10 @@ export class IdentificacionComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  capturar() {
+  capturarPersona() {
     // Pasamos el valor seleccionado a la variable verSeleccion
-    this.verSeleccion = this.opcionSeleccionado.name;
-    console.log("this.opcionSeleccionado", this.opcionSeleccionado.name);
+    this.verSeleccion = this.personaSeleccionado.name;
+    console.log("this.personaSeleccionado", this.personaSeleccionado.name);
   }
 
   loadIdentificacion = (id) => {
@@ -202,21 +202,10 @@ export class IdentificacionComponent implements OnInit {
    */
   sendForm(value: any, valid: boolean) {
     this.submitted = true;
-    if (valid) {
+  if (valid) {
       this.spinner.show();
-
-      console.log("this.identificacionFormffff", this.identificacionForm);
-
-      const identificaForm: IdentificacionDto = new IdentificacionDto();
-      identificaForm.rucrise = value.rucrise;
-      identificaForm.nombrerazonsocial = value.nombrerazonsocial;
-      identificaForm.nombrecomercial = value.nombrecomercial;
-      //    identificaForm.idtipopersona = +value.persona.value;
-
-      //   console.log(" value.persona", value.persona.value);
-      console.log("identificaForm", identificaForm);
-
-      this.formsService.saveIdentificacion(identificaForm).subscribe(
+      // console.log("this.identificacionFormffff", this.identificacionForm.value);
+      this.formsService.saveIdentificacion(this.identificacionForm.value).subscribe(
         (identificacionDto: IdentificacionDto) => {
           console.log("regresa Identificacion", identificacionDto);
 
