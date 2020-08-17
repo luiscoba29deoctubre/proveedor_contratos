@@ -31,8 +31,6 @@ export class ApiEndpoints {
 
   public url_api_validate_email_usuario: string =
     this.url_api_validaciones + "/validate-email";
-  // obtiene el email
-  public url_api_get_email: string = this.url_api_usuarios + "/get-email";
 
   public url_api_find_usuario: string = this.url_api_usuarios + "/find-user";
 

@@ -46,14 +46,7 @@ export class ChangePasswordComponent implements OnInit {
    * Método que se ejecuta al iniciar el componente
    */
   ngOnInit() {
-    this.usuarioService.getEmail().subscribe(
-      (usuario) => {
-        this.usuario = usuario;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+   
   }
 
   /**

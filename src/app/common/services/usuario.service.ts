@@ -94,15 +94,6 @@ export class UsuarioService {
   }
 
   /**
-   * Obtiene un usuario por Email
-   *
-   * @param email
-   */
-  public getEmail(): Observable<Usuario> {
-    return this.http.get(this.endpoints.url_api_get_email);
-  }
-
-  /**
    * Actualiza el password de usuario
    *
    * @param usuario
