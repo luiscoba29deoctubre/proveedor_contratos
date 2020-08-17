@@ -1,6 +1,6 @@
 import { IdentificacionDto } from "./../common/dtos/form/IdentificacionDto";
 import { NgxIndexedDBService } from "ngx-indexed-db";
-import { formularios } from "../dashboard/indexedDB";
+import { formularios, listas } from "../dashboard/indexedDB";
 
 // manejaremos la bd
 export class ProcessIDB {
@@ -57,6 +57,18 @@ export class ProcessIDB {
   clearIndexedDB = () => {
     console.log("entra en clear");
     formularios.forEach((store) => {
+      this.dbService.clear(store).then(
+        () => {
+          // Do something after clear
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    });
+
+    listas.forEach((store) => {
+      console.log("entra a borrrar listas");
       this.dbService.clear(store).then(
         () => {
           // Do something after clear

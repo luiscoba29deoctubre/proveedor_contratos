@@ -32,9 +32,9 @@ export class DialogExitComponent {
     this.dialog.closeAll();
     console.log("entra a eliminar la baaaaaaaaseeeee");
 
-    //this.processIDB.clearIndexedDB(); para borrar los stores del indexedDB
+    this.processIDB.clearIndexedDB(); // para borrar los stores del indexedDB
      // ****************** eliminamos la base de datos
-     this.dbService.deleteDatabase().then(
+     /*this.dbService.deleteDatabase().then(
       () => {
         console.log("Database deleted successfully with NgxIndexedDBService");
       },
@@ -49,7 +49,7 @@ export class DialogExitComponent {
 
     DBDeleteRequest.onsuccess = function (event) {
       console.log("Database deleted successfully");
-    };
+    };*/
     // ******************
   }
 
