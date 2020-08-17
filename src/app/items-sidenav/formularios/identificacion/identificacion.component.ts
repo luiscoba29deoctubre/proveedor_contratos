@@ -1,3 +1,4 @@
+import { IdentificacionDto } from "./../../../common/dtos/form/IdentificacionDto";
 import { Component, OnInit } from "@angular/core";
 
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
@@ -13,7 +14,6 @@ import { NgxIndexedDBService } from "ngx-indexed-db";
 
 import { NgxSpinnerService } from "ngx-spinner";
 import { FormularioService } from "../formulario.service";
-import { IdentificacionDto } from "../../../common/dtos/form/IdentificacionDto";
 import { formularios, listas } from "../../../dashboard/indexedDB";
 import { LoginService } from "../../../logueo/login/login.service";
 
@@ -29,11 +29,11 @@ export class IdentificacionComponent implements OnInit {
   processIDB: ProcessIDB;
   /** Flag que indica si el formulario 'Identificacion' ya se hizo submit */
   submitted: boolean;
-  /** Para almacenar la lista de tipopersona */
-  personas: Parameter[];
+
   /** Para almacenar el nombre del store que almacena este componente */
   store: string;
-
+  /** Para almacenar la lista de tipopersona */
+  personas: Parameter[];
   contribuyentes: Parameter[];
   proveedores: Parameter[];
   actividades: Parameter[];
@@ -78,7 +78,7 @@ export class IdentificacionComponent implements OnInit {
           // llenamos la base 'indexed-db'
           console.log("componente ", identificacionDto);
           this.processIDB.fillingIdentificacion(identificacionDto); // llenamos el store 'identificacionDto'
-          this.loadIdentificacion(identificacionDto.id); // carga los datos en pantalla
+          this.loadIdentificacion(identificacionDto); // carga los datos en pantalla
         }
         this.spinner.hide();
       },
@@ -90,11 +90,11 @@ export class IdentificacionComponent implements OnInit {
   }
   // sacado de https://morioh.com/p/526559a86600 el Toast que muestra mensajes
   showToasterSuccess() {
-    this.notifyService.showSuccess("Información guardada", "Información");
+    this.notifyService.showSuccess("guardada exitosamente", "Identificación");
   }
 
   showToasterError() {
-    this.notifyService.showError("Error al guardar información", "Error");
+    this.notifyService.showError("Error al guardar identificación", "Error");
   }
 
   ngOnInit(): void {
@@ -107,9 +107,9 @@ export class IdentificacionComponent implements OnInit {
     console.log("this.personaSeleccionado", this.personaSeleccionado.name);
   }
 
-  loadIdentificacion = (id) => {
+  loadIdentificacion = (identificacionDto: IdentificacionDto) => {
     // cargamos con la informacion inicial al componente
-    this.dbService.getByIndex(this.store, "id", id).then(
+    this.dbService.getByIndex(this.store, "id", identificacionDto.id).then(
       (form) => {
         console.log("loadIdentificacion", form);
 
@@ -120,11 +120,14 @@ export class IdentificacionComponent implements OnInit {
         this.identificacionForm.controls["nombrecomercial"].setValue(
           form.nombrecomercial
         );
-        /*if (form.idtipopersona !== null) {
-          this.identificacionForm.controls["idtipopersona"].setValue(
-            form.idtipopersona
-          );
-        }*/
+
+        let p: Parameter;
+        this.personas.forEach((element) => {
+          if (element.id == identificacionDto.idtipopersona) p = element;
+        });
+
+        console.log("persosssssssss", this.personas);
+          this.identificacionForm.controls["persona"].setValue(p);
       },
       (error) => {
         console.log("getdata error", error);
@@ -219,9 +222,11 @@ export class IdentificacionComponent implements OnInit {
 
             this.router.navigate(["/infocontacto"]);
 
+            this.showToasterSuccess();
             this.spinner.hide();
           },
           (error) => {
+            this.showToasterError();
             console.log(error);
             this.spinner.hide();
           }
