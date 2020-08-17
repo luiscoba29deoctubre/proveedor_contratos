@@ -40,10 +40,6 @@ export class IdentificacionComponent implements OnInit {
   categorias: Parameter[];
   catalogocategorias: Parameter[];
 
-  // Seleccionamos o iniciamos el valor '0' del <select>
-  personaSeleccionado: Parameter;
-  verSeleccion: string;
-
   /**
    * Constructor del Componente {@link IdentificacionComponent}
    *
@@ -101,12 +97,6 @@ export class IdentificacionComponent implements OnInit {
     this.loginService.checkToken(); // para que salga, cuando el token expire
   }
 
-  capturarPersona() {
-    // Pasamos el valor seleccionado a la variable verSeleccion
-    this.verSeleccion = this.personaSeleccionado.name;
-    console.log("this.personaSeleccionado", this.personaSeleccionado.name);
-  }
-
   loadIdentificacion = (identificacionDto: IdentificacionDto) => {
     // cargamos con la informacion inicial al componente
     this.dbService.getByIndex(this.store, "id", identificacionDto.id).then(
@@ -121,13 +111,31 @@ export class IdentificacionComponent implements OnInit {
           form.nombrecomercial
         );
 
-        let p: Parameter;
+        let persona: Parameter;
         this.personas.forEach((element) => {
-          if (element.id == identificacionDto.idtipopersona) p = element;
+          if (element.id == identificacionDto.idtipopersona) {
+            persona = element;
+          }
         });
+        // console.log("persosssssssss", this.personas);
+        this.identificacionForm.controls["persona"].setValue(persona);
 
-        console.log("persosssssssss", this.personas);
-          this.identificacionForm.controls["persona"].setValue(p);
+        let proveedor: Parameter;
+        this.proveedores.forEach((element) => {
+          if (element.id == identificacionDto.idtipoproveedor) {
+            proveedor = element;
+          }
+        });
+        this.identificacionForm.controls["proveedor"].setValue(proveedor);
+
+        /*  let contribuyente: Parameter;
+        this.contribuyentes.forEach((element) => {
+          if (element.id == identificacionDto.) {
+            contribuyente = element;
+          }
+        });
+        this.identificacionForm.controls["contribuyente"].setValue(contribuyente);
+        */
       },
       (error) => {
         console.log("getdata error", error);
