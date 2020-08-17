@@ -128,14 +128,15 @@ export class IdentificacionComponent implements OnInit {
         });
         this.identificacionForm.controls["proveedor"].setValue(proveedor);
 
-        /*  let contribuyente: Parameter;
+        let contribuyente: Parameter;
         this.contribuyentes.forEach((element) => {
-          if (element.id == identificacionDto.) {
+          if (element.id == identificacionDto.idtipocontribuyente) {
             contribuyente = element;
           }
         });
-        this.identificacionForm.controls["contribuyente"].setValue(contribuyente);
-        */
+        this.identificacionForm.controls["contribuyente"].setValue(
+          contribuyente
+        );
       },
       (error) => {
         console.log("getdata error", error);
@@ -144,8 +145,6 @@ export class IdentificacionComponent implements OnInit {
   };
 
   private loadCombos() {
-    /*const p1: Parameter = new Parameter(88, "ddddd");
-    this.personas.push(p1);*/
     this.dbService.getAll(listas[0]).then(
       (personas) => {
         this.personas = personas;
