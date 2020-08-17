@@ -226,7 +226,7 @@ export class IdentificacionComponent implements OnInit {
           (identificacionDto: IdentificacionDto) => {
             console.log("regresa Identificacion", identificacionDto);
 
-            this.processIDB.fillingIdentificacion(identificacionDto);
+            this.processIDB.updatingIdentificacion(identificacionDto);
 
             this.router.navigate(["/infocontacto"]);
 
