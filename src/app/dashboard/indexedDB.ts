@@ -1,13 +1,21 @@
 import { DBConfig } from "ngx-indexed-db";
 
 export const formularios = ["identificacionDto"];
+export const listas = [
+  "lstTipoPersonaDto",
+  "lstTipoProveedorDto",
+  "lstTipocontribuyenteDto",
+  "lstActividadDto",
+  "lstCategoriaDto",
+  "lstCatalogocategoriaDto"
+];
 
 export const dbConfig: DBConfig = {
   name: "Providers",
   version: 1,
   objectStoresMeta: [
     {
-      store: "lstTipoPersonaDto",
+      store: listas[0],
       storeConfig: { keyPath: "id", autoIncrement: false },
       storeSchema: [
         { name: "id", keypath: "id", options: { unique: false } },
@@ -15,7 +23,7 @@ export const dbConfig: DBConfig = {
       ],
     },
     {
-      store: "lstTipoProveedorDto",
+      store: listas[1],
       storeConfig: { keyPath: "id", autoIncrement: false },
       storeSchema: [
         { name: "id", keypath: "id", options: { unique: false } },
@@ -23,7 +31,7 @@ export const dbConfig: DBConfig = {
       ],
     },
     {
-      store: "lstTipocontribuyenteDto",
+      store: listas[2],
       storeConfig: { keyPath: "id", autoIncrement: false },
       storeSchema: [
         { name: "id", keypath: "id", options: { unique: false } },
@@ -31,7 +39,7 @@ export const dbConfig: DBConfig = {
       ],
     },
     {
-      store: "lstActividadDto",
+      store: listas[3],
       storeConfig: { keyPath: "id", autoIncrement: false },
       storeSchema: [
         { name: "id", keypath: "id", options: { unique: false } },
@@ -39,7 +47,7 @@ export const dbConfig: DBConfig = {
       ],
     },
     {
-      store: "lstCategoriaDto",
+      store: listas[4],
       storeConfig: { keyPath: "id", autoIncrement: false },
       storeSchema: [
         { name: "id", keypath: "id", options: { unique: false } },
@@ -47,7 +55,7 @@ export const dbConfig: DBConfig = {
       ],
     },
     {
-      store: "lstCatalogocategoriaDto",
+      store: listas[5],
       storeConfig: { keyPath: "id", autoIncrement: false },
       storeSchema: [
         { name: "id", keypath: "id", options: { unique: false } },

@@ -14,12 +14,7 @@ import { NgxIndexedDBService } from "ngx-indexed-db";
 import { NgxSpinnerService } from "ngx-spinner";
 import { FormularioService } from "../formulario.service";
 import { IdentificacionDto } from "../../../common/dtos/form/IdentificacionDto";
-import { formularios } from "../../../dashboard/indexedDB";
-
-interface ItemTipo {
-  value: string;
-  viewValue: string;
-}
+import { formularios, listas } from '../../../dashboard/indexedDB';
 
 @Component({
   selector: "app-identificacion",
@@ -38,38 +33,13 @@ export class IdentificacionComponent implements OnInit {
   /** Para almacenar el nombre del store que almacena este componente */
   store: string;
 
-  contribuyentes: ItemTipo[];
-  proveedores: ItemTipo[];
-  categorias: ItemTipo[];
-  detalleCategoria: ItemTipo[];
+  contribuyentes: Parameter[];
+  proveedores: Parameter[];
+  actividades: Parameter[];
+  categorias: Parameter[];
+  catalogocategorias: Parameter[];
 
-  /*  contribuyentes: ItemTipo[] = [
-    { value: "0", viewValue: "Entidad" },
-    { value: "1", viewValue: "Especial" },
-    { value: "2", viewValue: "Sociedad" },
-    { value: "3", viewValue: "Obligada a llevar Contabilidad" },
-    { value: "4", viewValue: "No obligada a llevar Contabilidad" },
-    { value: "5", viewValue: "Régimen Impositivo Simplicado Ecuador" },
-  ];
-
-  proveedores: ItemTipo[] = [
-    { value: "0", viewValue: "Nacional" },
-    { value: "1", viewValue: "Extranjero" },
-  ];
-
-  categorias: ItemTipo[] = [
-    { value: "0", viewValue: "Enseres" },
-    { value: "1", viewValue: "Equipos" },
-    { value: "2", viewValue: "Inmuebles" },
-  ];
-
-  detalleCategoria: ItemTipo[] = [
-    { value: "0", viewValue: "Abrillantadoras" },
-    { value: "1", viewValue: "Aires acondicionados" },
-    { value: "2", viewValue: "Amplificadores de audio" },
-  ];*/
-
-  /**
+    /**
    * Constructor del Componente {@link IdentificacionComponent}
    *
    * @param fb Builder de Formularios
@@ -88,6 +58,9 @@ export class IdentificacionComponent implements OnInit {
   ) {
     this.spinner.show();
     this.store = formularios[0];
+
+    console.log("this.storeeeeeeee", this.store);
+
     this.loadCombos();
     this.initForm();
     this.processIDB = new ProcessIDB(dbService);
@@ -141,20 +114,62 @@ export class IdentificacionComponent implements OnInit {
   };
 
   private loadCombos() {
-    this.dbService.getAll("lstTipoPersonaDto").then(
-      (people) => {
-        this.personas = people;
-        console.log("lstTipoPersonaDtoddddddddd", people);
+    this.dbService.getAll(listas[0]).then(
+      (personas) => {
+        this.personas = personas;
       },
       (error) => {
         console.log(error);
       }
     );
-
-    //  this.contribuyentes =
-    /*proveedores
-  categorias
-  detalleCategoria*/
+    this.dbService.getAll(listas[1]).then(
+      (proveedores) => {
+        this.proveedores = proveedores;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    this.dbService.getAll(listas[2]).then(
+      (contribuyentes) => {
+        this.contribuyentes = contribuyentes;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    this.dbService.getAll(listas[3]).then(
+      (categorias) => {
+        this.categorias = categorias;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    this.dbService.getAll(listas[4]).then(
+      (actividades) => {
+        this.contribuyentes = actividades;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    this.dbService.getAll(listas[5]).then(
+      (categorias) => {
+        this.categorias = categorias;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    this.dbService.getAll(listas[6]).then(
+      (catalogocategorias) => {
+        this.catalogocategorias = catalogocategorias;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   private initForm() {
@@ -162,7 +177,7 @@ export class IdentificacionComponent implements OnInit {
       rucrise: [null, [Validators.required]],
       nombrerazonsocial: [null, [Validators.required]],
       nombrecomercial: [null, [Validators.required]],
-      //    persona: [null, [Validators.required]],
+      persona: [null, [Validators.required]],
       contribuyente: [null, [Validators.required]],
       proveedor: [null, [Validators.required]],
       categoria: [null, [Validators.required]],

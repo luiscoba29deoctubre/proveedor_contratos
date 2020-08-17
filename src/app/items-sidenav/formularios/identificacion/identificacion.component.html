@@ -74,7 +74,7 @@
                 *ngFor="let proveedor of proveedores"
                 [ngValue]="proveedor"
               >
-                {{ proveedor.viewValue }}
+                {{ proveedor.name }}
               </option>
             </select>
           </div>
@@ -91,7 +91,7 @@
                 *ngFor="let contribuyente of contribuyentes"
                 [ngValue]="contribuyente"
               >
-                {{ contribuyente.viewValue }}
+                {{ contribuyente.name }}
               </option>
             </select>
           </div>
@@ -104,12 +104,12 @@
           <div class="form-group">
             <label for="categoria">Categoria: </label>
             <select formControlName="categoria" class="select">
-              <option [ngValue]="null" disabled>Escoger persona </option>
+              <option [ngValue]="null" disabled>Escoger categor&iacute;a </option>
               <option
                 *ngFor="let categoria of categorias"
                 [ngValue]="categoria"
               >
-                {{ categoria.viewValue }}
+                {{ categoria.name }}
               </option>
             </select>
           </div>
@@ -121,10 +121,10 @@
             <select formControlName="detalle" class="select">
               <option [ngValue]="null" disabled>Escoger detalle </option>
               <option
-                *ngFor="let detalle of detalleCategoria"
+                *ngFor="let detalle of catalogocategorias"
                 [ngValue]="detalle"
               >
-                {{ detalle.viewValue }}
+                {{ detalle.name }}
               </option>
             </select>
           </div>
