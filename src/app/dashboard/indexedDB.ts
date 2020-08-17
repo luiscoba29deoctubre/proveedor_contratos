@@ -7,7 +7,7 @@ export const listas = [
   "lstTipocontribuyenteDto",
   "lstActividadDto",
   "lstCategoriaDto",
-  "lstCatalogocategoriaDto"
+  "lstCatalogocategoriaDto",
 ];
 
 export const dbConfig: DBConfig = {
@@ -68,7 +68,24 @@ export const dbConfig: DBConfig = {
       storeConfig: { keyPath: "id", autoIncrement: true },
       storeSchema: [
         { name: "id", keypath: "id", options: { unique: false } },
+        {
+          name: "idinformacioncontacto",
+          keypath: "idinformacioncontacto",
+          options: { unique: false },
+        },
+        {
+          name: "idtipopersona",
+          keypath: "idtipopersona",
+          options: { unique: false },
+        },
+        {
+          name: "idtipoproveedor",
+          keypath: "idtipoproveedor",
+          options: { unique: false },
+        },
+
         { name: "rucrise", keypath: "rucrise", options: { unique: false } },
+
         {
           name: "nombrerazonsocial",
           keypath: "nombrerazonsocial",
@@ -77,11 +94,6 @@ export const dbConfig: DBConfig = {
         {
           name: "nombrecomercial",
           keypath: "nombrecomercial",
-          options: { unique: false },
-        },
-        {
-          name: "idtipopersona",
-          keypath: "idtipopersona",
           options: { unique: false },
         },
       ],

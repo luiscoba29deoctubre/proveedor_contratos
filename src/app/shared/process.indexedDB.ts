@@ -35,13 +35,17 @@ export class ProcessIDB {
   }
 
   fillingIdentificacion = (i: IdentificacionDto) => {
+    
     this.dbService
       .add("identificacionDto", {
         id: i.id,
+    //    idinformacioncontacto: i.idinformacioncontacto,
+    //   id coooontribuyente: i.id coooontribuyente,
+        idtipopersona: i.idtipopersona,
+        idtipoproveedor: i.idtipoproveedor,
         rucrise: i.rucrise,
         nombrerazonsocial: i.nombrerazonsocial,
         nombrecomercial: i.nombrecomercial,
-        idtipopersona: i.idtipopersona,
       })
       .then(
         () => {
@@ -49,7 +53,7 @@ export class ProcessIDB {
           console.log("exito se llena store identificacionDto");
         },
         (error) => {
-          console.log(error);
+          console.log("fillingIdentificacion " + error);
         }
       );
   };

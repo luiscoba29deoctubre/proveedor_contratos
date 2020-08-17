@@ -1,7 +1,7 @@
 export class IdentificacionDto {
   constructor(
     public id?: number,
-    public idinformacioncontacto?: number,
+  //  public idinformacioncontacto?: number,
     public idtipopersona?: number,
     public idtipoproveedor?: number,
     public rucrise?: string,
