@@ -37,10 +37,9 @@ export class LoginService {
     this.loggedIn.next(false);
   }
 
-  private checkToken(): void {
+  public checkToken(): void {
     const userToken = sessionStorage.getItem("token");
     const isExpired = helper.isTokenExpired(userToken);
-    console.log("isExpiredddddd", isExpired);
     isExpired ? this.logout() : this.loggedIn.next(true);
   }
 

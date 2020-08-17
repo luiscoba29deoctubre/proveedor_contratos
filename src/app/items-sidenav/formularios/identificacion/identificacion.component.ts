@@ -15,6 +15,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { FormularioService } from "../formulario.service";
 import { IdentificacionDto } from "../../../common/dtos/form/IdentificacionDto";
 import { formularios, listas } from "../../../dashboard/indexedDB";
+import { LoginService } from "../../../logueo/login/login.service";
 
 @Component({
   selector: "app-identificacion",
@@ -58,7 +59,8 @@ export class IdentificacionComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private formsService: FormularioService,
     private notifyService: NotificationService,
-    private dbService: NgxIndexedDBService
+    private dbService: NgxIndexedDBService,
+    private loginService: LoginService
   ) {
     this.spinner.show();
     this.store = formularios[0];
@@ -67,7 +69,7 @@ export class IdentificacionComponent implements OnInit {
 
     this.loadCombos();
     this.initForm();
-    this.processIDB = new ProcessIDB(dbService);// creamos una instancia para manejar la base de datos
+    this.processIDB = new ProcessIDB(dbService); // creamos una instancia para manejar la base de datos
     console.log("entra en formsServices");
     this.formsService.getIdentificacion().subscribe(
       (identificacionDto) => {
@@ -95,7 +97,9 @@ export class IdentificacionComponent implements OnInit {
     this.notifyService.showError("Error al guardar información", "Error");
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loginService.checkToken(); // para que salga, cuando el token expire
+  }
 
   capturarPersona() {
     // Pasamos el valor seleccionado a la variable verSeleccion
@@ -202,24 +206,26 @@ export class IdentificacionComponent implements OnInit {
    */
   sendForm(value: any, valid: boolean) {
     this.submitted = true;
-  if (valid) {
+    if (valid) {
       this.spinner.show();
       // console.log("this.identificacionFormffff", this.identificacionForm.value);
-      this.formsService.saveIdentificacion(this.identificacionForm.value).subscribe(
-        (identificacionDto: IdentificacionDto) => {
-          console.log("regresa Identificacion", identificacionDto);
+      this.formsService
+        .saveIdentificacion(this.identificacionForm.value)
+        .subscribe(
+          (identificacionDto: IdentificacionDto) => {
+            console.log("regresa Identificacion", identificacionDto);
 
-          this.processIDB.fillingIdentificacion(identificacionDto);
+            this.processIDB.fillingIdentificacion(identificacionDto);
 
-          this.router.navigate(["/infocontacto"]);
+            this.router.navigate(["/infocontacto"]);
 
-          this.spinner.hide();
-        },
-        (error) => {
-          console.log(error);
-          this.spinner.hide();
-        }
-      );
+            this.spinner.hide();
+          },
+          (error) => {
+            console.log(error);
+            this.spinner.hide();
+          }
+        );
     }
   }
 
