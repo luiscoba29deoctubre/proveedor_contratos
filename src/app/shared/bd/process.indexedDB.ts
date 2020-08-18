@@ -102,17 +102,29 @@ export class ProcessIDB {
   }
 
   fillingIdentificacion = (i: IdentificacionDto) => {
-    console.log("i.rucriseeee", i.rucrise);
+    this.dbService.clear("identificacionDto").then(
+      () => {
+        // Do something after clear
+        console.log("se elimina identificacionDto");
+      },
+      (error) => {
+        console.log("clear fillingIdentificacion", error);
+      }
+    );
+
     this.dbService
       .add("identificacionDto", {
         id: i.id,
-        //    idinformacioncontacto: i.idinformacioncontacto,
-        //   id coooontribuyente: i.id coooontribuyente,
+        idinformacioncontacto: i.idinformacioncontacto,
         idtipopersona: i.idtipopersona,
         idtipoproveedor: i.idtipoproveedor,
+        idtipocontribuyente: i.idtipocontribuyente,
         rucrise: i.rucrise,
         nombrerazonsocial: i.nombrerazonsocial,
         nombrecomercial: i.nombrecomercial,
+        idactividad: i.idactividad,
+        idcategoria: i.idcategoria,
+        idcatalogocategoria: i.idcatalogocategoria,
       })
       .then(
         () => {
@@ -129,13 +141,16 @@ export class ProcessIDB {
     this.dbService
       .update("identificacionDto", {
         id: i.id,
-        //    idinformacioncontacto: i.idinformacioncontacto,
-        //   id coooontribuyente: i.id coooontribuyente,
+        idinformacioncontacto: i.idinformacioncontacto,
         idtipopersona: i.idtipopersona,
         idtipoproveedor: i.idtipoproveedor,
+        idtipocontribuyente: i.idtipocontribuyente,
         rucrise: i.rucrise,
         nombrerazonsocial: i.nombrerazonsocial,
         nombrecomercial: i.nombrecomercial,
+        idactividad: i.idactividad,
+        idcategoria: i.idcategoria,
+        idcatalogocategoria: i.idcatalogocategoria,
       })
       .then(
         () => {

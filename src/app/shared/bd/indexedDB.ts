@@ -98,9 +98,12 @@ export const dbConfig: DBConfig = {
           keypath: "idtipoproveedor",
           options: { unique: false },
         },
-
+        {
+          name: "idtipocontribuyente",
+          keypath: "idtipocontribuyente",
+          options: { unique: false },
+        },
         { name: "rucrise", keypath: "rucrise", options: { unique: false } },
-
         {
           name: "nombrerazonsocial",
           keypath: "nombrerazonsocial",
@@ -111,6 +114,22 @@ export const dbConfig: DBConfig = {
           keypath: "nombrecomercial",
           options: { unique: false },
         },
+        {
+          name: "idactividad",
+          keypath: "idactividad",
+          options: { unique: false },
+        },
+        {
+          name: "idcategoria",
+          keypath: "idcategoria",
+          options: { unique: false },
+        },
+        {
+          name: "idcatalogocategoria",
+          keypath: "idcatalogocategoria",
+          options: { unique: false },
+        },
+
       ],
     },
   ],

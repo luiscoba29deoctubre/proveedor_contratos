@@ -1,5 +1,7 @@
 export class IdentificacionDto {
   constructor(
+    public estado?: boolean,
+
     public id?: number,
     public idinformacioncontacto?: number,
     public idtipopersona?: number,
@@ -8,8 +10,8 @@ export class IdentificacionDto {
     public rucrise?: string,
     public nombrerazonsocial?: string,
     public nombrecomercial?: string,
-
-    public estado?: boolean,
-    public correo?: string,
+    public idactividad?: number,
+    public idcategoria?: number,
+    public idcatalogocategoria?: number
   ) {}
 }

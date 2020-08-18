@@ -134,36 +134,29 @@ export class IdentificacionComponent implements OnInit {
         });
         this.identificacionForm.controls["proveedor"].setValue(proveedor);
 
-        let contribuyente: Parameter;
-        this.contribuyentes.forEach((element) => {
-          if (element.id === identificacionDto.idtipocontribuyente) {
-            contribuyente = element;
+        let actividad: Parameter;
+        this.actividades.forEach((element) => {
+          if (element.id === identificacionDto.idactividad) {
+            actividad = element;
           }
         });
-        this.identificacionForm.controls["contribuyente"].setValue(
-          contribuyente
-        );
+        this.identificacionForm.controls["actividad"].setValue(actividad);
 
-        /*
         let categoria: Parameter;
         this.categorias.forEach((element) => {
-          if (element.id === identificacionDto.) {
+          if (element.id === identificacionDto.idcategoria) {
             categoria = element;
           }
         });
-        this.identificacionForm.controls["contribuyente"].setValue(
-          contribuyente
-        );
+        this.identificacionForm.controls["categoria"].setValue(categoria);
 
-        let contribuyente: Parameter;
-        this.contribuyentes.forEach((element) => {
-          if (element.id === identificacionDto.idtipocontribuyente) {
-            contribuyente = element;
+        let catalogoCategoria: Parameter;
+        this.catalogocategorias.forEach((element) => {
+          if (element.id === identificacionDto.idcatalogocategoria) {
+            catalogoCategoria = element;
           }
         });
-        this.identificacionForm.controls["contribuyente"].setValue(
-          contribuyente
-        );*/
+        this.identificacionForm.controls["detalle"].setValue(catalogoCategoria);
       },
       (error) => {
         console.log("getdata error", error);
@@ -272,7 +265,7 @@ export class IdentificacionComponent implements OnInit {
           (identificacionDto: IdentificacionDto) => {
             console.log("regresa Identificacion", identificacionDto);
 
-            this.processIDB.updatingIdentificacion(identificacionDto);
+            //this.processIDB.updatingIdentificacion(identificacionDto);
 
             this.router.navigate(["/infocontacto"]);
 
