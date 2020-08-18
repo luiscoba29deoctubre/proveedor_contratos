@@ -1,183 +1,225 @@
-<div class="card">
-  <h5 class="card-title" style="margin: 10px;">
-    IDENTIFICACIÓN DEL PROVEEDOR
-  </h5>
+<div>
+  <div class="card">
+    <h5 class="card-title" style="margin: 10px;">
+      IDENTIFICACIÓN DEL PROVEEDOR
+    </h5>
 
-  <form
-    class="card"
-    [formGroup]="identificacionForm"
-    (ngSubmit)="sendForm(identificacionForm.value, identificacionForm.valid)"
-    role="form"
-  >
-    <div class="card-body">
-      <div class="row">
-        <div class="col">
-          <div class="form-group">
-            <label for="nombrerazonsocial">Nombre o Razón Social: </label>
-            <input
-              formControlName="nombrerazonsocial"
-              type="text"
-              class="form-control"
-              placeholder="Nombre o Razón Social"
-              id="nombrerazonsocial"
-            />
+    <form
+      class="card"
+      [formGroup]="identificacionForm"
+      (ngSubmit)="sendForm(identificacionForm.value, identificacionForm.valid)"
+      role="form"
+    >
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+              <label for="nombrerazonsocial">Nombre o Razón Social: </label>
+              <input
+                formControlName="nombrerazonsocial"
+                type="text"
+                class="form-control"
+                placeholder="Nombre o Razón Social"
+                id="nombrerazonsocial"
+              />
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+              <label for="rucrise">RUC / RISE: </label>
+              <input
+                formControlName="rucrise"
+                type="text"
+                class="form-control"
+                placeholder="RUC / RISE"
+                id="rucrise"
+              />
+            </div>
           </div>
         </div>
-        <div class="col">
-          <div class="form-group">
-            <label for="rucrise">RUC / RISE: </label>
-            <input
-              formControlName="rucrise"
-              type="text"
-              class="form-control"
-              placeholder="RUC / RISE"
-              id="rucrise"
-            />
+
+        <div class="row">
+          <div class="col-sm-12 col-md-12 col-lg-12">
+            <div class="form-group">
+              <label for="nombrecomercial">Nombre Comercial: </label>
+              <input
+                formControlName="nombrecomercial"
+                type="text"
+                class="form-control"
+                placeholder="Nombre Comercial"
+                id="nombrecomercial"
+              />
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="row">
-        <div class="col">
-          <div class="form-group">
-            <label for="nombrecomercial">Nombre Comercial: </label>
-            <input
-              formControlName="nombrecomercial"
-              type="text"
-              class="form-control"
-              placeholder="Nombre Comercial"
-              id="nombrecomercial"
-            />
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col">
-          <div class="form-group">
-            <label for="persona">Persona: </label>
-            <select formControlName="persona" class="select"  [(ngModel)]="opcionSeleccionado" (change)="capturarPersona()">
-              <option [ngValue]="null" disabled>Escoger persona </option>
-              <option *ngFor="let persona of personas" [ngValue]="persona">
-                {{ persona.name }}
-              </option>
-            </select>
-          </div>
-          <p>Haz seleccionado la opción # {{ verSeleccion }}</p>
-        </div>
-
-        <div class="col">
-          <div class="form-group">
-            <label for="proveedor">Proveedor: </label>
-            <select formControlName="proveedor" class="select" >
-              <option [ngValue]="null" disabled>Escoger proveedor </option>
-              <option
-                *ngFor="let proveedor of proveedores"
-                [ngValue]="proveedor"
+        <div class="row">
+          <div class="col-sm-12 col-md-6 col-lg-5">
+            <div class="form-group">
+              <label for="persona">Persona: </label>
+              <select
+                style="margin-left: 0%;"
+                formControlName="persona"
+                class="form-control"
+                [(ngModel)]="opcionSeleccionado"
+                (change)="capturarPersona()"
               >
-                {{ proveedor.name }}
-              </option>
-            </select>
+                <option [ngValue]="null" disabled>Escoger persona </option>
+                <option *ngFor="let persona of personas" [ngValue]="persona">
+                  {{ persona.name }}
+                </option>
+              </select>
+            </div>
+            <p>Haz seleccionado la opción # {{ verSeleccion }}</p>
           </div>
-        </div>
-      </div>
 
-      <div class="row">
-        <div class="col">
-          <div class="form-group">
-            <label for="contribuyente">Contribuyente: </label>
-            <select formControlName="contribuyente" class="select">
-              <option [ngValue]="null" disabled>Escoger contribuyente </option>
-              <option
-                *ngFor="let contribuyente of contribuyentes"
-                [ngValue]="contribuyente"
+          <div class="col-sm-12 col-md-12 col-lg-7">
+            <div class="form-group">
+              <label for="contribuyente">Contribuyente: </label>
+              <select
+                style="margin-left: 0%;"
+                formControlName="contribuyente"
+                class="form-control"
               >
-                {{ contribuyente.name }}
-              </option>
-            </select>
-          </div>
-        </div>
-        <div class="col"></div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <div class="row">
-            <div class="col">
-              <div class="form-group">
-                <label for="actividad">Actividad: </label>
-                <select formControlName="actividad" class="select">
-                  <option [ngValue]="null" disabled>Escoger actividad </option>
-                  <option
-                    *ngFor="let actividad of actividades"
-                    [ngValue]="actividad"
-                  >
-                    {{ actividad.name }}
-                  </option>
-                </select>
-              </div>
-            </div>
-
-            <div class="col">
-              <div class="form-group">
-                <label for="categoria">Categor&iacute;a: </label>
-                <select formControlName="categoria" class="select">
-                  <option [ngValue]="null" disabled
-                    >Escoger categor&iacute;a
-                  </option>
-                  <option
-                    *ngFor="let categoria of categorias"
-                    [ngValue]="categoria"
-                  >
-                    {{ categoria.name }}
-                  </option>
-                </select>
-              </div>
-            </div>
-
-            <div class="col">
-              <div class="form-group">
-                <label for="detalle">Detalle: </label>
-                <select formControlName="detalle" class="select">
-                  <option [ngValue]="null" disabled>Escoger detalle </option>
-                  <option
-                    *ngFor="let detalle of catalogocategorias"
-                    [ngValue]="detalle"
-                  >
-                    {{ detalle.name }}
-                  </option>
-                </select>
-              </div>
+                <option [ngValue]="null" disabled
+                  >Escoger contribuyente
+                </option>
+                <option
+                  *ngFor="let contribuyente of contribuyentes"
+                  [ngValue]="contribuyente"
+                >
+                  {{ contribuyente.name }}
+                </option>
+              </select>
             </div>
           </div>
         </div>
-      </div>
 
-      <div
-        style="margin-top: 10px; text-align: center;"
-        class="row mt-3 form-group"
-      >
+        <div class="row">
+          <div class="col-sm-12 col-md-12 col-lg-12">
+            <div class="form-group">
+              <label for="proveedor">Proveedor: </label>
+              <select
+                style="margin-left: 0%;"
+                formControlName="proveedor"
+                class="form-control"
+              >
+                <option [ngValue]="null" disabled>Escoger proveedor </option>
+                <option
+                  *ngFor="let proveedor of proveedores"
+                  [ngValue]="proveedor"
+                >
+                  {{ proveedor.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-12 col-md-6 col-lg-4">
+                <div class="form-group">
+                  <div><label for="actividad">Actividad: </label></div>
+                  <div>
+                    <select
+                      style="margin-left: 0%;"
+                      formControlName="actividad"
+                      class="form-control"
+                    >
+                      <option [ngValue]="null" disabled
+                        >Escoger actividad
+                      </option>
+                      <option
+                        *ngFor="let actividad of actividades"
+                        [ngValue]="actividad"
+                      >
+                        {{ actividad.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-12 col-md-12 col-lg-4">
+                <div class="form-group">
+                  <div><label for="categoria">Categor&iacute;a: </label></div>
+                  <div>
+                    <select
+                      style="margin-left: 0%;"
+                      formControlName="categoria"
+                      class="form-control"
+                    >
+                      <option [ngValue]="null" disabled
+                        >Escoger categor&iacute;a
+                      </option>
+                      <option
+                        *ngFor="let categoria of categorias"
+                        [ngValue]="categoria"
+                      >
+                        {{ categoria.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-12 col-md-6 col-lg-4">
+                <div class="form-group">
+                  <div><label for="detalle">Detalle: </label></div>
+                  <div>
+                    <select
+                      style="margin-left: 0%;"
+                      formControlName="detalle"
+                      class="form-control"
+                    >
+                      <option [ngValue]="null" disabled
+                        >Escoger detalle
+                      </option>
+                      <option
+                        *ngFor="let detalle of catalogocategorias"
+                        [ngValue]="detalle"
+                      >
+                        {{ detalle.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div
+          style="margin-top: 10px; text-align: center;"
+          class="row mt-3 form-group"
+        > -->
         <!-- Button -->
-        <div class="col">
-          <button
-            [disabled]="identificacionForm.invalid"
-            class="btn btn-info"
-            type="submit"
-          >
-            <i class="fa fa-sign-in"></i>Guardar y Continuar
-          </button>
+        <div style="text-align: center;" class="row mt-3">
+          <div class="col-lg-12">
+            <button
+              [disabled]="identificacionForm.invalid"
+              class="btn btn-info"
+              type="submit"
+            >
+              Guardar y Continuar
+            </button>
+          </div>
         </div>
+
+        <!-- </div> -->
       </div>
-    </div>
-  </form>
-  <ngx-spinner
-    bdColor="rgba(51,51,51,0.8)"
-    size="medium"
-    color="#fff"
-    type="ball-scale-multiple"
-  >
-    <p style="font-size: 20px; color: white;">Cargando...</p>
-  </ngx-spinner>
-  <pre>{{ identificacionForm.status }}</pre>
-  <pre>{{ identificacionForm.value | json }}</pre>
+    </form>
+    <ngx-spinner
+      bdColor="rgba(51,51,51,0.8)"
+      size="medium"
+      color="#fff"
+      type="ball-scale-multiple"
+    >
+      <p style="font-size: 20px; color: white;">Cargando...</p>
+    </ngx-spinner>
+    <pre>{{ identificacionForm.status }}</pre>
+    <pre>{{ identificacionForm.value | json }}</pre>
+  </div>
 </div>
