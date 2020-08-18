@@ -147,32 +147,6 @@ export class IdentificacionComponent implements OnInit {
         detalle: [null, [Validators.required]],
       })
     );
-
-    this.dbService.getAll(listas[3]).then(
-      (actividades) => {
-        this.actividades = actividades;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-    this.dbService.getAll(listas[4]).then(
-      (categorias) => {
-        this.categorias = categorias;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-    this.dbService.getAll(listas[5]).then(
-      (catalogocategorias) => {
-        this.catalogocategorias = catalogocategorias;
-        console.log("this.catalogocategoriasfff", this.catalogocategorias);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
   }
 
   loadIdentificacion = (identificacionDto: IdentificacionDto) => {
