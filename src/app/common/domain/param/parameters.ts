@@ -1,3 +1,7 @@
+export class Parameter22 {
+  constructor(public role?: number, public email?: string) {}
+}
+
 export class Parameter {
   constructor(public id?: number, public name?: string) {}
 }

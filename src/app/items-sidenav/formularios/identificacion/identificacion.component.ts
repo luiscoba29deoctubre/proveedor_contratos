@@ -1,7 +1,13 @@
 import { IdentificacionDto } from "./../../../common/dtos/form/IdentificacionDto";
 import { Component, OnInit } from "@angular/core";
 
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormControl,
+  FormArray,
+} from "@angular/forms";
 
 import { Router } from "@angular/router";
 
@@ -19,7 +25,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { FormularioService } from "../formulario.service";
 import { formularios, listas } from "../../../shared/bd/indexedDB";
 import { LoginService } from "../../../logueo/login/login.service";
-import { Parameter } from "../../../common/domain/param/parameters";
+import { Parameter22 } from "../../../common/domain/param/parameters";
 
 @Component({
   selector: "app-identificacion",
@@ -47,6 +53,8 @@ export class IdentificacionComponent implements OnInit {
 
   opcionSeleccionado: Parameter;
   verSeleccion: number;
+
+  collaborators: FormArray;
 
   /**
    * Constructor del Componente {@link IdentificacionComponent}
@@ -106,6 +114,68 @@ export class IdentificacionComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginService.checkToken(); // para que salga, cuando el token expire
+
+    this.setFormArrayValue();
+  }
+
+  private initForm() {
+    this.identificacionForm = this.fb.group({
+      rucrise: [null, [Validators.required]],
+      nombrerazonsocial: [null, [Validators.required]],
+      nombrecomercial: [null, [Validators.required]],
+      persona: [null, [Validators.required]],
+      contribuyente: [null, [Validators.required]],
+      proveedor: [null, [Validators.required]],
+      actividad: [null, [Validators.required]],
+      categoria: [null, [Validators.required]],
+      detalle: [null, [Validators.required]],
+      phones: this.fb.array([
+        this.fb.group({
+          type: [null, [Validators.required]],
+          number: ["", [Validators.required]],
+        }),
+      ]),
+
+    });
+  }
+  public buildCollaboratorsGroup(fb: FormBuilder): FormGroup {
+    return fb.group({
+      email: "",
+      role: "",
+    });
+  }
+
+  get phones() {
+    return this.identificacionForm.get("phones") as FormArray;
+  }
+
+  addNewPhoneToModel() {
+    this.phones.push(
+      this.fb.group({
+        type: [null],
+        number: [""],
+      })
+    );
+  }
+
+  quitNewPhoneToModel() {
+    this.phones.(
+      this.fb.group({
+        type: [null],
+        number: [""],
+      })
+    );
+
+
+  }
+
+  // Here I'm setting only one value if it's multiple use foreach
+  public setFormArrayValue() {
+    const controlArray = <FormArray>(
+      this.identificacionForm.get("collaborators")
+    );
+    controlArray.controls[0].get("email").setValue("yourEmailId@gmail.com");
+    controlArray.controls[0].get("role").setValue(2);
   }
 
   loadIdentificacion = (identificacionDto: IdentificacionDto) => {
@@ -178,6 +248,16 @@ export class IdentificacionComponent implements OnInit {
     );
   };
 
+  /*addNewActividad = () => {
+    this.lstActividades.push(
+      new FormGroup({
+        actividad: new FormControl('');
+        categoria: new FormControl('')
+        detalle:new FormControl('')
+      })
+    )
+  };*/
+
   capturarPersona = () => {
     console.log("entra a capturar");
     let params: ParameterContribuyente[] = [];
@@ -249,20 +329,6 @@ export class IdentificacionComponent implements OnInit {
     );
   }
 
-  private initForm() {
-    this.identificacionForm = this.fb.group({
-      rucrise: [null, [Validators.required]],
-      nombrerazonsocial: [null, [Validators.required]],
-      nombrecomercial: [null, [Validators.required]],
-      persona: [null, [Validators.required]],
-      contribuyente: [null, [Validators.required]],
-      actividad: [null, [Validators.required]],
-      proveedor: [null, [Validators.required]],
-      categoria: [null, [Validators.required]],
-      detalle: [null, [Validators.required]],
-    });
-  }
-
   /**
    * Se envía el formulario identificación
    *
@@ -272,7 +338,7 @@ export class IdentificacionComponent implements OnInit {
     this.submitted = true;
     if (valid) {
       this.spinner.show();
-     console.log("this.identificacionFormffff", this.identificacionForm.value);
+      console.log("this.identificacionFormffff", this.identificacionForm.value);
       this.formsService
         .saveIdentificacion(this.identificacionForm.value)
         .subscribe(
