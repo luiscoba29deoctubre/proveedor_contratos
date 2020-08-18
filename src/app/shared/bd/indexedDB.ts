@@ -2,12 +2,12 @@ import { DBConfig } from "ngx-indexed-db";
 
 export const formularios = ["identificacionDto"];
 export const listas = [
-  "lstTipoPersonaDto",
-  "lstTipoProveedorDto",
-  "lstTipocontribuyenteDto",
-  "lstActividadDto",
-  "lstCategoriaDto",
-  "lstCatalogocategoriaDto",
+  "lstTipoPersonaDto",      //0
+  "lstTipoProveedorDto",    //1
+  "lstTipocontribuyenteDto",//2
+  "lstActividadDto",        //3
+  "lstCategoriaDto",        //4
+  "lstCatalogocategoriaDto",//5
 ];
 
 export const dbConfig: DBConfig = {
@@ -56,6 +56,11 @@ export const dbConfig: DBConfig = {
       storeConfig: { keyPath: "id", autoIncrement: false },
       storeSchema: [
         { name: "id", keypath: "id", options: { unique: false } },
+        {
+          name: "idactividad",
+          keypath: "idactividad",
+          options: { unique: false },
+        },
         { name: "name", keypath: "name", options: { unique: false } },
       ],
     },
@@ -64,6 +69,11 @@ export const dbConfig: DBConfig = {
       storeConfig: { keyPath: "id", autoIncrement: false },
       storeSchema: [
         { name: "id", keypath: "id", options: { unique: false } },
+        {
+          name: "idcategoria",
+          keypath: "idcategoria",
+          options: { unique: false },
+        },
         { name: "name", keypath: "name", options: { unique: false } },
       ],
     },

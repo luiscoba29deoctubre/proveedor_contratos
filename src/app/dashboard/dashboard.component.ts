@@ -1,13 +1,13 @@
 import { Component, AfterViewInit, OnInit } from "@angular/core";
 
-import { ProcessIDB } from "../shared/process.indexedDB";
+import { ProcessIDB } from "../shared/bd/process.indexedDB";
 import { NotificationService } from "../shared/services/notification.service";
 import { NgxIndexedDBService } from "ngx-indexed-db";
 import { FormularioService } from "../items-sidenav/formularios/formulario.service";
 
 import { NgxSpinnerService } from "ngx-spinner";
 import { ParamService } from "./param.service";
-import { dbConfig } from "./indexedDB";
+import { dbConfig } from "../shared/bd/indexedDB";
 
 @Component({
   selector: "app-dashboard",

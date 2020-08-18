@@ -11,7 +11,7 @@ import { ParamService } from "./param.service";
 import { ApiEndpoints } from "../logueo/api.endpoints";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
-import { dbConfig } from './indexedDB';
+import { dbConfig } from '../shared/bd/indexedDB';
 import { NgxIndexedDBModule } from 'ngx-indexed-db';
 
 export function tokenGetter() {

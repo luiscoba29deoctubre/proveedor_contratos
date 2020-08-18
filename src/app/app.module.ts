@@ -20,7 +20,7 @@ import { ToastrModule } from "ngx-toastr";
 import { LogueoModule } from "./logueo/logueo.module";
 import { NgxSpinnerModule } from "ngx-spinner";
 import { NgxIndexedDBModule } from "ngx-indexed-db";
-import { dbConfig } from "./dashboard/indexedDB";
+import { dbConfig } from "./shared/bd/indexedDB";
 
 export function tokenGetter() {
   return sessionStorage.getItem("token");

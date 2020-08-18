@@ -7,7 +7,7 @@ import { Usuario } from "../../common/domain/usuario";
 import { NotificationService } from "../../shared/services/notification.service";
 
 import { NgxIndexedDBService } from "ngx-indexed-db";
-import { ProcessIDB } from "../../shared/process.indexedDB";
+import { ProcessIDB } from "../../shared/bd/process.indexedDB";
 
 import { NgxSpinnerService } from "ngx-spinner";
 

@@ -1,34 +1,24 @@
-import { IdentificacionDto } from "./../common/dtos/form/IdentificacionDto";
+import { IdentificacionDto } from "../../common/dtos/form/IdentificacionDto";
 import { NgxIndexedDBService } from "ngx-indexed-db";
-import { formularios, listas } from "../dashboard/indexedDB";
+import { formularios, listas } from "./indexedDB";
 
 // manejaremos la bd
 export class ProcessIDB {
   constructor(private dbService: NgxIndexedDBService) {}
 
   fillingParameters = (allParameters) => {
-    // console.log("allParameters bdddddd", allParameters);
     for (let key in allParameters) {
       if (allParameters.hasOwnProperty(key)) {
-        // console.log(key + " -> " + allParameters[key]); // tomado del sistema 'responsable'
-        //   this.createSchema(key); // no vale crear schemas
         let vector = allParameters[key];
-        // tslint:disable-next-line: forin
-        if (key == "lstTipocontribuyenteDto") {
-          // tslint:disable-next-line: forin
-          for (let index in vector) {
-            // console.log("index[posicion]", vector[index].name);
-            this.addContribuyente(
-              key,
-              vector[index].id,
-              vector[index].idtipopersona,
-              vector[index].name
-            );
-          }
+        if (key === "lstTipocontribuyenteDto") {
+          this.addContribuyente(key, vector);
+        } else if (key === "lstCatalogocategoriaDto") {
+          this.addCatalogoCategoria(key, vector);
+        } else if (key === "lstCategoriaDto") {
+          this.addCategoria(key, vector);
         } else {
           // tslint:disable-next-line: forin
           for (let index in vector) {
-            // console.log("index[posicion]", vector[index].name);
             this.addParameterToDB(key, vector[index].id, vector[index].name);
           }
         }
@@ -36,18 +26,67 @@ export class ProcessIDB {
     }
   };
 
-  addContribuyente(store, id, idtipopersona, name): void {
-    this.dbService
-      .add(store, { id: id, idtipopersona: idtipopersona, name: name })
-      .then(
-        () => {
-          // Do something after the value was added
-          console.log("se llena store ", store);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+  addContribuyente(store, vector): void {
+    // tslint:disable-next-line: forin
+    for (let index in vector) {
+      this.dbService
+        .add(store, {
+          id: vector[index].id,
+          idtipopersona: vector[index].idtipopersona,
+          name: vector[index].name,
+        })
+        .then(
+          () => {
+            // Do something after the value was added
+            console.log("se llena store ", store);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+    }
+  }
+
+  addCategoria(store, vector): void {
+    // tslint:disable-next-line: forin
+    for (let index in vector) {
+      this.dbService
+        .add(store, {
+          id: vector[index].id,
+          idactividad: vector[index].idactividad,
+          name: vector[index].name,
+        })
+        .then(
+          () => {
+            // Do something after the value was added
+            console.log("se llena store ", store);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+    }
+  }
+
+  addCatalogoCategoria(store, vector): void {
+    // tslint:disable-next-line: forin
+    for (let index in vector) {
+      this.dbService
+        .add(store, {
+          id: vector[index].id,
+          idcategoria: vector[index].idcategoria,
+          name: vector[index].name,
+        })
+        .then(
+          () => {
+            // Do something after the value was added
+            console.log("se llena store ", store);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+    }
   }
 
   addParameterToDB(store, id, name): void {

@@ -12,12 +12,12 @@ import {
   ParameterContribuyente,
 } from "../../../common/domain/param/parameters";
 
-import { ProcessIDB } from "../../../shared/process.indexedDB";
+import { ProcessIDB } from "../../../shared/bd/process.indexedDB";
 import { NgxIndexedDBService } from "ngx-indexed-db";
 
 import { NgxSpinnerService } from "ngx-spinner";
 import { FormularioService } from "../formulario.service";
-import { formularios, listas } from "../../../dashboard/indexedDB";
+import { formularios, listas } from "../../../shared/bd/indexedDB";
 import { LoginService } from "../../../logueo/login/login.service";
 
 @Component({
@@ -120,16 +120,15 @@ export class IdentificacionComponent implements OnInit {
 
         let persona: Parameter;
         this.personas.forEach((element) => {
-          if (element.id == identificacionDto.idtipopersona) {
+          if (element.id === identificacionDto.idtipopersona) {
             persona = element;
           }
         });
-        // console.log("persosssssssss", this.personas);
         this.identificacionForm.controls["persona"].setValue(persona);
 
         let proveedor: Parameter;
         this.proveedores.forEach((element) => {
-          if (element.id == identificacionDto.idtipoproveedor) {
+          if (element.id === identificacionDto.idtipoproveedor) {
             proveedor = element;
           }
         });
@@ -137,13 +136,34 @@ export class IdentificacionComponent implements OnInit {
 
         let contribuyente: Parameter;
         this.contribuyentes.forEach((element) => {
-          if (element.id == identificacionDto.idtipocontribuyente) {
+          if (element.id === identificacionDto.idtipocontribuyente) {
             contribuyente = element;
           }
         });
         this.identificacionForm.controls["contribuyente"].setValue(
           contribuyente
         );
+
+        /*
+        let categoria: Parameter;
+        this.categorias.forEach((element) => {
+          if (element.id === identificacionDto.) {
+            categoria = element;
+          }
+        });
+        this.identificacionForm.controls["contribuyente"].setValue(
+          contribuyente
+        );
+
+        let contribuyente: Parameter;
+        this.contribuyentes.forEach((element) => {
+          if (element.id === identificacionDto.idtipocontribuyente) {
+            contribuyente = element;
+          }
+        });
+        this.identificacionForm.controls["contribuyente"].setValue(
+          contribuyente
+        );*/
       },
       (error) => {
         console.log("getdata error", error);

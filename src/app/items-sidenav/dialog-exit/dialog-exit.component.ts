@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { MatDialog } from "@angular/material";
 import { Router } from "@angular/router";
 import { NgxIndexedDBService } from "ngx-indexed-db";
-import { ProcessIDB } from "../../shared/process.indexedDB";
+import { ProcessIDB } from "../../shared/bd/process.indexedDB";
 
 @Component({
   selector: "app-dialog-exit",

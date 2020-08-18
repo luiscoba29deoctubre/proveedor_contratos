@@ -29,7 +29,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { FormularioService } from "./formularios/formulario.service";
 import { ApiEndpoints } from "../logueo/api.endpoints";
 import { NgxIndexedDBModule } from "ngx-indexed-db";
-import { dbConfig } from "../dashboard/indexedDB";
+import { dbConfig } from "../shared/bd/indexedDB";
 
 export function tokenGetter() {
   return sessionStorage.getItem("token");
