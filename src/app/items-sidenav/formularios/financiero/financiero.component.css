@@ -1,3 +1,9 @@
 input {
   border: 1px solid #ccc;
 }
+
+table tr td input{
+  border-top: none;
+  border-right: none;
+  border-left: none;
+}
