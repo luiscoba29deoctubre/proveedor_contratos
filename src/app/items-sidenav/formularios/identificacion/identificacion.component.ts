@@ -19,6 +19,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { FormularioService } from "../formulario.service";
 import { formularios, listas } from "../../../shared/bd/indexedDB";
 import { LoginService } from "../../../logueo/login/login.service";
+import { Parameter } from "../../../common/domain/param/parameters";
 
 @Component({
   selector: "app-identificacion",
@@ -67,6 +68,9 @@ export class IdentificacionComponent implements OnInit {
   ) {
     this.spinner.show();
     this.store = formularios[0];
+
+    // anulamos para mostrar que deben de 'seleccionar value'
+    this.opcionSeleccionado = null;
 
     console.log("this.storeeeeeeee", this.store);
 
@@ -133,6 +137,16 @@ export class IdentificacionComponent implements OnInit {
           }
         });
         this.identificacionForm.controls["proveedor"].setValue(proveedor);
+
+        let contribuyente: Parameter;
+        this.contribuyentes.forEach((element) => {
+          if (element.id === identificacionDto.idtipocontribuyente) {
+            contribuyente = element;
+          }
+        });
+        this.identificacionForm.controls["contribuyente"].setValue(
+          contribuyente
+        );
 
         let actividad: Parameter;
         this.actividades.forEach((element) => {
@@ -258,7 +272,7 @@ export class IdentificacionComponent implements OnInit {
     this.submitted = true;
     if (valid) {
       this.spinner.show();
-      // console.log("this.identificacionFormffff", this.identificacionForm.value);
+     console.log("this.identificacionFormffff", this.identificacionForm.value);
       this.formsService
         .saveIdentificacion(this.identificacionForm.value)
         .subscribe(
@@ -279,13 +293,5 @@ export class IdentificacionComponent implements OnInit {
           }
         );
     }
-  }
-
-  test() {
-    console.log("imprime ");
-  }
-
-  select(value) {
-    console.log("=========", value);
   }
 }
