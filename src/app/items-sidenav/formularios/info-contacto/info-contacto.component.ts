@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
-import { Parameter } from "../../../common/domain/param/parameter";
+import { Parameter } from "../../../common/domain/param/parameters";
 import { IdentificacionDto } from '../../../common/dtos/form/IdentificacionDto';
 
 interface ItemTipo {

@@ -56,19 +56,20 @@
         <div class="col">
           <div class="form-group">
             <label for="persona">Persona: </label>
-            <select formControlName="persona" class="select">
+            <select formControlName="persona" class="select"  [(ngModel)]="opcionSeleccionado" (change)="capturarPersona()">
               <option [ngValue]="null" disabled>Escoger persona </option>
               <option *ngFor="let persona of personas" [ngValue]="persona">
                 {{ persona.name }}
               </option>
             </select>
           </div>
+          <p>Haz seleccionado la opción # {{ verSeleccion }}</p>
         </div>
 
         <div class="col">
           <div class="form-group">
             <label for="proveedor">Proveedor: </label>
-            <select formControlName="proveedor" class="select">
+            <select formControlName="proveedor" class="select" >
               <option [ngValue]="null" disabled>Escoger proveedor </option>
               <option
                 *ngFor="let proveedor of proveedores"

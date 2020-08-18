@@ -14,13 +14,41 @@ export class ProcessIDB {
         //   this.createSchema(key); // no vale crear schemas
         let vector = allParameters[key];
         // tslint:disable-next-line: forin
-        for (let index in vector) {
-          // console.log("index[posicion]", vector[index].name);
-          this.addParameterToDB(key, vector[index].id, vector[index].name);
+        if (key == "lstTipocontribuyenteDto") {
+          // tslint:disable-next-line: forin
+          for (let index in vector) {
+            // console.log("index[posicion]", vector[index].name);
+            this.addContribuyente(
+              key,
+              vector[index].id,
+              vector[index].idtipopersona,
+              vector[index].name
+            );
+          }
+        } else {
+          // tslint:disable-next-line: forin
+          for (let index in vector) {
+            // console.log("index[posicion]", vector[index].name);
+            this.addParameterToDB(key, vector[index].id, vector[index].name);
+          }
         }
       }
     }
   };
+
+  addContribuyente(store, id, idtipopersona, name): void {
+    this.dbService
+      .add(store, { id: id, idtipopersona: idtipopersona, name: name })
+      .then(
+        () => {
+          // Do something after the value was added
+          console.log("se llena store ", store);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+  }
 
   addParameterToDB(store, id, name): void {
     this.dbService.add(store, { id: id, name: name }).then(

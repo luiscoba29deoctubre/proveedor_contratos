@@ -7,7 +7,10 @@ import { Router } from "@angular/router";
 
 import { NotificationService } from "../../../shared/services/notification.service";
 
-import { Parameter } from "../../../common/domain/param/parameter";
+import {
+  Parameter,
+  ParameterContribuyente,
+} from "../../../common/domain/param/parameters";
 
 import { ProcessIDB } from "../../../shared/process.indexedDB";
 import { NgxIndexedDBService } from "ngx-indexed-db";
@@ -34,11 +37,15 @@ export class IdentificacionComponent implements OnInit {
   store: string;
   /** Para almacenar la lista de tipopersona */
   personas: Parameter[];
-  contribuyentes: Parameter[];
+  contribuyentes: ParameterContribuyente[];
+  contribuyentesCompleto: ParameterContribuyente[];
   proveedores: Parameter[];
   actividades: Parameter[];
   categorias: Parameter[];
   catalogocategorias: Parameter[];
+
+  opcionSeleccionado: Parameter;
+  verSeleccion: number;
 
   /**
    * Constructor del Componente {@link IdentificacionComponent}
@@ -144,6 +151,25 @@ export class IdentificacionComponent implements OnInit {
     );
   };
 
+  capturarPersona = () => {
+    console.log("entra a capturar");
+    let params: ParameterContribuyente[] = [];
+    this.contribuyentesCompleto.forEach((element) => {
+      if (element.idtipopersona === this.opcionSeleccionado.id) {
+        let e: ParameterContribuyente = new ParameterContribuyente(
+          element.id,
+          element.idtipopersona,
+          element.name
+        );
+        console.log("cambia los contribuyentes", element);
+        params.push(e);
+      }
+    });
+    console.log("this.opcionSeleccionado.id", this.opcionSeleccionado.id);
+    this.verSeleccion = this.opcionSeleccionado.id; // this.opcionSeleccionado.name;
+    this.contribuyentes = params;
+  };
+
   private loadCombos() {
     this.dbService.getAll(listas[0]).then(
       (personas) => {
@@ -164,6 +190,7 @@ export class IdentificacionComponent implements OnInit {
     this.dbService.getAll(listas[2]).then(
       (contribuyentes) => {
         this.contribuyentes = contribuyentes;
+        this.contribuyentesCompleto = contribuyentes;
       },
       (error) => {
         console.log(error);
@@ -210,7 +237,7 @@ export class IdentificacionComponent implements OnInit {
   }
 
   /**
-   * Se envía el formulardio identificación
+   * Se envía el formulario identificación
    *
    * @param value Valor del formulario
    */
