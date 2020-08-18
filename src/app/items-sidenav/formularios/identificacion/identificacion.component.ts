@@ -114,8 +114,6 @@ export class IdentificacionComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginService.checkToken(); // para que salga, cuando el token expire
-
-    this.setFormArrayValue();
   }
 
   private initForm() {
@@ -126,56 +124,55 @@ export class IdentificacionComponent implements OnInit {
       persona: [null, [Validators.required]],
       contribuyente: [null, [Validators.required]],
       proveedor: [null, [Validators.required]],
-      actividad: [null, [Validators.required]],
-      categoria: [null, [Validators.required]],
-      detalle: [null, [Validators.required]],
-      phones: this.fb.array([
+
+      lstActividades: this.fb.array([
         this.fb.group({
-          type: [null, [Validators.required]],
-          number: ["", [Validators.required]],
+          actividad: [null, [Validators.required]],
+          categoria: [null, [Validators.required]],
+          detalle: [null, [Validators.required]],
         }),
       ]),
-
-    });
-  }
-  public buildCollaboratorsGroup(fb: FormBuilder): FormGroup {
-    return fb.group({
-      email: "",
-      role: "",
     });
   }
 
-  get phones() {
-    return this.identificacionForm.get("phones") as FormArray;
+  get getActividades() {
+    return this.identificacionForm.get("lstActividades") as FormArray;
   }
 
-  addNewPhoneToModel() {
-    this.phones.push(
+  addNewActividad() {
+    this.getActividades.push(
       this.fb.group({
-        type: [null],
-        number: [""],
-      })
-    );
-  }
-
-  quitNewPhoneToModel() {
-    this.phones.(
-      this.fb.group({
-        type: [null],
-        number: [""],
+        actividad: [null, [Validators.required]],
+        categoria: [null, [Validators.required]],
+        detalle: [null, [Validators.required]],
       })
     );
 
-
-  }
-
-  // Here I'm setting only one value if it's multiple use foreach
-  public setFormArrayValue() {
-    const controlArray = <FormArray>(
-      this.identificacionForm.get("collaborators")
+    this.dbService.getAll(listas[3]).then(
+      (actividades) => {
+        this.actividades = actividades;
+      },
+      (error) => {
+        console.log(error);
+      }
     );
-    controlArray.controls[0].get("email").setValue("yourEmailId@gmail.com");
-    controlArray.controls[0].get("role").setValue(2);
+    this.dbService.getAll(listas[4]).then(
+      (categorias) => {
+        this.categorias = categorias;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    this.dbService.getAll(listas[5]).then(
+      (catalogocategorias) => {
+        this.catalogocategorias = catalogocategorias;
+        console.log("this.catalogocategoriasfff", this.catalogocategorias);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   loadIdentificacion = (identificacionDto: IdentificacionDto) => {
@@ -217,7 +214,7 @@ export class IdentificacionComponent implements OnInit {
         this.identificacionForm.controls["contribuyente"].setValue(
           contribuyente
         );
-
+        /*
         let actividad: Parameter;
         this.actividades.forEach((element) => {
           if (element.id === identificacionDto.idactividad) {
@@ -240,23 +237,13 @@ export class IdentificacionComponent implements OnInit {
             catalogoCategoria = element;
           }
         });
-        this.identificacionForm.controls["detalle"].setValue(catalogoCategoria);
+        this.identificacionForm.controls["detalle"].setValue(catalogoCategoria);*/
       },
       (error) => {
         console.log("getdata error", error);
       }
     );
   };
-
-  /*addNewActividad = () => {
-    this.lstActividades.push(
-      new FormGroup({
-        actividad: new FormControl('');
-        categoria: new FormControl('')
-        detalle:new FormControl('')
-      })
-    )
-  };*/
 
   capturarPersona = () => {
     console.log("entra a capturar");
@@ -322,6 +309,7 @@ export class IdentificacionComponent implements OnInit {
     this.dbService.getAll(listas[5]).then(
       (catalogocategorias) => {
         this.catalogocategorias = catalogocategorias;
+        console.log("this.catalogocategoriaseeee", this.catalogocategorias);
       },
       (error) => {
         console.log(error);
