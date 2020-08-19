@@ -1,3 +1,6 @@
 input {
   border: 1px solid #ccc;
 }
+button {
+  width: 120px;
+}

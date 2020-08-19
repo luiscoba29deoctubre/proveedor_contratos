@@ -7,3 +7,7 @@ table tr td input{
   border-right: none;
   border-left: none;
 }
+
+button {
+  width: 120px;
+}

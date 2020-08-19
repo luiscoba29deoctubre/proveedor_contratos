@@ -12,3 +12,7 @@ select{
     border-radius: 5px;
     margin-left: 5%;
 }
+
+button {
+  width: 120px;
+}
