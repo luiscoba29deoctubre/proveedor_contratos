@@ -127,6 +127,8 @@ export class IdentificacionComponent implements OnInit {
   }
 
   loadIdentificacion = (i: IdentificacionDto) => {
+    this.removeActividad(0);
+
     // cargamos con la informacion inicial al componente
     this.identificacionForm.controls["rucrise"].setValue(i.rucrise);
     this.identificacionForm.controls["nombrerazonsocial"].setValue(
@@ -310,15 +312,6 @@ export class IdentificacionComponent implements OnInit {
   }
 
   capturarPersona = () => {
-    const data = {
-      lstActividades: [
-        {
-          detalle: { id: 0, name: "AIRES ACONDICIONADOS" },
-        },
-      ],
-    };
-    this.identificacionForm.patchValue(data);
-
     console.log("entra a capturar");
     let params: ParameterContribuyente[] = [];
     this.contribuyentesCompleto.forEach((element) => {
