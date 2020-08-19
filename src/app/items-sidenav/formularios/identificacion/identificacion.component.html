@@ -61,7 +61,7 @@
                 style="margin-left: 0%;"
                 formControlName="persona"
                 class="form-control"
-                [(ngModel)]="opcionSeleccionado"
+                [(ngModel)]="personaSeleccionado"
                 (change)="capturarPersona()"
               >
                 <option [ngValue]="null" disabled>Escoger persona </option>
@@ -119,13 +119,12 @@
           <div class="card-body">
             <div formArrayName="lstActividades">
               <div class="row">Actividades que realiza ud.:</div>
-
               <div
                 *ngFor="let item of getActividades.controls; let i = index"
                 [formGroupName]="i"
               >
                 <div class="row">
-                  <div class="col-sm-12 col-md-4 col-lg-4">
+                  <div class="col-sm-12 col-md-3 col-lg-3">
                     <div class="form-group">
                       <label for="actividad">Actividad: </label>
                       <select
@@ -137,9 +136,11 @@
                         <option [ngValue]="null" disabled
                           >Escoger actividad
                         </option>
+
                         <option
                           *ngFor="let actividad of actividades"
                           [ngValue]="actividad"
+                          [selected]="actividad.id"
                         >
                           {{ actividad.name }}
                         </option>
@@ -162,6 +163,7 @@
                         <option
                           *ngFor="let categoria of categorias"
                           [ngValue]="categoria"
+                          [selected]="categoria.id"
                         >
                           {{ categoria.name }}
                         </option>
@@ -184,11 +186,23 @@
                         <option
                           *ngFor="let detalle of catalogocategorias"
                           [ngValue]="detalle"
+                          [selected]="detalle.id"
                         >
                           {{ detalle.name }}
                         </option>
                       </select>
                     </div>
+                  </div>
+
+                  <div class="col-sm-12 col-md-1 col-lg-1">
+                    <button
+                      type="button"
+                      class="quitar-actividad btn btn-link"
+                      (click)="removeActividad(i)"
+                      style="font-size: 10px; margin-left: 0%;"
+                    >
+                      Quitar Actividad
+                    </button>
                   </div>
                 </div>
               </div>
@@ -209,7 +223,11 @@
         >
           <!-- Button -->
           <div class="col">
-            <button class="btn btn-info" type="submit">
+            <button
+              [disabled]="identificacionForm.invalid"
+              class="btn btn-info"
+              type="submit"
+            >
               <i class="fa fa-sign-in"></i>Guardar y Continuar
             </button>
           </div>

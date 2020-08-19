@@ -1,3 +1,4 @@
+import { Parameter } from "../../domain/param/parameters";
 export class IdentificacionDto {
   constructor(
     public estado?: boolean,
@@ -22,5 +23,13 @@ export class ListaActividades {
     public idactividad?: number,
     public idcategoria?: number,
     public idcatalogocategoria?: number
+  ) {}
+}
+
+export class LstActividades {
+  constructor(
+    public actividad?: Parameter,
+    public categoria?: Parameter,
+    public detalle?: Parameter
   ) {}
 }

@@ -1,13 +1,7 @@
 import { IdentificacionDto } from "./../../../common/dtos/form/IdentificacionDto";
 import { Component, OnInit } from "@angular/core";
 
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  FormControl,
-  FormArray,
-} from "@angular/forms";
+import { FormBuilder, FormGroup, Validators, FormArray } from "@angular/forms";
 
 import { Router } from "@angular/router";
 
@@ -48,9 +42,7 @@ export class IdentificacionComponent implements OnInit {
   categorias: Parameter[];
   catalogocategorias: Parameter[];
 
-  opcionSeleccionado: Parameter;
-
-  collaborators: FormArray;
+  personaSeleccionado: Parameter;
 
   /**
    * Constructor del Componente {@link IdentificacionComponent}
@@ -73,16 +65,14 @@ export class IdentificacionComponent implements OnInit {
     this.spinner.show();
 
     // anulamos para mostrar que deben de 'seleccionar value'
-    this.opcionSeleccionado = null;
-
-    console.log("entra en constructor");
+    this.personaSeleccionado = null;
 
     this.initForm();
     this.processIDB = new ProcessIDB(dbService); // creamos una instancia para manejar la base de datos
     console.log("entra en formsServices");
     this.formsService.getIdentificacion().subscribe(
       (identificacionDto) => {
-        console.log(" llega allForms", identificacionDto);
+        // console.log(" llega allForms", identificacionDto);
         if (identificacionDto.estado) {
           console.log("componente ", identificacionDto);
 
@@ -95,8 +85,6 @@ export class IdentificacionComponent implements OnInit {
         this.spinner.hide();
       }
     );
-
-    this.loadCombos();
   }
   // sacado de https://morioh.com/p/526559a86600 el Toast que muestra mensajes
   showToasterSuccess() {
@@ -130,23 +118,15 @@ export class IdentificacionComponent implements OnInit {
     });
   }
 
-  get getActividades() {
+  get getActividades(): FormArray {
     return this.identificacionForm.get("lstActividades") as FormArray;
   }
 
-  addNewActividad() {
-    this.getActividades.push(
-      this.fb.group({
-        actividad: [null, [Validators.required]],
-        categoria: [null, [Validators.required]],
-        detalle: [null, [Validators.required]],
-      })
-    );
+  removeActividad(i) {
+    this.getActividades.removeAt(i);
   }
 
   loadIdentificacion = (i: IdentificacionDto) => {
-    console.log("impo", i);
-
     // cargamos con la informacion inicial al componente
     this.identificacionForm.controls["rucrise"].setValue(i.rucrise);
     this.identificacionForm.controls["nombrerazonsocial"].setValue(
@@ -164,9 +144,10 @@ export class IdentificacionComponent implements OnInit {
         this.personas.forEach((element) => {
           if (element.id === i.idtipopersona) {
             persona = element;
+
+            this.identificacionForm.controls["persona"].setValue(persona);
           }
         });
-        this.identificacionForm.controls["persona"].setValue(persona);
       },
       (error) => {
         console.log(error);
@@ -180,9 +161,10 @@ export class IdentificacionComponent implements OnInit {
         this.proveedores.forEach((element) => {
           if (element.id === i.idtipoproveedor) {
             proveedor = element;
+
+            this.identificacionForm.controls["proveedor"].setValue(proveedor);
           }
         });
-        this.identificacionForm.controls["proveedor"].setValue(proveedor);
       },
       (error) => {
         console.log(error);
@@ -198,80 +180,149 @@ export class IdentificacionComponent implements OnInit {
         this.contribuyentes.forEach((element) => {
           if (element.id === i.idtipocontribuyente) {
             contribuyente = element;
+
+            this.identificacionForm.controls["contribuyente"].setValue(
+              contribuyente
+            );
           }
         });
-        this.identificacionForm.controls["contribuyente"].setValue(
-          contribuyente
-        );
       },
       (error) => {
         console.log(error);
       }
     );
-    // se carga actividades
 
-   /* i.lstActividades.forEach((e) => {
-      this.dbService.getAll(listas[3]).then(
+    i.lstActividades.forEach(async (e) => {
+      console.log("dentro de foreach e", e);
+
+      let actividad: Parameter;
+      const actividadNoUsada = await this.dbService.getAll(listas[3]).then(
         (actividades) => {
           this.actividades = actividades;
 
-          let actividad: Parameter;
           this.actividades.forEach((element) => {
             if (element.id === e.idactividad) {
               actividad = element;
+              console.log("existe coincidencia actividad", actividad);
+
+              const data = {
+                lstActividades: [
+                  {
+                    actividad: { id: element.id, name: element.name },
+                  },
+                ],
+              };
             }
           });
-          this.identificacionForm.controls["actividad"].setValue(actividad);
         },
         (error) => {
           console.log(error);
         }
       );
+
+      console.log("actividad seleccionado", actividad);
+
+      let categoria: Parameter;
+      const categoriaNoUsada = await this.dbService.getAll(listas[4]).then(
+        (categorias) => {
+          this.categorias = categorias;
+
+          this.categorias.forEach((element) => {
+            if (element.id === e.idcategoria) {
+              categoria = element;
+              console.log("existe coincidencia categoria", categoria);
+
+              const data = {
+                lstActividades: [
+                  {
+                    categoria: { id: element.id, name: element.name },
+                  },
+                ],
+              };
+            }
+          });
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+
+      console.log("categoria seleccionado", categoria);
+
+      let catalogoCategoria: Parameter;
+      const catalogoCategoriaNoUsada = await this.dbService
+        .getAll(listas[5])
+        .then(
+          (catalogoCategorias) => {
+            this.catalogocategorias = catalogoCategorias;
+
+            this.catalogocategorias.forEach((element) => {
+              if (element.id === e.idcatalogocategoria) {
+                catalogoCategoria = element;
+                console.log(
+                  "existe coincidencia catalogoCategoria",
+                  catalogoCategoria
+                );
+
+                const data = {
+                  lstActividades: [
+                    {
+                      detalle: { id: element.id, name: element.name },
+                    },
+                  ],
+                };
+              }
+            });
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+
+      console.log("catalogoCategoria seleccionado", catalogoCategoria);
+
+      this.loadNewActividad(actividad, categoria, catalogoCategoria);
     });
-*/
-    /*
-this.dbService.getAll(listas[3]).then(
-  (actividades) => {
-    this.actividades = actividades;
-
-    let actividad: Parameter;
-        this.actividades.forEach((element) => {
-          if (element.id === i.lstActividades.) {
-            actividad = element;
-          }
-        });
-        this.identificacionForm.controls["actividad"].setValue(actividad);
-  },
-  (error) => {
-    console.log(error);
-  }
-);
-
-/*
-
-        let categoria: Parameter;
-        this.categorias.forEach((element) => {
-          if (element.id === identificacionDto.idcategoria) {
-            categoria = element;
-          }
-        });
-        this.identificacionForm.controls["categoria"].setValue(categoria);
-
-        let catalogoCategoria: Parameter;
-        this.catalogocategorias.forEach((element) => {
-          if (element.id === identificacionDto.idcatalogocategoria) {
-            catalogoCategoria = element;
-          }
-        });
-        this.identificacionForm.controls["detalle"].setValue(catalogoCategoria);
-        */
   };
 
+  loadNewActividad(
+    actividad: Parameter,
+    categoria: Parameter,
+    catalogoCategoria: Parameter
+  ) {
+    this.getActividades.push(
+      this.fb.group({
+        actividad: [actividad, [Validators.required]],
+        categoria: [categoria, [Validators.required]],
+        detalle: [catalogoCategoria, [Validators.required]],
+      })
+    );
+  }
+
+  addNewActividad() {
+    this.getActividades.push(
+      this.fb.group({
+        actividad: ["", [Validators.required]],
+        categoria: ["", [Validators.required]],
+        detalle: ["", [Validators.required]],
+      })
+    );
+  }
+
   capturarPersona = () => {
+    const data = {
+      lstActividades: [
+        {
+          detalle: { id: 0, name: "AIRES ACONDICIONADOS" },
+        },
+      ],
+    };
+    this.identificacionForm.patchValue(data);
+
     console.log("entra a capturar");
     let params: ParameterContribuyente[] = [];
     this.contribuyentesCompleto.forEach((element) => {
-      if (element.idtipopersona === this.opcionSeleccionado.id) {
+      if (element.idtipopersona === this.personaSeleccionado.id) {
         let e: ParameterContribuyente = new ParameterContribuyente(
           element.id,
           element.idtipopersona,
@@ -281,46 +332,8 @@ this.dbService.getAll(listas[3]).then(
         params.push(e);
       }
     });
-    console.log("this.opcionSeleccionado.id", this.opcionSeleccionado.id);
-   // this.verSeleccion = this.opcionSeleccionado.id; // this.opcionSeleccionado.name;
+    console.log("this.opcionSeleccionado.id", this.personaSeleccionado.id);
     this.contribuyentes = params;
-  };
-
-  loadCombos = () => {
-    /* this.dbService.getAll(listas[0]).then(
-      (personas) => {
-        this.personas = personas;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-    */
-    this.dbService.getAll(listas[3]).then(
-      (actividades) => {
-        this.actividades = actividades;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-    this.dbService.getAll(listas[4]).then(
-      (categorias) => {
-        this.categorias = categorias;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-    this.dbService.getAll(listas[5]).then(
-      (catalogocategorias) => {
-        this.catalogocategorias = catalogocategorias;
-        console.log("this.catalogocategoriaseeee", this.catalogocategorias);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
   };
 
   /**
@@ -338,8 +351,6 @@ this.dbService.getAll(listas[3]).then(
         .subscribe(
           (identificacionDto: IdentificacionDto) => {
             console.log("regresa Identificacion", identificacionDto);
-
-            //this.processIDB.updatingIdentificacion(identificacionDto);
 
             this.router.navigate(["/infocontacto"]);
 
