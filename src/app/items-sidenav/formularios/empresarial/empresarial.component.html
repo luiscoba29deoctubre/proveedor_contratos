@@ -75,15 +75,17 @@
                   *ngFor="let answer of question.answers; let i = index"
                   class="form-check form-check-inline mr-6"
                 >
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    name="{{ question.id }}"
-                    value="{{ answer.resp }}"
-                    [(ngModel)]="question.selected"
-                    (change)="onItemChange($event.target.value)"
-                  />
-                  <label class="form-check-label">{{ answer.resp }} </label>
+                  <label class="form-check-label">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="{{ question.id }}"
+                      value="{{ answer.resp }}"
+                      [(ngModel)]="question.selected"
+                      (change)="onItemChange($event.target.value)"
+                    />
+                    {{ answer.resp }}
+                  </label>
                 </div>
               </div>
             </div>

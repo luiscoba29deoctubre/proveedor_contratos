@@ -1,49 +1,80 @@
 <div class="card">
-  <h5 class="card-title" style="margin: 10px;">
-    ACEPTACIÓN
-  </h5>
-
-  <form class="card">
-    <div class="card-body">
-      <div class="row">
-        <div class="col">
-          <div class="form-group">
-            <label for="razonsocial">Nombre o Razón Social: </label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Nombre o Razón Social"
-              name="razonsocial"
-              id="razonsocial"
-            />
+  <form>
+    <div class="card">
+      <h5 class="card-title" style="margin: 10px;">
+        ACEPTACIÓN
+      </h5>
+      <div class="card-body">
+        <div class="row">
+          <div class="col">
+            Declaro que toda la información y documentación proporcionada a la
+            Cooperativa 29 de Octubre Ltda., es verídica y está sujeta a
+            verificación y comprobación, cuando así lo requiera para los fines
+            internos y de acuerdo a las normativas externas establecidas, por lo
+            que en caso de detectarse errores, omisiones o alteraciones, el
+            proveedor está sujeto a que la Cooperativa tome las acciones
+            pertinentes y sea causal suficiente para no ser considerado en la
+            base de proveedores que puedan prestar servicios o entregar bienes a
+            la Cooperativa, así también, en caso de requerir por parte de la
+            institución un Plan de Contingencia, éste deberá contener de forma
+            clara y detallada: cómo se garantizará la continuidad del servicio,
+            de qué manera se va actuar en caso de una contigencia y cuáles serán
+            los tiempos de respuesta para solventar el inconveniente.
           </div>
         </div>
-        <div class="col">
-          <div class="form-group">
-            <label for="rucrice">RUC / RISE: </label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="RUC / RISE"
-              name="rucrice"
-              id="rucrice"
-            />
+        <div class="row mt-3">
+          <div class="col">
+            <div class="checkbox" style="text-align: center;">
+              <label
+                ><input type="checkbox" style="margin-right: 10px;" />He leido
+                los terminos y acepto las condiciones</label
+              >
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="form-group">
-        <label for="nombrecomercial">Nombre Comercial: </label>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Nombre Comercial"
-          name="nombrecomercial"
-          id="nombrecomercial"
-        />
+      <div class="card">
+        <h5 class="card-title" style="margin: 10px;">
+          AUTORIZACIÓN
+        </h5>
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              Autorizo a la Cooperativa de Ahorro y Crédito 29 de Octubre Ltda.,
+              a través del proceso de calificación de proveedores, para que se
+              revise y analice el buró crediticio de mi respectivo giro de
+              negocio, el cual estoy conciente de que servirá para medir mi
+              situación económica y financiera.
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col">
+              <div class="checkbox" style="text-align: center;">
+                <label>
+                  <input type="checkbox" style="margin-right: 10px;" />
+                  He leido los terminos y acepto las condiciones</label
+                >
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div style="margin-top: 10px; text-align: center;" class="row form-group">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              subir documento firmado:
+            </div>
+          </div>
+          <div class="row">
+            <div class="col"></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-bottom: 10px;" class="row mt-3">
         <!-- Button -->
         <div class="col">
           <button class="btn btn-info" type="submit">
@@ -60,11 +91,11 @@
   </form>
 
   <ngx-spinner
-  bdColor="rgba(51,51,51,0.8)"
-  size="medium"
-  color="#fff"
-  type="ball-scale-multiple"
->
-  <p style="font-size: 20px; color: white;">Cargando...</p>
-</ngx-spinner>
+    bdColor="rgba(51,51,51,0.8)"
+    size="medium"
+    color="#fff"
+    type="ball-scale-multiple"
+  >
+    <p style="font-size: 20px; color: white;">Cargando...</p>
+  </ngx-spinner>
 </div>
