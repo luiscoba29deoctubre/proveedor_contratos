@@ -11,6 +11,16 @@ export class IdentificacionDto {
     public nombrerazonsocial?: string,
     public nombrecomercial?: string,
 
-    public lstActividades?: any,
+    public lstActividades?: ListaActividades[]
+  ) {}
+}
+
+export class ListaActividades {
+  constructor(
+    public id?: number,
+    public ididentificacionproveedor?: number,
+    public idactividad?: number,
+    public idcategoria?: number,
+    public idcatalogocategoria?: number
   ) {}
 }

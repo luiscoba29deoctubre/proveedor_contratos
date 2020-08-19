@@ -25,8 +25,6 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { FormularioService } from "../formulario.service";
 import { listas } from "../../../shared/bd/indexedDB";
 import { LoginService } from "../../../logueo/login/login.service";
-import { Parameter22 } from "../../../common/domain/param/parameters";
-import { async } from "@angular/core/testing";
 
 @Component({
   selector: "app-identificacion",
@@ -73,10 +71,12 @@ export class IdentificacionComponent implements OnInit {
     private dbService: NgxIndexedDBService,
     private loginService: LoginService
   ) {
-   // this.spinner.show();
+    this.spinner.show();
 
     // anulamos para mostrar que deben de 'seleccionar value'
     this.opcionSeleccionado = null;
+
+    console.log("entra en constructor");
 
     this.initForm();
     this.processIDB = new ProcessIDB(dbService); // creamos una instancia para manejar la base de datos
@@ -85,7 +85,6 @@ export class IdentificacionComponent implements OnInit {
       (identificacionDto) => {
         console.log(" llega allForms", identificacionDto);
         if (identificacionDto.estado) {
-          // llenamos la base 'indexed-db'
           console.log("componente ", identificacionDto);
 
           this.loadIdentificacion(identificacionDto); // carga los datos en pantalla
@@ -93,7 +92,7 @@ export class IdentificacionComponent implements OnInit {
         this.spinner.hide();
       },
       (error) => {
-        console.log(error);
+        console.log("aqui error hay ", error);
         this.spinner.hide();
       }
     );
@@ -147,6 +146,8 @@ export class IdentificacionComponent implements OnInit {
   }
 
   loadIdentificacion = (i: IdentificacionDto) => {
+    console.log("impo", i);
+
     // cargamos con la informacion inicial al componente
     this.identificacionForm.controls["rucrise"].setValue(i.rucrise);
     this.identificacionForm.controls["nombrerazonsocial"].setValue(
@@ -155,38 +156,99 @@ export class IdentificacionComponent implements OnInit {
     this.identificacionForm.controls["nombrecomercial"].setValue(
       i.nombrecomercial
     );
+    // carga persona
+    this.dbService.getAll(listas[0]).then(
+      (personas) => {
+        this.personas = personas;
 
-    let persona: Parameter;
-    this.personas.forEach((element) => {
-      if (element.id === i.idtipopersona) {
-        persona = element;
+        let persona: Parameter;
+        this.personas.forEach((element) => {
+          if (element.id === i.idtipopersona) {
+            persona = element;
+          }
+        });
+        this.identificacionForm.controls["persona"].setValue(persona);
+      },
+      (error) => {
+        console.log(error);
       }
-    });
-    this.identificacionForm.controls["persona"].setValue(persona);
+    );
+    // carga proveedor
+    this.dbService.getAll(listas[1]).then(
+      (proveedores) => {
+        this.proveedores = proveedores;
+        let proveedor: Parameter;
+        this.proveedores.forEach((element) => {
+          if (element.id === i.idtipoproveedor) {
+            proveedor = element;
+          }
+        });
+        this.identificacionForm.controls["proveedor"].setValue(proveedor);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    // carga contribuyente
+    this.dbService.getAll(listas[2]).then(
+      (contribuyentes) => {
+        this.contribuyentes = contribuyentes;
+        this.contribuyentesCompleto = contribuyentes;
 
-    let proveedor: Parameter;
-    this.proveedores.forEach((element) => {
-      if (element.id === i.idtipoproveedor) {
-        proveedor = element;
+        let contribuyente: Parameter;
+        this.contribuyentes.forEach((element) => {
+          if (element.id === i.idtipocontribuyente) {
+            contribuyente = element;
+          }
+        });
+        this.identificacionForm.controls["contribuyente"].setValue(
+          contribuyente
+        );
+      },
+      (error) => {
+        console.log(error);
       }
-    });
-    this.identificacionForm.controls["proveedor"].setValue(proveedor);
+    );
+    // se carga actividades
 
-    let contribuyente: Parameter;
-    this.contribuyentes.forEach((element) => {
-      if (element.id === i.idtipocontribuyente) {
-        contribuyente = element;
-      }
+   /* i.lstActividades.forEach((e) => {
+      this.dbService.getAll(listas[3]).then(
+        (actividades) => {
+          this.actividades = actividades;
+
+          let actividad: Parameter;
+          this.actividades.forEach((element) => {
+            if (element.id === e.idactividad) {
+              actividad = element;
+            }
+          });
+          this.identificacionForm.controls["actividad"].setValue(actividad);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     });
-    this.identificacionForm.controls["contribuyente"].setValue(contribuyente);
+*/
     /*
-        let actividad: Parameter;
+this.dbService.getAll(listas[3]).then(
+  (actividades) => {
+    this.actividades = actividades;
+
+    let actividad: Parameter;
         this.actividades.forEach((element) => {
-          if (element.id === identificacionDto.idactividad) {
+          if (element.id === i.lstActividades.) {
             actividad = element;
           }
         });
         this.identificacionForm.controls["actividad"].setValue(actividad);
+  },
+  (error) => {
+    console.log(error);
+  }
+);
+
+/*
 
         let categoria: Parameter;
         this.categorias.forEach((element) => {
@@ -202,7 +264,8 @@ export class IdentificacionComponent implements OnInit {
             catalogoCategoria = element;
           }
         });
-        this.identificacionForm.controls["detalle"].setValue(catalogoCategoria);*/
+        this.identificacionForm.controls["detalle"].setValue(catalogoCategoria);
+        */
   };
 
   capturarPersona = () => {
@@ -225,7 +288,7 @@ export class IdentificacionComponent implements OnInit {
   };
 
   loadCombos = () => {
-    this.dbService.getAll(listas[0]).then(
+    /* this.dbService.getAll(listas[0]).then(
       (personas) => {
         this.personas = personas;
       },
@@ -233,23 +296,7 @@ export class IdentificacionComponent implements OnInit {
         console.log(error);
       }
     );
-    this.dbService.getAll(listas[1]).then(
-      (proveedores) => {
-        this.proveedores = proveedores;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-    this.dbService.getAll(listas[2]).then(
-      (contribuyentes) => {
-        this.contribuyentes = contribuyentes;
-        this.contribuyentesCompleto = contribuyentes;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    */
     this.dbService.getAll(listas[3]).then(
       (actividades) => {
         this.actividades = actividades;

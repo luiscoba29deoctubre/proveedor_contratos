@@ -47,6 +47,7 @@ export class FormularioService {
   public getIdentificacion(): Observable<IdentificacionDto> {
     return this.http.get(this.endpoints.url_api_get_identificacion).pipe(
       map((identificacionDto: IdentificacionDto) => {
+        console.log("identificacionDtoiiiii",identificacionDto);
         return identificacionDto;
       }),
       catchError((err) => this.handleError(err))
