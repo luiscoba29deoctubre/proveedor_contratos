@@ -10,8 +10,7 @@ export class IdentificacionDto {
     public rucrise?: string,
     public nombrerazonsocial?: string,
     public nombrecomercial?: string,
-    public idactividad?: number,
-    public idcategoria?: number,
-    public idcatalogocategoria?: number
+
+    public lstActividades?: any,
   ) {}
 }

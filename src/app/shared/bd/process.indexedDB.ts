@@ -1,6 +1,6 @@
 import { IdentificacionDto } from "../../common/dtos/form/IdentificacionDto";
 import { NgxIndexedDBService } from "ngx-indexed-db";
-import { formularios, listas } from "./indexedDB";
+import { listas } from "./indexedDB";
 
 // manejaremos la bd
 export class ProcessIDB {
@@ -101,80 +101,8 @@ export class ProcessIDB {
     );
   }
 
-  fillingIdentificacion = (i: IdentificacionDto) => {
-    this.dbService.clear("identificacionDto").then(
-      () => {
-        // Do something after clear
-        console.log("se elimina identificacionDto");
-      },
-      (error) => {
-        console.log("clear fillingIdentificacion", error);
-      }
-    );
-
-    this.dbService
-      .add("identificacionDto", {
-        id: i.id,
-        idinformacioncontacto: i.idinformacioncontacto,
-        idtipopersona: i.idtipopersona,
-        idtipoproveedor: i.idtipoproveedor,
-        idtipocontribuyente: i.idtipocontribuyente,
-        rucrise: i.rucrise,
-        nombrerazonsocial: i.nombrerazonsocial,
-        nombrecomercial: i.nombrecomercial,
-        idactividad: i.idactividad,
-        idcategoria: i.idcategoria,
-        idcatalogocategoria: i.idcatalogocategoria,
-      })
-      .then(
-        () => {
-          // Do something after the value was added
-          console.log("exito se llena store identificacionDto");
-        },
-        (error) => {
-          console.log("fillingIdentificacion " + error);
-        }
-      );
-  };
-
-  updatingIdentificacion = (i: IdentificacionDto) => {
-    this.dbService
-      .update("identificacionDto", {
-        id: i.id,
-        idinformacioncontacto: i.idinformacioncontacto,
-        idtipopersona: i.idtipopersona,
-        idtipoproveedor: i.idtipoproveedor,
-        idtipocontribuyente: i.idtipocontribuyente,
-        rucrise: i.rucrise,
-        nombrerazonsocial: i.nombrerazonsocial,
-        nombrecomercial: i.nombrecomercial,
-        idactividad: i.idactividad,
-        idcategoria: i.idcategoria,
-        idcatalogocategoria: i.idcatalogocategoria,
-      })
-      .then(
-        () => {
-          // Do something after the value was added
-          console.log("exito se llena store identificacionDto");
-        },
-        (error) => {
-          console.log("fillingIdentificacion " + error);
-        }
-      );
-  };
-
   clearIndexedDB = () => {
     console.log("entra en clear");
-    formularios.forEach((store) => {
-      this.dbService.clear(store).then(
-        () => {
-          // Do something after clear
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    });
 
     listas.forEach((store) => {
       console.log("entra a borrrar listas");
