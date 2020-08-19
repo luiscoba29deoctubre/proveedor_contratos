@@ -49,7 +49,6 @@ export class IdentificacionComponent implements OnInit {
   catalogocategorias: Parameter[];
 
   opcionSeleccionado: Parameter;
-  verSeleccion: number;
 
   collaborators: FormArray;
 
@@ -283,7 +282,7 @@ this.dbService.getAll(listas[3]).then(
       }
     });
     console.log("this.opcionSeleccionado.id", this.opcionSeleccionado.id);
-    this.verSeleccion = this.opcionSeleccionado.id; // this.opcionSeleccionado.name;
+   // this.verSeleccion = this.opcionSeleccionado.id; // this.opcionSeleccionado.name;
     this.contribuyentes = params;
   };
 
