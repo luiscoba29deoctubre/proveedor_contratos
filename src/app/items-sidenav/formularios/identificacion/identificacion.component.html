@@ -118,83 +118,89 @@
 
         <div class="card">
           <div class="card-body">
-            <div class="row form-group" formArrayName="lstActividades">
-              <p>Actividade que realiza ud.:</p>
+            <div formArrayName="lstActividades">
+              <div class="row">Actividades que realiza ud.:</div>
+
               <div
-                class="form-item"
                 *ngFor="let item of getActividades.controls; let i = index"
                 [formGroupName]="i"
               >
-                <div class="col-sm-12 col-md-6 col-lg-4">
-                  <div><label for="actividad">Actividad: </label></div>
-                  <div>
-                    <select
-                      id="actividad"
-                      style="margin-left: 0%;"
-                      formControlName="actividad"
-                      class="form-control"
-                    >
-                      <option [ngValue]="null" disabled
-                        >Escoger actividad
-                      </option>
-                      <option
-                        *ngFor="let actividad of actividades"
-                        [ngValue]="actividad"
+                <div class="row">
+                  <div class="col-sm-12 col-md-4 col-lg-4">
+                    <div class="form-group">
+                      <label for="actividad">Actividad: </label>
+                      <select
+                        id="actividad"
+                        style="margin-left: 0%;"
+                        formControlName="actividad"
+                        class="form-control"
                       >
-                        {{ actividad.name }}
-                      </option>
-                    </select>
+                        <option [ngValue]="null" disabled
+                          >Escoger actividad
+                        </option>
+                        <option
+                          *ngFor="let actividad of actividades"
+                          [ngValue]="actividad"
+                        >
+                          {{ actividad.name }}
+                        </option>
+                      </select>
+                    </div>
                   </div>
-                </div>
 
-                <div class="col-sm-12 col-md-12 col-lg-4">
-                  <div><label for="categoria">Categor&iacute;a: </label></div>
-                  <div>
-                    <select
-                      id="categoria"
-                      style="margin-left: 0%;"
-                      formControlName="categoria"
-                      class="form-control"
-                    >
-                      <option [ngValue]="null" disabled
-                        >Escoger categor&iacute;a
-                      </option>
-                      <option
-                        *ngFor="let categoria of categorias"
-                        [ngValue]="categoria"
+                  <div class="col-sm-12 col-md-4 col-lg-4">
+                    <div class="form-group">
+                      <label for="categoria">Categor&iacute;a: </label>
+                      <select
+                        id="categoria"
+                        style="margin-left: 0%;"
+                        formControlName="categoria"
+                        class="form-control"
                       >
-                        {{ categoria.name }}
-                      </option>
-                    </select>
+                        <option [ngValue]="null" disabled
+                          >Escoger categor&iacute;a
+                        </option>
+                        <option
+                          *ngFor="let categoria of categorias"
+                          [ngValue]="categoria"
+                        >
+                          {{ categoria.name }}
+                        </option>
+                      </select>
+                    </div>
                   </div>
-                </div>
 
-                <div class="col-sm-12 col-md-6 col-lg-4">
-                  <div><label for="detalle">Detalle: </label></div>
-                  <div>
-                    <select
-                      id="detalle"
-                      style="margin-left: 0%;"
-                      formControlName="detalle"
-                      class="form-control"
-                    >
-                      <option [ngValue]="null" disabled
-                        >Escoger detalle
-                      </option>
-                      <option
-                        *ngFor="let detalle of catalogocategorias"
-                        [ngValue]="detalle"
+                  <div class="col-sm-12 col-md-4 col-lg-4">
+                    <div class="form-group">
+                      <label for="detalle">Detalle: </label>
+                      <select
+                        id="detalle"
+                        style="margin-left: 0%;"
+                        formControlName="detalle"
+                        class="form-control"
                       >
-                        {{ detalle.name }}
-                      </option>
-                    </select>
+                        <option [ngValue]="null" disabled
+                          >Escoger detalle
+                        </option>
+                        <option
+                          *ngFor="let detalle of catalogocategorias"
+                          [ngValue]="detalle"
+                        >
+                          {{ detalle.name }}
+                        </option>
+                      </select>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <p class="form-action" (click)="addNewActividad()">
-            Agregar otra actividad +
+          <p
+            class="form-action"
+            (click)="addNewActividad()"
+            style="font-size: 5px; margin-left: 15px;"
+          >
+            <strong><i>Agregar otra actividad +</i></strong>
           </p>
         </div>
 
