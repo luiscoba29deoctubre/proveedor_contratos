@@ -195,7 +195,6 @@ export class IdentificacionComponent implements OnInit {
     );
 
     i.lstActividades.forEach(async (e) => {
-      console.log("dentro de foreach e", e);
 
       let actividad: Parameter;
       const actividadNoUsada = await this.dbService.getAll(listas[3]).then(
@@ -205,15 +204,6 @@ export class IdentificacionComponent implements OnInit {
           this.actividades.forEach((element) => {
             if (element.id === e.idactividad) {
               actividad = element;
-              console.log("existe coincidencia actividad", actividad);
-
-              const data = {
-                lstActividades: [
-                  {
-                    actividad: { id: element.id, name: element.name },
-                  },
-                ],
-              };
             }
           });
         },
@@ -221,8 +211,6 @@ export class IdentificacionComponent implements OnInit {
           console.log(error);
         }
       );
-
-      console.log("actividad seleccionado", actividad);
 
       let categoria: Parameter;
       const categoriaNoUsada = await this.dbService.getAll(listas[4]).then(
@@ -232,15 +220,6 @@ export class IdentificacionComponent implements OnInit {
           this.categorias.forEach((element) => {
             if (element.id === e.idcategoria) {
               categoria = element;
-              console.log("existe coincidencia categoria", categoria);
-
-              const data = {
-                lstActividades: [
-                  {
-                    categoria: { id: element.id, name: element.name },
-                  },
-                ],
-              };
             }
           });
         },
@@ -248,8 +227,6 @@ export class IdentificacionComponent implements OnInit {
           console.log(error);
         }
       );
-
-      console.log("categoria seleccionado", categoria);
 
       let catalogoCategoria: Parameter;
       const catalogoCategoriaNoUsada = await this.dbService
@@ -261,18 +238,6 @@ export class IdentificacionComponent implements OnInit {
             this.catalogocategorias.forEach((element) => {
               if (element.id === e.idcatalogocategoria) {
                 catalogoCategoria = element;
-                console.log(
-                  "existe coincidencia catalogoCategoria",
-                  catalogoCategoria
-                );
-
-                const data = {
-                  lstActividades: [
-                    {
-                      detalle: { id: element.id, name: element.name },
-                    },
-                  ],
-                };
               }
             });
           },
@@ -280,8 +245,6 @@ export class IdentificacionComponent implements OnInit {
             console.log(error);
           }
         );
-
-      console.log("catalogoCategoria seleccionado", catalogoCategoria);
 
       this.loadNewActividad(actividad, categoria, catalogoCategoria);
     });
