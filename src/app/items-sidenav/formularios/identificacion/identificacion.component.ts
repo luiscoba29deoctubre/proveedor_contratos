@@ -38,9 +38,9 @@ export class IdentificacionComponent implements OnInit {
   contribuyentes: ParameterContribuyente[];
   contribuyentesCompleto: ParameterContribuyente[];
   proveedores: Parameter[];
-  actividades: Parameter[];
-  categorias: Parameter[];
-  catalogocategorias: Parameter[];
+  actividades: Parameter[] = [];
+  categorias: Parameter[] = [];
+  catalogocategorias: Parameter[] = [];
 
   personaSeleccionado: Parameter;
 
@@ -83,14 +83,14 @@ export class IdentificacionComponent implements OnInit {
     this.loginService.checkToken(); // para que salga, cuando el token expire
 
     this.formsService.getIdentificacion().subscribe(
-      (identificacionDto) => {
+      async (identificacionDto) => {
         // console.log(" llega allForms", identificacionDto);
         if (identificacionDto.estado) {
           console.log("componente ", identificacionDto);
 
           this.loadIdentificacion(identificacionDto); // carga los datos en pantalla
-          this.loadCombos();
-          this.setearCombos()
+          await this.loadCombos();
+          this.setearCombos(identificacionDto);
         }
         this.spinner.hide();
       },
@@ -195,67 +195,86 @@ export class IdentificacionComponent implements OnInit {
         console.log(error);
       }
     );
-  }
+  };
 
-  loadIdentificacion = (i: IdentificacionDto) => {
-    // carga la lista de actividades dinámicamente
-    i.lstActividades.forEach(async (e) => {
-      let actividad: Parameter;
-      const actividadNoUsada = await this.dbService.getAll(listas[3]).then(
-        (actividades) => {
-          this.actividades = actividades;
-
-          this.actividades.forEach((element) => {
-            if (element.id === e.idactividad) {
-              actividad = element;
-            }
-          });
+  loadCombos = async () => {
+    const actividadNoUsada = await this.dbService.getAll(listas[3]).then(
+      (actividades) => {
+        this.actividades = actividades;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    console.log("loadCombos this.actividades", this.actividades);
+    const categoriaNoUsada = await this.dbService.getAll(listas[4]).then(
+      (categorias) => {
+        this.categorias = categorias;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    console.log("loadCombos this.categorias", this.categorias);
+    const catalogoCategoriaNoUsada = await this.dbService
+      .getAll(listas[5])
+      .then(
+        (catalogoCategorias) => {
+          this.catalogocategorias = catalogoCategorias;
         },
         (error) => {
           console.log(error);
         }
       );
+    console.log("loadCombos this.catalogocategorias", this.catalogocategorias);
+  };
+
+  setearCombos = async (i: IdentificacionDto) => {
+    // carga la lista de actividades dinámicamente
+
+    console.log("async i ", i);
+    console.log("i.lstActividades.length", i.lstActividades.length);
+    for (let k = 0; k < i.lstActividades.length; k++) {
+      let actividad: Parameter;
+      const tamanioActividades = this.actividades.length;
+      console.log("tamanioActividades", tamanioActividades);
+      for (let j = 0; j < tamanioActividades; j++) {
+        if (this.actividades[j].id === i.lstActividades[k].idactividad) {
+          console.log("entra en tamanioActividades");
+          actividad = this.actividades[j];
+          console.log("dentro de actividad", actividad);
+          j = tamanioActividades;
+        }
+      }
+      console.log("actividad", actividad);
 
       let categoria: Parameter;
-      const categoriaNoUsada = await this.dbService.getAll(listas[4]).then(
-        (categorias) => {
-          this.categorias = categorias;
-
-          this.categorias.forEach((element) => {
-            if (element.id === e.idcategoria) {
-              categoria = element;
-            }
-          });
-        },
-        (error) => {
-          console.log(error);
+      const tamanioCategorias = this.categorias.length;
+      for (let j = 0; j < tamanioCategorias; j++) {
+        if (this.categorias[j].id === i.lstActividades[k].idcategoria) {
+          categoria = this.categorias[j];
+          j = tamanioCategorias;
         }
-      );
-
+      }
+      console.log("categoria", categoria);
       let catalogoCategoria: Parameter;
-      const catalogoCategoriaNoUsada = await this.dbService
-        .getAll(listas[5])
-        .then(
-          (catalogoCategorias) => {
-            this.catalogocategorias = catalogoCategorias;
-
-            this.catalogocategorias.forEach((element) => {
-              if (element.id === e.idcatalogocategoria) {
-                catalogoCategoria = element;
-              }
-            });
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
-
+      const tamanioCatalogoCategorias = this.actividades.length;
+      for (let j = 0; j < tamanioCatalogoCategorias; j++) {
+        if (
+          this.catalogocategorias[j].id ===
+          i.lstActividades[k].idcatalogocategoria
+        ) {
+          catalogoCategoria = this.catalogocategorias[j];
+          j = tamanioCatalogoCategorias;
+        }
+      }
+      console.log("catalogoCategoria", catalogoCategoria);
       this.loadNewActividad(actividad, categoria, catalogoCategoria);
-    });
+    }
   };
 
   onSelect($event) {
-    //You will get the target with bunch of other options as well.
+    // You will get the target with bunch of other options as well.
     console.log("llegaa");
     console.log($event.target.value);
   }
