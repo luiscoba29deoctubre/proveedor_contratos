@@ -132,6 +132,8 @@
                         style="margin-left: 0%;"
                         formControlName="actividad"
                         class="form-control"
+                        (change)="onSelect($event)"
+                        [value]="i"
                       >
                         <option [ngValue]="null" disabled
                           >Escoger actividad
@@ -140,7 +142,6 @@
                         <option
                           *ngFor="let actividad of actividades"
                           [ngValue]="actividad"
-                          [selected]="actividad.id"
                         >
                           {{ actividad.name }}
                         </option>
@@ -163,7 +164,6 @@
                         <option
                           *ngFor="let categoria of categorias"
                           [ngValue]="categoria"
-                          [selected]="categoria.id"
                         >
                           {{ categoria.name }}
                         </option>
@@ -186,7 +186,6 @@
                         <option
                           *ngFor="let detalle of catalogocategorias"
                           [ngValue]="detalle"
-                          [selected]="detalle.id"
                         >
                           {{ detalle.name }}
                         </option>
@@ -208,13 +207,9 @@
               </div>
             </div>
           </div>
-          <p
-            class="form-action"
-            (click)="addNewActividad()"
-            style="font-size: 1em; margin-left: 15px;"
-          >
+          <div (click)="addNewActividad()" class="agregar-actividad">
             <strong><i>Agregar otra actividad +</i></strong>
-          </p>
+          </div>
         </div>
 
         <div

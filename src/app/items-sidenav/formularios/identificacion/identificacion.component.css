@@ -13,3 +13,11 @@ select {
 .quitar-actividad {
   padding-top: 20px;
 }
+
+.agregar-actividad {
+  font-size: 1em;
+  margin-left: 15px;
+  /* align-self: flex-start;
+  display: flex; */
+  float: left;
+}

@@ -69,22 +69,6 @@ export class IdentificacionComponent implements OnInit {
 
     this.initForm();
     this.processIDB = new ProcessIDB(dbService); // creamos una instancia para manejar la base de datos
-    console.log("entra en formsServices");
-    this.formsService.getIdentificacion().subscribe(
-      (identificacionDto) => {
-        // console.log(" llega allForms", identificacionDto);
-        if (identificacionDto.estado) {
-          console.log("componente ", identificacionDto);
-
-          this.loadIdentificacion(identificacionDto); // carga los datos en pantalla
-        }
-        this.spinner.hide();
-      },
-      (error) => {
-        console.log("aqui error hay ", error);
-        this.spinner.hide();
-      }
-    );
   }
   // sacado de https://morioh.com/p/526559a86600 el Toast que muestra mensajes
   showToasterSuccess() {
@@ -97,6 +81,24 @@ export class IdentificacionComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginService.checkToken(); // para que salga, cuando el token expire
+
+    this.formsService.getIdentificacion().subscribe(
+      (identificacionDto) => {
+        // console.log(" llega allForms", identificacionDto);
+        if (identificacionDto.estado) {
+          console.log("componente ", identificacionDto);
+
+          this.loadIdentificacion(identificacionDto); // carga los datos en pantalla
+          this.loadCombos();
+          this.setearCombos()
+        }
+        this.spinner.hide();
+      },
+      (error) => {
+        console.log("aqui error hay ", error);
+        this.spinner.hide();
+      }
+    );
   }
 
   private initForm() {
@@ -193,9 +195,11 @@ export class IdentificacionComponent implements OnInit {
         console.log(error);
       }
     );
+  }
 
+  loadIdentificacion = (i: IdentificacionDto) => {
+    // carga la lista de actividades dinámicamente
     i.lstActividades.forEach(async (e) => {
-
       let actividad: Parameter;
       const actividadNoUsada = await this.dbService.getAll(listas[3]).then(
         (actividades) => {
@@ -250,6 +254,12 @@ export class IdentificacionComponent implements OnInit {
     });
   };
 
+  onSelect($event) {
+    //You will get the target with bunch of other options as well.
+    console.log("llegaa");
+    console.log($event.target.value);
+  }
+
   loadNewActividad(
     actividad: Parameter,
     categoria: Parameter,
@@ -267,9 +277,9 @@ export class IdentificacionComponent implements OnInit {
   addNewActividad() {
     this.getActividades.push(
       this.fb.group({
-        actividad: ["", [Validators.required]],
-        categoria: ["", [Validators.required]],
-        detalle: ["", [Validators.required]],
+        actividad: [null, [Validators.required]],
+        categoria: [null, [Validators.required]],
+        detalle: [null, [Validators.required]],
       })
     );
   }
