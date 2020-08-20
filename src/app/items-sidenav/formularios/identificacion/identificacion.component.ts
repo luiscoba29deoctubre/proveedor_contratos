@@ -10,6 +10,7 @@ import { NotificationService } from "../../../shared/services/notification.servi
 import {
   Parameter,
   ParameterContribuyente,
+  ParameterCode,
 } from "../../../common/domain/param/parameters";
 
 import { ProcessIDB } from "../../../shared/bd/process.indexedDB";
@@ -19,6 +20,11 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { FormularioService } from "../formulario.service";
 import { listas } from "../../../shared/bd/indexedDB";
 import { LoginService } from "../../../logueo/login/login.service";
+import {
+  ParameterActividad,
+  ParameterCategoria,
+  ParameterCatalogoCategoria,
+} from "../../../common/domain/param/parameters";
 
 @Component({
   selector: "app-identificacion",
@@ -38,9 +44,10 @@ export class IdentificacionComponent implements OnInit {
   contribuyentes: ParameterContribuyente[];
   contribuyentesCompleto: ParameterContribuyente[];
   proveedores: Parameter[];
-  actividades: Parameter[] = [];
-  categorias: Parameter[] = [];
-  catalogocategorias: Parameter[] = [];
+  // listas de actividades
+  actividades: ParameterCode[] = [];
+  categorias: ParameterCode[] = [];
+  catalogocategorias: ParameterCode[] = [];
 
   personaSeleccionado: Parameter;
 
@@ -89,7 +96,7 @@ export class IdentificacionComponent implements OnInit {
           console.log("componente ", identificacionDto);
 
           this.loadIdentificacion(identificacionDto); // carga los datos en pantalla
-          await this.loadCombos();
+          await this.loadCombos(identificacionDto);
           this.setearCombosActividades(identificacionDto);
         }
         this.spinner.hide();
@@ -197,15 +204,19 @@ export class IdentificacionComponent implements OnInit {
     );
   };
 
-  loadCombos = async () => {
+  loadCombos = async (i: IdentificacionDto) => {
     const actividadNoUsada = await this.dbService.getAll(listas[3]).then(
       (actividades) => {
         this.actividades = actividades;
+        console.log("actividades ddddd", actividades);
       },
       (error) => {
         console.log(error);
       }
     );
+
+    //this.actividades[0]. = 1;
+
     console.log("loadCombos this.actividades", this.actividades);
     const categoriaNoUsada = await this.dbService.getAll(listas[4]).then(
       (categorias) => {
@@ -233,41 +244,52 @@ export class IdentificacionComponent implements OnInit {
     // carga la lista de actividades dinámicamente
 
     for (let k = 0; k < i.lstActividades.length; k++) {
-      let actividad: Parameter;
+      let actividad: ParameterActividad = new ParameterActividad();
       const tamanioActividades = this.actividades.length;
-      console.log("tamanioActividades", tamanioActividades);
+
       for (let j = 0; j < tamanioActividades; j++) {
-        if (this.actividades[j].id === i.lstActividades[k].idactividad) {
-          console.log("entra en tamanioActividades");
-          actividad = this.actividades[j];
+        if (this.actividades[j].code === i.lstActividades[k].idactividad) {
+          actividad.id = i.lstActividades[k].id;
+          actividad.code = i.lstActividades[k].idactividad;
+          actividad.name = this.actividades[j].name;
           console.log("dentro de actividad", actividad);
           j = tamanioActividades;
         }
       }
-      console.log("actividad", actividad);
+      console.log("actividad xxx", actividad);
 
-      let categoria: Parameter;
+      let categoria: ParameterCategoria = new ParameterCategoria();
       const tamanioCategorias = this.categorias.length;
+
       for (let j = 0; j < tamanioCategorias; j++) {
-        if (this.categorias[j].id === i.lstActividades[k].idcategoria) {
-          categoria = this.categorias[j];
+        if (this.categorias[j].code === i.lstActividades[k].idcategoria) {
+          categoria.id = i.lstActividades[k].id;
+          categoria.code = i.lstActividades[k].idcategoria;
+          categoria.name = this.categorias[j].name;
+          console.log("dentro de categoria", categoria);
+
           j = tamanioCategorias;
         }
       }
       console.log("categoria", categoria);
-      let catalogoCategoria: Parameter;
+      let catalogoCategoria: ParameterCategoria = new ParameterCategoria();
       const tamanioCatalogoCategorias = this.actividades.length;
       for (let j = 0; j < tamanioCatalogoCategorias; j++) {
         if (
-          this.catalogocategorias[j].id ===
+          this.catalogocategorias[j].code ===
           i.lstActividades[k].idcatalogocategoria
         ) {
-          catalogoCategoria = this.catalogocategorias[j];
+          catalogoCategoria.id = i.lstActividades[k].id;
+          catalogoCategoria.code = i.lstActividades[k].idcatalogocategoria;
+          catalogoCategoria.name = this.catalogocategorias[j].name;
+
+          console.log("dentro de catalogoCategoria", catalogoCategoria);
+
           j = tamanioCatalogoCategorias;
         }
       }
-      console.log("catalogoCategoria", catalogoCategoria);
-      this.loadNewActividad(actividad, categoria, catalogoCategoria);
+
+      this.seteoActividad(actividad, categoria, catalogoCategoria);
     }
   };
 
@@ -277,11 +299,7 @@ export class IdentificacionComponent implements OnInit {
     console.log($event.target.value);
   }
 
-  loadNewActividad(
-    actividad: Parameter,
-    categoria: Parameter,
-    catalogoCategoria: Parameter
-  ) {
+  seteoActividad(actividad, categoria, catalogoCategoria) {
     this.getActividades.push(
       this.fb.group({
         actividad: [actividad, [Validators.required]],

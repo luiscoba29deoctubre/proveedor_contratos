@@ -1,7 +1,12 @@
 export class Parameter {
-  constructor(
-    public id?: number,
-     public name?: string) {}
+  // con id se maneja persona, contribuyente, proveedor
+  constructor(public id?: number, public code?: number, public name?: string) {}
+}
+
+
+export class ParameterCode {
+  // con code se maneja categorias, actividad, catalogoCategoria
+  constructor(public code?: number, public name?: string) {}
 }
 
 export class ParameterContribuyente {
@@ -13,17 +18,12 @@ export class ParameterContribuyente {
 }
 
 export class ParameterActividad {
-  constructor(
-    public id?: number,
-    public code?: number,
-    public name?: string
-  ) {}
+  constructor(public code?: number, public id?: number, public name?: string) {}
 }
-
 export class ParameterCategoria {
   constructor(
-    public id?: number,
     public code?: number,
+    public id?: number,
     public idactividad?: number,
     public name?: string
   ) {}
@@ -31,8 +31,8 @@ export class ParameterCategoria {
 
 export class ParameterCatalogoCategoria {
   constructor(
-    public id?: number,
     public code?: number,
+    public id?: number,
     public idcategoria?: number,
     public name?: string
   ) {}

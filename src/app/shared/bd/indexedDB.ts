@@ -1,12 +1,12 @@
 import { DBConfig } from "ngx-indexed-db";
 
 export const listas = [
-  "lstTipoPersonaDto",      //0
-  "lstTipoProveedorDto",    //1
-  "lstTipocontribuyenteDto",//2
-  "lstActividadDto",        //3
-  "lstCategoriaDto",        //4
-  "lstCatalogocategoriaDto",//5
+  "lstTipoPersonaDto", //0
+  "lstTipoProveedorDto", //1
+  "lstTipocontribuyenteDto", //2
+  "lstActividadDto", //3
+  "lstCategoriaDto", //4
+  "lstCatalogocategoriaDto", //5
 ];
 
 export const dbConfig: DBConfig = {
@@ -44,17 +44,17 @@ export const dbConfig: DBConfig = {
     },
     {
       store: listas[3],
-      storeConfig: { keyPath: "id", autoIncrement: false },
+      storeConfig: { keyPath: "code", autoIncrement: false },
       storeSchema: [
-        { name: "id", keypath: "id", options: { unique: false } },
+        { name: "code", keypath: "code", options: { unique: false } },
         { name: "name", keypath: "name", options: { unique: false } },
       ],
     },
     {
       store: listas[4],
-      storeConfig: { keyPath: "id", autoIncrement: false },
+      storeConfig: { keyPath: "code", autoIncrement: false },
       storeSchema: [
-        { name: "id", keypath: "id", options: { unique: false } },
+        { name: "code", keypath: "code", options: { unique: false } },
         {
           name: "idactividad",
           keypath: "idactividad",
@@ -65,9 +65,9 @@ export const dbConfig: DBConfig = {
     },
     {
       store: listas[5],
-      storeConfig: { keyPath: "id", autoIncrement: false },
+      storeConfig: { keyPath: "code", autoIncrement: false },
       storeSchema: [
-        { name: "id", keypath: "id", options: { unique: false } },
+        { name: "code", keypath: "code", options: { unique: false } },
         {
           name: "idcategoria",
           keypath: "idcategoria",

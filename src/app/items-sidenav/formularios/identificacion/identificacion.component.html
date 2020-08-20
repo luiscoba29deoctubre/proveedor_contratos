@@ -133,12 +133,10 @@
                         formControlName="actividad"
                         class="form-control"
                         (change)="onSelect($event)"
-                        [value]="i"
                       >
                         <option [ngValue]="null" disabled
                           >Escoger actividad
                         </option>
-
                         <option
                           *ngFor="let actividad of actividades"
                           [ngValue]="actividad"

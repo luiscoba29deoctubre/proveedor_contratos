@@ -16,6 +16,8 @@ export class ProcessIDB {
           this.addCatalogoCategoria(key, vector);
         } else if (key === "lstCategoriaDto") {
           this.addCategoria(key, vector);
+        } else if (key === "lstActividadDto") {
+          this.addActividad(key, vector);
         } else {
           // tslint:disable-next-line: forin
           for (let index in vector) {
@@ -52,7 +54,28 @@ export class ProcessIDB {
     for (let index in vector) {
       this.dbService
         .add(store, {
-          id: vector[index].id,
+          code: vector[index].id,
+          idactividad: vector[index].idactividad,
+          name: vector[index].name,
+        })
+        .then(
+          () => {
+            // Do something after the value was added
+            console.log("se llena store ", store);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+    }
+  }
+
+  addActividad(store, vector): void {
+    // tslint:disable-next-line: forin
+    for (let index in vector) {
+      this.dbService
+        .add(store, {
+          code: vector[index].id,
           idactividad: vector[index].idactividad,
           name: vector[index].name,
         })
@@ -73,7 +96,7 @@ export class ProcessIDB {
     for (let index in vector) {
       this.dbService
         .add(store, {
-          id: vector[index].id,
+          code: vector[index].id,
           idcategoria: vector[index].idcategoria,
           name: vector[index].name,
         })
