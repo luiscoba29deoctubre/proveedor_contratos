@@ -1,5 +1,7 @@
 export class Parameter {
-  constructor(public id?: number, public name?: string) {}
+  constructor(
+    public id?: number,
+     public name?: string) {}
 }
 
 export class ParameterContribuyente {
@@ -10,9 +12,18 @@ export class ParameterContribuyente {
   ) {}
 }
 
+export class ParameterActividad {
+  constructor(
+    public id?: number,
+    public code?: number,
+    public name?: string
+  ) {}
+}
+
 export class ParameterCategoria {
   constructor(
     public id?: number,
+    public code?: number,
     public idactividad?: number,
     public name?: string
   ) {}
@@ -21,6 +32,7 @@ export class ParameterCategoria {
 export class ParameterCatalogoCategoria {
   constructor(
     public id?: number,
+    public code?: number,
     public idcategoria?: number,
     public name?: string
   ) {}

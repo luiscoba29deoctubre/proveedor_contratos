@@ -90,7 +90,7 @@ export class IdentificacionComponent implements OnInit {
 
           this.loadIdentificacion(identificacionDto); // carga los datos en pantalla
           await this.loadCombos();
-          this.setearCombos(identificacionDto);
+          this.setearCombosActividades(identificacionDto);
         }
         this.spinner.hide();
       },
@@ -229,11 +229,9 @@ export class IdentificacionComponent implements OnInit {
     console.log("loadCombos this.catalogocategorias", this.catalogocategorias);
   };
 
-  setearCombos = async (i: IdentificacionDto) => {
+  setearCombosActividades = async (i: IdentificacionDto) => {
     // carga la lista de actividades dinámicamente
 
-    console.log("async i ", i);
-    console.log("i.lstActividades.length", i.lstActividades.length);
     for (let k = 0; k < i.lstActividades.length; k++) {
       let actividad: Parameter;
       const tamanioActividades = this.actividades.length;
@@ -343,6 +341,7 @@ export class IdentificacionComponent implements OnInit {
             this.spinner.hide();
           },
           (error) => {
+            this.loginService.checkToken(); // para que salga, cuando el token expire
             this.showToasterError();
             console.log(error);
             this.spinner.hide();
