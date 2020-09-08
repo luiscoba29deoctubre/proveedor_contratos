@@ -12,6 +12,7 @@ import { LoginService } from "../../../logueo/login/login.service";
 import { storageList } from "../../../shared/bd/indexedDB";
 import { NotificationService } from "../../../shared/services/notification.service";
 import { FormularioService } from "../formulario.service";
+import { DocumentalDto } from "../../../common/dtos/form/DocumentalDto";
 
 @Component({
   selector: "app-documental",
@@ -46,7 +47,7 @@ export class DocumentalComponent implements OnInit {
 
         if (this.isEmpty(documentalDto.lstDocumento)) {
         } else {
-          //        this.seteoDocumentos(documentalDto.lstDocumento);
+          this.seteoDocumentos(documentalDto);
         }
 
         this.spinner.hide();
@@ -78,6 +79,7 @@ export class DocumentalComponent implements OnInit {
     );
   };
 
+  /*
   agregaLetraAlaPregunta = (lstDocumentos: ParamDocumento[]) => {
     let j = 65;
 
@@ -103,14 +105,26 @@ export class DocumentalComponent implements OnInit {
     }
     this.lstDocumentos = lstDocumentos;
   };
+*/
 
-  seteoDocumentos = (
-    lstDocumentoPerfilDocumental: ParamDocumentoPerfilDocumental[]
-  ) => {
+  agregaLetraAlaPregunta = (lstDocumentos: ParamDocumento[]) => {
+    let j = 65;
+
+    for (let i = 0; i < lstDocumentos.length; i++) {
+      lstDocumentos[i].name =
+        String.fromCharCode(j) + ". " + lstDocumentos[i].name;
+
+      j++;
+    }
+    this.lstDocumentos = lstDocumentos;
+  };
+
+  seteoDocumentos = (documentalDto: DocumentalDto) => {
     for (let i = 0; i < this.lstDocumentos.length; i++) {
-      this.lstDocumentos[
-        i
-      ].lstDocumentoPerfilDocumental = lstDocumentoPerfilDocumental;
+      if (this.lstDocumentos[i].id === documentalDto.lstDocumento[i].id) {
+        this.lstDocumentos[i].lstDocumentoPerfilDocumental =
+          documentalDto.lstDocumento[i].lstDocumentoPerfilDocumental;
+      }
     }
   };
 
