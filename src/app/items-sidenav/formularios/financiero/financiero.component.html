@@ -1,103 +1,80 @@
 <div class="card">
-  <h5 class="card-title" style="margin: 10px;">
+  <h5 class="card-title" style="margin: 10px; text-align: center">
     PERFIL FINANCIERO
   </h5>
 
-  <form>
+  <form
+    [hidden]="esNatural()"
+    novalidate
+    class="card"
+    [formGroup]="naturalForm"
+    (ngSubmit)="sendNaturalForm(naturalForm.value, naturalForm.valid)"
+    role="form"
+  >
     <div class="card">
       <div class="card-body">
         <h4>PERSONA NATURAL</h4>
-        <p style="font-size: 13px;">
-          Ingrese los valores correspondientes a los años 2018 y 2019
+        <p style="font-size: 13px">
+          Ingrese los valores correspondientes a los años
+          {{ currentYear - 2 }} y {{ currentYear - 1 }}
         </p>
-        <div class="row">
-          <table class="table">
-            <tr>
-              <th>Cuenta</th>
-              <th>Resultado</th>
-              <th>Resultado</th>
-            </tr>
-            <tr>
-              <td>Ingresos</td>
-              <td><input type="text" placeholder="ingreso 2018" /></td>
-              <td><input type="text" placeholder="ingreso 2019" /></td>
-            </tr>
-            <tr>
-              <td>Gastos</td>
-              <td><input type="text" placeholder="gastos 2018" /></td>
-              <td><input type="text" placeholder="gastos 2019" /></td>
-            </tr>
-          </table>
-        </div>
+
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+          <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+
+           <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="weight">
+            <th mat-header-cell *matHeaderCellDef>Weight</th>
+            <td mat-cell *matCellDef="let element">{{ element.weight }}</td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="symbol">
+            <th mat-header-cell *matHeaderCellDef>Symbol</th>
+            <td mat-cell *matCellDef="let element">{{ element.symbol }}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
       </div>
     </div>
-    <div class="card">
-      <div class="card-body">
-        <h4>PERSONA JURIDICA</h4>
-        <p style="font-size: 13px;">
-          Ingrese los valores correspondientes a los años 2018 y 2019
-        </p>
-        <div class="row">
-          <table class="table">
-            <tr>
-              <th>Cuenta</th>
-              <th>Resultado</th>
-              <th>Resultado</th>
-            </tr>
-            <tr>
-              <td>Pasivo</td>
-              <td><input type="text" placeholder="Pasivo 2018" /></td>
-              <td><input type="text" placeholder="Pasivo 2019" /></td>
-            </tr>
-            <tr>
-              <td>Patrimonio</td>
-              <td><input type="text" placeholder="Patrimonio 2019" /></td>
-              <td><input type="text" placeholder="Patrimonio 2019" /></td>
-            </tr>
-            <tr>
-              <td>Activo</td>
-              <td><input type="text" placeholder="Activo 2019" /></td>
-              <td><input type="text" placeholder="Activo 2019" /></td>
-            </tr>
-            <tr>
-              <td>Activo Corriente</td>
-              <td><input type="text" placeholder="Activo Corriente 2019" /></td>
-              <td><input type="text" placeholder="Activo Corriente 2019" /></td>
-            </tr>
-            <tr>
-              <td>Pasivo Corriente</td>
-              <td><input type="text" placeholder="Pasivo Corriente 2019" /></td>
-              <td><input type="text" placeholder="Pasivo Corriente 2019" /></td>
-            </tr>
-            <tr>
-              <td>Utilidad Neta</td>
-              <td><input type="text" placeholder="Utilidad Neta 2019" /></td>
-              <td><input type="text" placeholder="Utilidad Neta 2019" /></td>
-            </tr>
-          </table>
-        </div>
-      </div>
-    </div>
-    <div style="text-align: center; margin-bottom: 10px;" class="row mt-3">
+
+    <div style="text-align: center; margin-bottom: 10px" class="row mt-3">
       <!-- Button -->
       <div class="col">
-        <button class="btn btn-info" type="submit">
+        <button
+          class="btn btn-info"
+          style="color: #fec524; background: #8b2131; border-color: black"
+        >
           <i class="fa fa-sign-in"></i> Atrás
         </button>
       </div>
       <div class="col">
-        <button class="btn btn-info" type="submit">
+        <button
+          class="btn btn-info"
+          type="submit"
+          style="color: #fec524; background: #8b2131; border-color: black"
+        >
           <i class="fa fa-sign-in"></i> Siguiente
         </button>
       </div>
     </div>
   </form>
+
   <ngx-spinner
     bdColor="rgba(51,51,51,0.8)"
     size="medium"
     color="#fff"
     type="ball-scale-multiple"
   >
-    <p style="font-size: 20px; color: white;">Cargando...</p>
+    <p style="font-size: 20px; color: white">Cargando...</p>
   </ngx-spinner>
 </div>

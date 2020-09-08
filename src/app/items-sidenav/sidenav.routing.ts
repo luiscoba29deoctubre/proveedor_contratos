@@ -1,16 +1,14 @@
 import { Routes } from "@angular/router";
-
-import { AdminComponent } from "./admin/admin.component";
 import { AuthGuardService } from "../common/services/auth/auth-guard.service";
-
-import { IdentificacionComponent } from "./formularios/identificacion/identificacion.component";
-import { InfoContactoComponent } from "./formularios/info-contacto/info-contacto.component";
-import { EmpresarialComponent } from "./formularios/empresarial/empresarial.component";
-import { FinancieroComponent } from "./formularios/financiero/financiero.component";
-import { OperativoComponent } from "./formularios/operativo/operativo.component";
+import { AdminComponent } from "./admin/admin.component";
+import { AceptacionComponent } from "./formularios/aceptacion/aceptacion.component";
 import { ComercialComponent } from "./formularios/comercial/comercial.component";
 import { DocumentalComponent } from "./formularios/documental/documental.component";
-import { AceptacionComponent } from "./formularios/aceptacion/aceptacion.component";
+import { EmpresarialComponent } from "./formularios/empresarial/empresarial.component";
+import { FinancieroComponent } from "./formularios/financiero/financiero.component";
+import { IdentificacionComponent } from "./formularios/identificacion/identificacion.component";
+import { InfoContactoComponent } from "./formularios/info-contacto/info-contacto.component";
+import { OperativoComponent } from "./formularios/operativo/operativo.component";
 
 export const SidenavRoutes: Routes = [
   {

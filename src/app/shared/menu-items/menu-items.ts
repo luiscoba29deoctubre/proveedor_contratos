@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-import { NgxIndexedDBService } from "ngx-indexed-db";
 
 export interface Menu {
   state: string;

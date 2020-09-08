@@ -1,15 +1,12 @@
 import { Component, OnInit } from "@angular/core";
-import { FormGroup, Validators, FormBuilder } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-
-import { LoginService } from "./login.service";
-import { Usuario } from "../../common/domain/usuario";
-import { NotificationService } from "../../shared/services/notification.service";
-
 import { NgxIndexedDBService } from "ngx-indexed-db";
-import { ProcessIDB } from "../../shared/bd/process.indexedDB";
-
 import { NgxSpinnerService } from "ngx-spinner";
+import { Usuario } from "../../common/domain/usuario";
+import { ProcessIDB } from "../../shared/bd/process.indexedDB";
+import { NotificationService } from "../../shared/services/notification.service";
+import { LoginService } from "./login.service";
 
 /**
  * Componente Login de Usuario

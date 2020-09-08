@@ -1,13 +1,9 @@
-import { Component, AfterViewInit, OnInit } from "@angular/core";
-
+import { Component, OnInit } from "@angular/core";
+import { NgxIndexedDBService } from "ngx-indexed-db";
+import { NgxSpinnerService } from "ngx-spinner";
 import { ProcessIDB } from "../shared/bd/process.indexedDB";
 import { NotificationService } from "../shared/services/notification.service";
-import { NgxIndexedDBService } from "ngx-indexed-db";
-import { FormularioService } from "../items-sidenav/formularios/formulario.service";
-
-import { NgxSpinnerService } from "ngx-spinner";
 import { ParamService } from "./param.service";
-import { dbConfig } from "../shared/bd/indexedDB";
 
 @Component({
   selector: "app-dashboard",
@@ -23,7 +19,6 @@ export class DashboardComponent implements OnInit {
     private paramService: ParamService,
     private spinner: NgxSpinnerService
   ) {
-    dbConfig;
     this.processIDB = new ProcessIDB(dbService);
   }
   // sacado de https://morioh.com/p/526559a86600 el Toast que muestra mensajes
@@ -42,8 +37,6 @@ export class DashboardComponent implements OnInit {
 
   loadAllParameters() {
     this.spinner.show();
-
-    console.log("entra en loadAllParameters");
 
     this.paramService.getParameters().subscribe(
       (allParameters) => {

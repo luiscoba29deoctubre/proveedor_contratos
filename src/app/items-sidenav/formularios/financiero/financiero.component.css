@@ -2,7 +2,7 @@ input {
   border: 1px solid #ccc;
 }
 
-table tr td input{
+table tr td input {
   border-top: none;
   border-right: none;
   border-left: none;
@@ -10,4 +10,8 @@ table tr td input{
 
 button {
   width: 120px;
+}
+
+table {
+  width: 100%;
 }

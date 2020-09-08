@@ -21,3 +21,10 @@ select {
   display: flex; */
   float: left;
 }
+
+.equiz{
+  margin-top: 17px;
+  font-size: x-large;
+  color: crimson;
+
+}

@@ -1,14 +1,12 @@
-import { Injectable } from "@angular/core";
-
-import { ApiEndpoints } from "../api.endpoints";
-
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { Observable } from "rxjs/Observable";
-import { TokenInitial } from "../../common/domain/tokeninitial";
-import { throwError, BehaviorSubject } from "rxjs";
+import { Injectable } from "@angular/core";
+import { JwtHelperService } from "@auth0/angular-jwt";
+import { BehaviorSubject, throwError } from "rxjs";
 import { catchError } from "rxjs/internal/operators/catchError";
 import { map } from "rxjs/internal/operators/map";
-import { JwtHelperService } from "@auth0/angular-jwt";
+import { Observable } from "rxjs/Observable";
+import { TokenInitial } from "../../common/domain/tokeninitial";
+import { ApiEndpoints } from "../api.endpoints";
 
 const helper = new JwtHelperService();
 /**
@@ -37,7 +35,7 @@ export class LoginService {
     this.loggedIn.next(false);
   }
 
-  public checkToken(): void {
+  public checkExpirationToken(): void {
     const userToken = sessionStorage.getItem("token");
     const isExpired = helper.isTokenExpired(userToken);
     isExpired ? this.logout() : this.loggedIn.next(true);
@@ -47,7 +45,11 @@ export class LoginService {
     sessionStorage.setItem("token", token);
   }
 
-   /**
+  private saveUsuario(usuario: string): void {
+    sessionStorage.setItem("usuario", usuario);
+  }
+
+  /**
    * Llama el servicio de autenticación de credenciales
    *
    * @param email Email del usuario
@@ -55,13 +57,15 @@ export class LoginService {
    */
   public login(email: string, password: string): Observable<TokenInitial> {
     const authData: any = {
-      email: email,
-      password: password,
+      email,
+      password,
     };
     return this.http
       .post<TokenInitial>(this.endpoints.url_api_auth_login, authData)
       .pipe(
         map((response: TokenInitial) => {
+          const usuario = helper.decodeToken(response.token).usuario;
+          this.saveUsuario(usuario);
           this.saveToken(response.token);
           this.loggedIn.next(true);
           return response;

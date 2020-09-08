@@ -1,10 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { FormGroup, Validators, FormBuilder } from "@angular/forms";
-import { Usuario } from "../../common/domain/usuario";
-
-import { UsuarioService } from "../../common/services/usuario.service";
-
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NgxSpinnerService } from "ngx-spinner";
+import { Usuario } from "../../common/domain/usuario";
+import { UsuarioService } from "../../common/services/usuario.service";
 
 @Component({
   selector: "app-register",

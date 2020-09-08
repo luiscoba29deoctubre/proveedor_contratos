@@ -1,29 +1,36 @@
 <div class="card">
-  <h5 class="card-title" style="margin: 10px;">
+  <h5 class="card-title" style="margin: 10px; text-align: center">
     PERFIL EMPRESARIAL
   </h5>
 
-  <form
-    class="card"
-    [formGroup]="empresarialForm"
-    (ngSubmit)="sendForm(empresarialForm.value, empresarialForm.valid)"
-    role="form"
-  >
+  <form class="card" [formGroup]="empresarialForm" role="form">
     <div class="card-body">
       <div class="row">
-        <div class="col">
+        <div class="col-sm-12 col-md-12 col-lg-12">
           <div class="form-group">
             <label for="fechaaperturaruc">Fecha de apertura del RUC: </label>
-            <input
-              formControlName="fechaaperturaruc"
-              type="text"
-              class="form-control"
-              placeholder="Dirección"
-              id="fechaaperturaruc"
-            />
+
+            <div class="container">
+              <div class="row">
+                <div class="col-xs-12">
+                  <input
+                    formControlName="fechaaperturaruc"
+                    type="text"
+                    placeholder="Escoge fecha"
+                    class="form-control"
+                    bsDatepicker
+                    #dp="bsDatepicker"
+                    [readonly]="true"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="col">
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12 col-md-6 col-lg-6">
           <div class="form-group">
             <label for="actividadeconomicaprincipal"
               >Actividad económica principal:
@@ -37,10 +44,7 @@
             />
           </div>
         </div>
-      </div>
-
-      <div class="row">
-        <div class="col">
+        <div class="col-sm-12 col-md-6 col-lg-6">
           <div class="form-group">
             <label for="actividadeconomicasecundaria"
               >Actividad económica secundaria(si aplica):
@@ -60,31 +64,32 @@
 
   <div class="row">
     <div class="col">
-      <div class="card mt-3" style="border: none;">
-        <label style="margin-bottom: 0%; margin-left: 2%;"
-          >Conteste las siguientes preguntas:</label
+      <div class="card mt-3" style="border: none">
+        <label style="margin-bottom: 0%; margin-left: 2%"
+          ><strong>Conteste las siguientes preguntas:</strong></label
         >
         <hr />
-        <div class="card-body" style="padding-top: 0%;">
-          <div *ngFor="let question of allQuestions">
+        <div class="card-body" style="padding-top: 0%">
+          <div *ngFor="let question of allQuestions; let i = index">
             <div>{{ question.question }}</div>
             <div class="form-group row">
-              <div class="col-md-9 col-form-label">
+              <div class="col-sm-12 col-md-6 col-lg-12 mt-3">
                 <div
-                  style="margin-right: 13%; margin-top: 0%;"
-                  *ngFor="let answer of question.answers; let i = index"
+                  style="margin-right: 13%; margin-top: 0%"
+                  *ngFor="let answer of question.answers; let j = index"
                   class="form-check form-check-inline mr-6"
                 >
                   <label class="form-check-label">
                     <input
+                      id="{{ answer.idrespuestaseleccionada }}"
                       class="form-check-input"
                       type="radio"
                       name="{{ question.id }}"
-                      value="{{ answer.resp }}"
-                      [(ngModel)]="question.selected"
-                      (change)="onItemChange($event.target.value)"
+                      [value]="answer"
+                      [(ngModel)]="lstRespuestasSeleccionadas[i]"
+                      (ngModelChange)="onItemChange($event, i, j)"
                     />
-                    {{ answer.resp }}
+                    {{ answer.name }}
                   </label>
                 </div>
               </div>
@@ -96,15 +101,26 @@
     </div>
   </div>
 
-  <div style="text-align: center; margin-bottom: 10px;" class="row mt-3">
+  <div style="text-align: center; margin-bottom: 10px" class="row mt-3">
     <!-- Button -->
     <div class="col">
-      <button class="btn btn-info" type="submit">
+      <button
+        style="color: #fec524; background: #8b2131; border-color: black"
+        (click)="retrocederForm()"
+        class="btn btn-info"
+        type="submit"
+      >
         <i class="fa fa-sign-in"></i> Atrás
       </button>
     </div>
     <div class="col">
-      <button class="btn btn-info" type="submit">
+      <button
+        [disabled]="empresarialForm.invalid || !cuestionarioEstaLleno()"
+        style="color: #fec524; background: #8b2131; border-color: black"
+        (click)="sendForm()"
+        class="btn btn-info"
+        type="submit"
+      >
         <i class="fa fa-sign-in"></i> Siguiente
       </button>
     </div>
@@ -116,8 +132,6 @@
     color="#fff"
     type="ball-scale-multiple"
   >
-    <p style="font-size: 20px; color: white;">Cargando...</p>
+    <p style="font-size: 20px; color: white">Cargando...</p>
   </ngx-spinner>
-  <pre>{{ empresarialForm.status }}</pre>
-  <pre>{{ empresarialForm.value | json }}</pre>
-</div>
+ </div>

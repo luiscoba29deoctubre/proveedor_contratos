@@ -1,73 +1,56 @@
 <div class="card">
-  <h5 class="card-title" style="margin: 10px;">
+  <h5 class="card-title" style="margin: 10px; text-align: center">
     PERFIL DOCUMENTAL
   </h5>
-
-Hay que recorrer todos los documentos
-
-
-  <form class="card">
-    <div class="card-body">
-      <div class="row">
-        <div class="col">
-          <div class="form-group">
-            <label for="razonsocial">Nombre o Razón Social: </label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Nombre o Razón Social"
-              name="razonsocial"
-              id="razonsocial"
-            />
+  <div class="card">
+    <div class="card-body" style="padding-top: 0%">
+      <div *ngFor="let subeDocumento of lstDocumentos; let i = index">
+        <div class="row">
+          <div class="col">
+            <div class="border">
+              {{ subeDocumento.name }}
+              <angular-file-uploader
+                [numberFileUpload]="subeDocumento.numero"
+                [allowedFiles]="subeDocumento.lstDocumentoPerfilDocumental"
+                [resetUpload]="resetUpload"
+                [config]="setIdAfuConfig(subeDocumento.id)"
+                (ApiResponse)="docUpload($event)"
+              >
+              </angular-file-uploader>
+            </div>
           </div>
-        </div>
-        <div class="col">
-          <div class="form-group">
-            <label for="rucrice">RUC / RISE: </label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="RUC / RISE"
-              name="rucrice"
-              id="rucrice"
-            />
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="nombrecomercial">Nombre Comercial: </label>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Nombre Comercial"
-          name="nombrecomercial"
-          id="nombrecomercial"
-        />
-      </div>
-
-      <div style="text-align: center; margin-bottom: 10px;" class="row mt-3">
-        <!-- Button -->
-        <div class="col">
-          <button class="btn btn-info" type="submit">
-            <i class="fa fa-sign-in"></i> Atrás
-          </button>
-        </div>
-        <div class="col">
-          <button class="btn btn-info" type="submit">
-            <i class="fa fa-sign-in"></i> Siguiente
-          </button>
         </div>
       </div>
     </div>
-  </form>
+    <div style="text-align: center; margin-bottom: 10px" class="row mt-3">
+      <!-- Button -->
+      <div class="col">
+        <button
+          style="color: #fec524; background: #8b2131; border-color: black"
+          class="btn btn-info"
+          type="submit"
+        >
+          <i class="fa fa-sign-in"></i> Atrás
+        </button>
+      </div>
+      <div class="col">
+        <button
+          style="color: #fec524; background: #8b2131; border-color: black"
+          class="btn btn-info"
+          type="submit"
+        >
+          <i class="fa fa-sign-in"></i> Siguiente
+        </button>
+      </div>
+    </div>
+  </div>
 
   <ngx-spinner
-  bdColor="rgba(51,51,51,0.8)"
-  size="medium"
-  color="#fff"
-  type="ball-scale-multiple"
->
-  <p style="font-size: 20px; color: white;">Cargando...</p>
-</ngx-spinner>
+    bdColor="rgba(51,51,51,0.8)"
+    size="medium"
+    color="#fff"
+    type="ball-scale-multiple"
+  >
+    <p style="font-size: 20px; color: white">Cargando...</p>
+  </ngx-spinner>
 </div>

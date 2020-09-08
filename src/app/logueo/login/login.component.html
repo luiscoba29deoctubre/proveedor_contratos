@@ -1,11 +1,15 @@
 <div class="container">
-  <div class="row justify-content-center">
-    <div class="col-5" style="margin-top: 70px;">
-      <div class="card">
-        <h5 class="card-title" style="margin: 10px;">Login</h5>
+  <div class="row center-block justify-content-center align-item-center">
+    <div style="margin-top: 70px">
+      <div class="card" style="background-color: #dad8d1">
+        <img src="../../../assets/images/la_29_logo-1.png" />
+
+        <h4 class="titulo-ingreso" style="margin-left: 10px">
+          <strong> Ingreso al sistema de proveedores </strong>
+        </h4>
 
         <div
-          style="padding-top: 30px; border: 1px solid #cccccc;"
+          style="padding-top: 30px; border: 1px solid #cccccc"
           class="card-body"
         >
           <form
@@ -14,7 +18,7 @@
             role="form"
           >
             <div class="form-group">
-              <div style="margin-bottom: 25px;" class="input-group">
+              <div style="margin-bottom: 25px" class="input-group">
                 <span class="input-group-addon">
                   <i class="glyphicon glyphicon-envelope"></i>
                 </span>
@@ -60,7 +64,7 @@
               </div>
             </div>
             <div class="form-group">
-              <div style="margin-bottom: 25px;" class="input-group">
+              <div style="margin-bottom: 25px" class="input-group">
                 <span class="input-group-addon">
                   <i class="glyphicon glyphicon-lock"></i>
                 </span>
@@ -93,39 +97,39 @@
               </div>
             </div>
             <div
-              style="margin-top: 10px; text-align: center;"
+              style="margin-top: 10px; text-align: center"
               class="form-group"
             >
               <!-- Button -->
               <div class="col-sm-12">
                 <button
                   [disabled]="loginForm.invalid"
-                  class="btn btn-info"
+                  class="btn btn-login"
                   type="submit"
                 >
-                  <i class="fa fa-sign-in"></i> Login
+                  Login
                 </button>
               </div>
-              <div class="col-sm-12 margin_login">
-                <a style="font-size: 13px;" href="/olvido-clave"
+              <div class="col-sm-12 margin_login" style="margin-bottom: 10px">
+                <a style="font-size: 13px" href="/olvido-clave"
                   >¿Has olvidado los datos de la cuenta?</a
                 >
               </div>
-              <div class="btn btn-success col-sm-12 margin_login">
-                <a style="color: white;" href="/registro">Crear nueva cuenta</a>
+              <div class="btn btn-crear col-sm-12 margin_login">
+                <a style="color: #8b2131" href="/registro">Registrarse</a>
               </div>
             </div>
           </form>
         </div>
       </div>
     </div>
-    <ngx-spinner
-      bdColor="rgba(51,51,51,0.8)"
-      size="medium"
-      color="#fff"
-      type="ball-scale-multiple"
-    >
-      <p style="font-size: 20px; color: white;">Cargando...</p>
-    </ngx-spinner>
   </div>
 </div>
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">Cargando...</p>
+</ngx-spinner>

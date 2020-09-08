@@ -1,18 +1,16 @@
-import "hammerjs";
-import { NgModule } from "@angular/core";
-import { RouterModule } from "@angular/router";
 import { CommonModule } from "@angular/common";
-import { MaterialModule } from "../material-module";
+import { HttpClientModule } from "@angular/common/http";
+import { NgModule } from "@angular/core";
 import { FlexLayoutModule } from "@angular/flex-layout";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { RouterModule } from "@angular/router";
+import { JwtModule } from "@auth0/angular-jwt";
+import "hammerjs";
+import { ApiEndpoints } from "../logueo/api.endpoints";
+import { MaterialModule } from "../material-module";
 import { DashboardComponent } from "./dashboard.component";
 import { DashboardRoutes } from "./dashboard.routing";
-import { JwtModule } from "@auth0/angular-jwt";
 import { ParamService } from "./param.service";
-import { ApiEndpoints } from "../logueo/api.endpoints";
-import { ReactiveFormsModule, FormsModule } from "@angular/forms";
-import { HttpClientModule } from "@angular/common/http";
-import { dbConfig } from '../shared/bd/indexedDB';
-import { NgxIndexedDBModule } from 'ngx-indexed-db';
 
 export function tokenGetter() {
   return sessionStorage.getItem("token");
@@ -27,8 +25,6 @@ export function tokenGetter() {
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-
-    //NgxIndexedDBModule.forRoot(dbConfig),
 
     JwtModule.forRoot({
       config: {

@@ -1,36 +1,184 @@
-import { IdentificacionDto } from "../../common/dtos/form/IdentificacionDto";
 import { NgxIndexedDBService } from "ngx-indexed-db";
-import { listas } from "./indexedDB";
+import { ParamPregunta, ParamRespuesta } from "../../common/dtos/parameters";
+import { storageList } from "./indexedDB";
 
 // manejaremos la bd
 export class ProcessIDB {
   constructor(private dbService: NgxIndexedDBService) {}
 
   fillingParameters = (allParameters) => {
-    for (let key in allParameters) {
-      if (allParameters.hasOwnProperty(key)) {
-        let vector = allParameters[key];
-        if (key === "lstTipocontribuyenteDto") {
-          this.addContribuyente(key, vector);
-        } else if (key === "lstCatalogocategoriaDto") {
-          this.addCatalogoCategoria(key, vector);
-        } else if (key === "lstCategoriaDto") {
-          this.addCategoria(key, vector);
-        } else if (key === "lstActividadDto") {
-          this.addActividad(key, vector);
-        } else {
-          // tslint:disable-next-line: forin
-          for (let index in vector) {
-            this.addParameterToDB(key, vector[index].id, vector[index].name);
-          }
-        }
-      }
+    this.addLstActividadDto(
+      "lstActividadDto",
+      allParameters["lstActividadDto"]
+    );
+
+    this.storeLstCantonDto("lstCantonDto", allParameters["lstCantonDto"]);
+
+    this.storeLstCatalogoCategoriaDto(
+      "lstCatalogocategoriaDto",
+      allParameters["lstCatalogocategoriaDto"]
+    );
+
+    this.storeLstCategoriaDto(
+      "lstCategoriaDto",
+      allParameters["lstCategoriaDto"]
+    );
+
+    this.addLstPaisDto("lstPaisDto", allParameters["lstPaisDto"]);
+
+    this.storeLstParroquiaDto(
+      "lstParroquiaDto",
+      allParameters["lstParroquiaDto"]
+    );
+
+    this.storeLstProvinciaDto(
+      "lstProvinciaDto",
+      allParameters["lstProvinciaDto"]
+    );
+
+    this.addLstTipoPersonaDto(
+      "lstTipoPersonaDto",
+      allParameters["lstTipoPersonaDto"]
+    );
+
+    this.addLstTipoProveedorDto(
+      "lstTipoProveedorDto",
+      allParameters["lstTipoProveedorDto"]
+    );
+
+    this.storeLstTipocontribuyenteDto(
+      "lstTipocontribuyenteDto",
+      allParameters["lstTipocontribuyenteDto"]
+    );
+
+    this.storeLstPreguntaDto("lstPreguntaDto", allParameters["lstPreguntaDto"]);
+
+    this.storeLstRespuestaDto(
+      "lstRespuestaDto",
+      allParameters["lstRespuestaDto"]
+    );
+
+    this.addLstDocumentoDto(
+      "lstDocumentoDto",
+      allParameters["lstDocumentoDto"]
+    );
+  };
+
+  addLstTipoProveedorDto = (key, vector) => {
+    // tslint:disable-next-line: forin
+    for (const index in vector) {
+      this.addParameterToDB(key, vector[index].id, vector[index].name);
     }
   };
 
-  addContribuyente(store, vector): void {
+  addLstActividadDto = (key, vector) => {
     // tslint:disable-next-line: forin
-    for (let index in vector) {
+    for (const index in vector) {
+      this.addParameterToDB(key, vector[index].id, vector[index].name);
+    }
+  };
+
+  addLstTipoPersonaDto = (key, vector) => {
+    // tslint:disable-next-line: forin
+    for (const index in vector) {
+      this.addParameterToDB(key, vector[index].id, vector[index].name);
+    }
+  };
+
+  addLstDocumentoDto = (store, vector) => {
+    // tslint:disable-next-line: forin
+    for (const index in vector) {
+      this.dbService
+        .add(store, {
+          id: vector[ index ].id,
+          name: vector[ index ].name,
+          numero: vector[ index ].numero,
+        })
+        .then(
+          () => {
+            // Do something after the value was added
+            console.log("se llena store ", store);
+          },
+          (error) => {
+            console.log(store, error);
+          }
+        );
+    }
+  }
+
+  addLstPaisDto = (key, vector) => {
+    // tslint:disable-next-line: forin
+    for (const index in vector) {
+      this.addParameterToDB(key, vector[index].id, vector[index].name);
+    }
+  };
+
+  storeLstRespuestaDto(store, vector: ParamRespuesta[]): void {
+    // tslint:disable-next-line: forin
+    for (const index in vector) {
+      this.dbService
+        .add(store, {
+          id: vector[index].id,
+          idpregunta: vector[index].idpregunta,
+          name: vector[index].name,
+          idtipoperfil: vector[index].idtipoperfil,
+        })
+        .then(
+          () => {
+            // Do something after the value was added
+            console.log("se llena store ", store);
+          },
+          (error) => {
+            console.log(store, error);
+          }
+        );
+    }
+  }
+
+  storeLstPreguntaDto(store, vector: ParamPregunta[]): void {
+    // tslint:disable-next-line: forin
+    for (const index in vector) {
+      this.dbService
+        .add(store, {
+          id: vector[index].id,
+          name: vector[index].name,
+          idtipoperfil: vector[index].idtipoperfil,
+        })
+        .then(
+          () => {
+            // Do something after the value was added
+            console.log("se llena store ", store);
+          },
+          (error) => {
+            console.log(store, error);
+          }
+        );
+    }
+  }
+  storeLstCantonDto(store, vector): void {
+    // tslint:disable-next-line: forin
+    for (const index in vector) {
+      this.dbService
+        .add(store, {
+          id: vector[index].id,
+          idprovincia: vector[index].idprovincia,
+          name: vector[index].name,
+        })
+        .then(
+          () => {
+            // Do something after the value was added
+            console.log("se llena store ", store);
+          },
+          (error) => {
+            console.log(store, error);
+          }
+        );
+    }
+  }
+
+  storeLstTipocontribuyenteDto(store, vector): void {
+    // tslint:disable-next-line: forin
+    for (const index in vector) {
       this.dbService
         .add(store, {
           id: vector[index].id,
@@ -43,18 +191,17 @@ export class ProcessIDB {
             console.log("se llena store ", store);
           },
           (error) => {
-            console.log(error);
+            console.log(store, error);
           }
         );
     }
   }
-
-  addCategoria(store, vector): void {
+  storeLstCategoriaDto(store, vector): void {
     // tslint:disable-next-line: forin
-    for (let index in vector) {
+    for (const index in vector) {
       this.dbService
         .add(store, {
-          code: vector[index].id,
+          id: vector[index].id,
           idactividad: vector[index].idactividad,
           name: vector[index].name,
         })
@@ -64,39 +211,17 @@ export class ProcessIDB {
             console.log("se llena store ", store);
           },
           (error) => {
-            console.log(error);
+            console.log(store, error);
           }
         );
     }
   }
-
-  addActividad(store, vector): void {
+  storeLstCatalogoCategoriaDto(store, vector): void {
     // tslint:disable-next-line: forin
-    for (let index in vector) {
+    for (const index in vector) {
       this.dbService
         .add(store, {
-          code: vector[index].id,
-          idactividad: vector[index].idactividad,
-          name: vector[index].name,
-        })
-        .then(
-          () => {
-            // Do something after the value was added
-            console.log("se llena store ", store);
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
-    }
-  }
-
-  addCatalogoCategoria(store, vector): void {
-    // tslint:disable-next-line: forin
-    for (let index in vector) {
-      this.dbService
-        .add(store, {
-          code: vector[index].id,
+          id: vector[index].id,
           idcategoria: vector[index].idcategoria,
           name: vector[index].name,
         })
@@ -106,7 +231,49 @@ export class ProcessIDB {
             console.log("se llena store ", store);
           },
           (error) => {
-            console.log(error);
+            console.log(store, error);
+          }
+        );
+    }
+  }
+
+  storeLstParroquiaDto(store, vector): void {
+    // tslint:disable-next-line: forin
+    for (const index in vector) {
+      this.dbService
+        .add(store, {
+          id: vector[index].id,
+          idcanton: vector[index].idcanton,
+          name: vector[index].name,
+        })
+        .then(
+          () => {
+            // Do something after the value was added
+            console.log("se llena store ", store);
+          },
+          (error) => {
+            console.log(store, error);
+          }
+        );
+    }
+  }
+
+  storeLstProvinciaDto(store, vector): void {
+    // tslint:disable-next-line: forin
+    for (const index in vector) {
+      this.dbService
+        .add(store, {
+          id: vector[index].id,
+          idpais: vector[index].idpais,
+          name: vector[index].name,
+        })
+        .then(
+          () => {
+            // Do something after the value was added
+            console.log("se llena store ", store);
+          },
+          (error) => {
+            console.log(store, error);
           }
         );
     }
@@ -119,7 +286,7 @@ export class ProcessIDB {
         // console.log("se llena store ", store);
       },
       (error) => {
-        console.log(error);
+        console.log(store, error);
       }
     );
   }
@@ -127,14 +294,14 @@ export class ProcessIDB {
   clearIndexedDB = () => {
     console.log("entra en clear");
 
-    listas.forEach((store) => {
+    storageList.forEach((store) => {
       console.log("entra a borrrar listas");
       this.dbService.clear(store).then(
         () => {
           // Do something after clear
         },
         (error) => {
-          console.log(error);
+          console.log(store, error);
         }
       );
     });

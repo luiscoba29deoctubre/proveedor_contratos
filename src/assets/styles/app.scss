@@ -16,8 +16,8 @@ File: scss
  *	7. Widgets
  *	8. Custom Templates
  */
-/******************* 
-Global Styles 
+/*******************
+Global Styles
 *******************/
 
 * {
@@ -31,8 +31,9 @@ body {
   overflow-x: hidden;
   color: $bodytext;
   font-weight: 300;
-  // background: $inverse;
-  //background: green;
+  min-height: 100vh;
+  padding: 0;
+  //background: $inverse;
 }
 
 html {

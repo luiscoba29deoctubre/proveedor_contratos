@@ -28,6 +28,9 @@ import { JwtModule } from "@auth0/angular-jwt";
 import { NgxSpinnerModule } from "ngx-spinner";
 import { FormularioService } from "./formularios/formulario.service";
 import { ApiEndpoints } from "../logueo/api.endpoints";
+import { BsDatepickerModule } from "ngx-bootstrap/datepicker";
+import { AngularFileUploaderModule } from "./formularios/documental/angular-file-uploader/src/lib/angular-file-uploader.module";
+import { FileSaverModule } from "ngx-filesaver";
 
 export function tokenGetter() {
   return sessionStorage.getItem("token");
@@ -44,9 +47,14 @@ export function tokenGetter() {
     FlexLayoutModule,
     CdkTableModule,
 
+
     NgxSpinnerModule,
-   // NgxIndexedDBModule.forRoot(dbConfig),
+
     LogueoModule,
+
+    AngularFileUploaderModule,
+
+    FileSaverModule,
 
     JwtModule.forRoot({
       config: {
@@ -56,6 +64,8 @@ export function tokenGetter() {
         blacklistedRoutes: ["http://example.com/examplebadroute/"],
       },
     }),
+
+    BsDatepickerModule.forRoot(),
   ],
   providers: [ApiEndpoints, FormularioService],
   declarations: [

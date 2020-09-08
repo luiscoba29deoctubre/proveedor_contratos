@@ -14,3 +14,22 @@ button {
 .margin_login {
   margin-top: 10px;
 }
+
+.titulo-ingreso {
+  margin-left: 10px;
+  margin-top: 10px;
+  text-align: center;
+  color: #8b2131;
+}
+
+.btn-login {
+  color: #fec524;
+  background-color: #8b2131;
+  border: 1px solid #8b2131 !important;
+}
+
+.btn-crear {
+  color: #8b2131;
+  background-color: #fec524;
+  border: 1px solid #fec524 !important;
+}

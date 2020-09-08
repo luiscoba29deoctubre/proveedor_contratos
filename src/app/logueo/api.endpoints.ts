@@ -48,8 +48,34 @@ export class ApiEndpoints {
   public url_api_get_parameters: string = this.url_api_procesos + "/get-param";
 
   // proceso de obtención del formulario 'identificacion'
+  public url_api_get_info_contacto: string =
+    this.url_api_formulario + "/get-info-contacto";
+
+  // proceso de obtención del formulario 'identificacion'
   public url_api_get_identificacion: string =
     this.url_api_formulario + "/get-identifica";
+
+  // proceso de obtención del formulario 'empresarial'
+  public url_api_get_empresarial: string =
+    this.url_api_formulario + "/get-empresarial";
+
+  public url_api_get_financiero: string =
+    this.url_api_formulario + "/get-financiero";
+
+  public url_api_get_operativo: string =
+    this.url_api_formulario + "/get-operativo";
+
+  public url_api_get_comercial: string =
+    this.url_api_formulario + "/get-comercial";
+
+  public url_api_get_documetal: string =
+    this.url_api_formulario + "/get-documental";
+
+  public url_api_get_aceptacion: string =
+    this.url_api_formulario + "/get-aceptacion";
+
+  public url_api_download_pdf: string =
+    this.url_api_formulario + "/download-pdf";
 
   // Crear nuevo usuario
   public url_api_new_user: string = this.url_api_usuarios + "/";
@@ -60,4 +86,30 @@ export class ApiEndpoints {
   // guardar identificacion
   public url_api_save_identification: string =
     this.url_api_formulario + "/save-identification";
+
+  // guardar identificacion
+  public url_api_save_empresarial: string =
+    this.url_api_formulario + "/save-empresarial";
+
+  public url_api_save_operativo: string =
+    this.url_api_formulario + "/save-operativo";
+
+  public url_api_save_comercial: string =
+    this.url_api_formulario + "/save-comercial";
+
+  // guardar el perfil financiero de persona Juridico
+  public url_api_save_financiero_juridico: string =
+    this.url_api_formulario + "/save-financiero-juridico";
+
+  // guardar el perfil financiero de persona Natural
+  public url_api_save_financiero_natural: string =
+    this.url_api_formulario + "/save-financiero-natural";
+
+  // guardar informacion de contacto
+  public url_api_save_info_contacto: string =
+    this.url_api_formulario + "/save-info-contacto";
+
+  // elimina una actividad
+  public url_api_delete_actividad: string =
+    this.url_api_formulario + "/delete-actividad";
 }

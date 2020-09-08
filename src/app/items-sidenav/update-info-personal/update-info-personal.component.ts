@@ -67,22 +67,20 @@ export class UpdateInfoPersonalComponent implements OnInit {
    */
   private loadInfoUsuario() {
     this.spinner.show();
-    this.usuarioService
-      .findUsuario()
-      .subscribe(
-        (usuario) => {
-                    this.usuario = usuario;
-          this.updateInfoForm.get("nombre").setValue(this.usuario.nombre);
-          this.updateInfoForm.get("apellidos").setValue(this.usuario.apellidos);
-          this.updateInfoForm.get("correo").setValue(this.usuario.correo);
-          this.updateInfoForm.get("telefono").setValue(this.usuario.telefono);
-          this.spinner.hide();
-        },
-        (error) => {
-          console.log(error);
-          this.spinner.hide();
-        }
-      );
+    this.usuarioService.findUsuario().subscribe(
+      (usuario) => {
+        this.usuario = usuario;
+        this.updateInfoForm.get("nombre").setValue(this.usuario.nombre);
+        this.updateInfoForm.get("apellidos").setValue(this.usuario.apellidos);
+        this.updateInfoForm.get("correo").setValue(this.usuario.correo);
+        this.updateInfoForm.get("telefono").setValue(this.usuario.telefono);
+        this.spinner.hide();
+      },
+      (error) => {
+        console.log(error);
+        this.spinner.hide();
+      }
+    );
   }
 
   /**
@@ -103,20 +101,21 @@ export class UpdateInfoPersonalComponent implements OnInit {
     if (valid) {
       this.spinner.show();
 
-      sessionStorage.setItem("usuario", value.usuario);
-
       this.usuario.nombre = value.nombre;
       this.usuario.apellidos = value.apellidos;
       this.usuario.correo = value.correo;
       this.usuario.telefono = value.telefono;
 
+      const nombreUsuario = value.nombre + " " + value.apellidos;
+      sessionStorage.setItem("usuario", nombreUsuario);
+
       this.usuarioService.updateUsuario(this.usuario).subscribe(
         (data) => {
           this.usuario = data;
-          this.alerts.msg = "Información actualizada";
+          this.alerts.msg =
+            "Información actualizada, actualize el navegador para ver los cambios reflejados";
           this.spinner.hide();
-          console.log("llegaaaaaaaaaaaaaa");
-        },
+          },
         (error) => {
           console.log(error);
           this.alerts.error = "Error al actualizar la información";

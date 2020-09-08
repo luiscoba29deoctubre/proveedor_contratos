@@ -1,10 +1,11 @@
 <div>
   <div class="card">
-    <h5 class="card-title" style="margin: 10px;">
+    <h5 class="card-title" style="margin: 10px; text-align: center;">
       IDENTIFICACIÓN DEL PROVEEDOR
     </h5>
 
     <form
+      novalidate
       class="card"
       [formGroup]="identificacionForm"
       (ngSubmit)="sendForm(identificacionForm.value, identificacionForm.valid)"
@@ -14,7 +15,11 @@
         <div class="row">
           <div class="col-sm-12 col-md-6 col-lg-6">
             <div class="form-group">
-              <label for="nombrerazonsocial">Nombre o Razón Social: </label>
+              <label for="nombrerazonsocial">
+                <strong>
+                  Nombre o Razón Social:
+                </strong>
+              </label>
               <input
                 formControlName="nombrerazonsocial"
                 type="text"
@@ -29,10 +34,11 @@
               <label for="rucrise">RUC / RISE: </label>
               <input
                 formControlName="rucrise"
-                type="text"
+                type="number"
                 class="form-control"
                 placeholder="RUC / RISE"
                 id="rucrise"
+                maxlength="{{ 13 }}"
               />
             </div>
           </div>
@@ -61,8 +67,8 @@
                 style="margin-left: 0%;"
                 formControlName="persona"
                 class="form-control"
+                (change)="capturaPersona()"
                 [(ngModel)]="personaSeleccionado"
-                (change)="capturarPersona()"
               >
                 <option [ngValue]="null" disabled>Escoger persona </option>
                 <option *ngFor="let persona of personas" [ngValue]="persona">
@@ -84,7 +90,7 @@
                   >Escoger contribuyente
                 </option>
                 <option
-                  *ngFor="let contribuyente of contribuyentes"
+                  *ngFor="let contribuyente of contribuyentesPorPersona"
                   [ngValue]="contribuyente"
                 >
                   {{ contribuyente.name }}
@@ -128,11 +134,11 @@
                     <div class="form-group">
                       <label for="actividad">Actividad: </label>
                       <select
+                        (ngModelChange)="capturaActividad($event, i)"
                         id="actividad"
                         style="margin-left: 0%;"
                         formControlName="actividad"
                         class="form-control"
-                        (change)="onSelect($event)"
                       >
                         <option [ngValue]="null" disabled
                           >Escoger actividad
@@ -151,6 +157,8 @@
                     <div class="form-group">
                       <label for="categoria">Categor&iacute;a: </label>
                       <select
+                        #categoria
+                        (ngModelChange)="capturaCategoria($event, i)"
                         id="categoria"
                         style="margin-left: 0%;"
                         formControlName="categoria"
@@ -160,7 +168,9 @@
                           >Escoger categor&iacute;a
                         </option>
                         <option
-                          *ngFor="let categoria of categorias"
+                          *ngFor="
+                            let categoria of categoriasPorActividadPadre[i]
+                          "
                           [ngValue]="categoria"
                         >
                           {{ categoria.name }}
@@ -173,6 +183,7 @@
                     <div class="form-group">
                       <label for="detalle">Detalle: </label>
                       <select
+                        #detalle
                         id="detalle"
                         style="margin-left: 0%;"
                         formControlName="detalle"
@@ -182,7 +193,11 @@
                           >Escoger detalle
                         </option>
                         <option
-                          *ngFor="let detalle of catalogocategorias"
+                          *ngFor="
+                            let detalle of catalogocategoriasPorCategoriaPadre[
+                              i
+                            ]
+                          "
                           [ngValue]="detalle"
                         >
                           {{ detalle.name }}
@@ -198,15 +213,21 @@
                       (click)="removeActividad(i)"
                       style="font-size: 10px; margin-left: 0%;"
                     >
-                      Quitar Actividad
+                      <i class="fa fa-close equiz"></i>
                     </button>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div (click)="addNewActividad()" class="agregar-actividad">
-            <strong><i>Agregar otra actividad +</i></strong>
+          <div>
+            <strong
+              class="agregar-actividad btn btn-link"
+              (click)="addNewActividad()"
+              style="font-family: Times New Roman, Times, serif;"
+            >
+              Agregar otra actividad +
+            </strong>
           </div>
         </div>
 
@@ -217,11 +238,15 @@
           <!-- Button -->
           <div class="col">
             <button
-              [disabled]="identificacionForm.invalid"
+              [disabled]="
+                identificacionForm.invalid ||
+                getActividades.controls.length === 0
+              "
+              style="color: #fec524; background: #8b2131; border-color: black;"
               class="btn btn-info"
               type="submit"
             >
-              <i class="fa fa-sign-in"></i>Guardar y Continuar
+              <i class="fa fa-sign-in"></i> Guardar y Continuar
             </button>
           </div>
         </div>
@@ -235,7 +260,5 @@
     >
       <p style="font-size: 20px; color: white;">Cargando...</p>
     </ngx-spinner>
-    <pre>{{ identificacionForm.status }}</pre>
-    <pre>{{ identificacionForm.value | json }}</pre>
   </div>
 </div>

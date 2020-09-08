@@ -1,12 +1,12 @@
 <div class="card">
   <form>
     <div class="card">
-      <h5 class="card-title" style="margin: 10px;">
+      <h5 class="card-title" style="margin: 10px; text-align: center">
         ACEPTACIÓN
       </h5>
       <div class="card-body">
         <div class="row">
-          <div class="col">
+          <div class="col" style="text-align: justify">
             Declaro que toda la información y documentación proporcionada a la
             Cooperativa 29 de Octubre Ltda., es verídica y está sujeta a
             verificación y comprobación, cuando así lo requiera para los fines
@@ -24,10 +24,11 @@
         </div>
         <div class="row mt-3">
           <div class="col">
-            <div class="checkbox" style="text-align: center;">
+            <div class="checkbox" style="text-align: center">
               <label
-                ><input type="checkbox" style="margin-right: 10px;" />He leido
-                los terminos y acepto las condiciones</label
+                ><input type="checkbox" style="margin-right: 10px" /><strong
+                  >He leido los terminos y acepto las condiciones</strong
+                ></label
               >
             </div>
           </div>
@@ -35,12 +36,12 @@
       </div>
 
       <div class="card">
-        <h5 class="card-title" style="margin: 10px;">
+        <h5 class="card-title" style="margin: 10px; text-align: center">
           AUTORIZACIÓN
         </h5>
         <div class="card-body">
           <div class="row">
-            <div class="col">
+            <div class="col" style="text-align: justify">
               Autorizo a la Cooperativa de Ahorro y Crédito 29 de Octubre Ltda.,
               a través del proceso de calificación de proveedores, para que se
               revise y analice el buró crediticio de mi respectivo giro de
@@ -50,10 +51,11 @@
           </div>
           <div class="row mt-3">
             <div class="col">
-              <div class="checkbox" style="text-align: center;">
+              <div class="checkbox" style="text-align: center">
                 <label>
-                  <input type="checkbox" style="margin-right: 10px;" />
-                  He leido los terminos y acepto las condiciones</label
+                  <input type="checkbox" style="margin-right: 10px" /><strong
+                    >He leido los terminos y acepto las condiciones</strong
+                  ></label
                 >
               </div>
             </div>
@@ -62,28 +64,67 @@
       </div>
 
       <div class="card">
-        <div class="card-body">
+        <div class="card-body" style="text-align: center">
           <div class="row">
-            <div class="col">
-              subir documento firmado:
-            </div>
+            <div class="col">Descargue documento para firmar:</div>
           </div>
           <div class="row">
-            <div class="col"></div>
+            <div class="col">
+              <button
+                (click)="download_pdf()"
+                style="
+                  color: #fec524;
+                  background: #8b2131;
+                  border-color: black;
+                  width: 140px !important;
+                "
+                class="btn btn-info"
+              >
+                <i class="fa fa-sign-in"></i> Descargue
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
-      <div style="text-align: center; margin-bottom: 10px;" class="row mt-3">
+      <div class="card">
+        <div class="card-body" style="text-align: center">
+          <div class="row">
+            <div class="col">Subir documento firmado:</div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <angular-file-uploader
+                [resetUpload]="resetUpload"
+                [config]="afuConfig"
+                (ApiResponse)="docUpload($event)"
+              >
+              </angular-file-uploader>
+            </div>
+            <br />
+            <br />
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-bottom: 10px" class="row mt-3">
         <!-- Button -->
         <div class="col">
-          <button class="btn btn-info" type="submit">
-            <i class="fa fa-sign-in"></i> Atrás
+          <button
+            style="color: #fec524; background: #8b2131; border-color: black"
+            class="btn btn-info"
+            type="submit"
+          >
+            <i class="fa fa-sign-in"></i> Atras
           </button>
         </div>
         <div class="col">
-          <button class="btn btn-info" type="submit">
-            <i class="fa fa-sign-in"></i> Siguiente
+          <button
+            style="color: #fec524; background: #8b2131; border-color: black"
+            class="btn btn-info"
+            type="submit"
+          >
+            <i class="fa fa-sign-in"></i> Finalizar
           </button>
         </div>
       </div>
@@ -96,6 +137,6 @@
     color="#fff"
     type="ball-scale-multiple"
   >
-    <p style="font-size: 20px; color: white;">Cargando...</p>
+    <p style="font-size: 20px; color: white">Cargando...</p>
   </ngx-spinner>
 </div>

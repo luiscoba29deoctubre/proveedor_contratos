@@ -1,8 +1,7 @@
 import { Routes } from "@angular/router";
-
 import { FullComponent } from "./layouts/full/full.component";
-import { RegisterComponent } from "./logueo/register/register.component";
 import { ForgotPassComponent } from "./logueo/forgot-pass/forgot-pass.component";
+import { RegisterComponent } from "./logueo/register/register.component";
 
 export const AppRoutes: Routes = [
   {

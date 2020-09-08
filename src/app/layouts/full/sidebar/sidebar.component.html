@@ -6,10 +6,15 @@
   <!-- ============================================================== -->
   <!-- Profile - style you can find in header.scss -->
   <!-- ============================================================== -->
-  <div class="profile-text">
-    <a [matMenuTriggerFor]="sdprofile" class="">
-      {{ usuario }} <i class="ti-angle-down font-12 m-l-5"></i
-    ></a>
+  <div class="row profile-text" style="background: gray">
+    <div class="col" style="text-align: right; margin-top: 5px">
+      <a [matMenuTriggerFor]="sdprofile" style="color: white">
+        {{ usuario }}
+      </a>
+    </div>
+    <div class="col" style="text-align: center; font-size: larger">
+      <i class="fa fa-user"></i>
+    </div>
   </div>
   <mat-menu #sdprofile="matMenu" class="mymegamenu">
     <button mat-menu-item routerLink="/admin">
@@ -37,12 +42,6 @@
     >
       <mat-icon>{{ menuitem.icon }}</mat-icon>
       <span>{{ menuitem.name }}</span>
-      <span fxFlex></span>
-      <span
-        class="label label-{{ badge.type }}"
-        *ngFor="let badge of menuitem.badge"
-        >{{ badge.value }}</span
-      >
     </a>
   </mat-list-item>
 </mat-nav-list>

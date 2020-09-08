@@ -1,26 +1,21 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { CommonModule } from "@angular/common";
-
-import { ReactiveFormsModule, FormsModule } from "@angular/forms";
-import { RouterModule, Router } from "@angular/router";
-import { LogueoRoutes } from "./logueo.routing";
-
-import { LoginService } from "./login/login.service";
-import { ApiEndpoints } from "./api.endpoints";
+import { HttpClientModule } from "@angular/common/http";
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from "@angular/core";
+import { FlexLayoutModule } from "@angular/flex-layout";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { RouterModule } from "@angular/router";
+import { OnlyNumbersDirective } from "../common/directives/only-numbers/only-numbers.directive";
 import { AuthGuardService } from "../common/services/auth/auth-guard.service";
 import { UsuarioService } from "../common/services/usuario.service";
 import { MaterialModule } from "../material-module";
-import { FlexLayoutModule } from "@angular/flex-layout";
-
-import { HttpClientModule } from "@angular/common/http";
 import { SharedModule } from "../shared/shared.module";
-
-import { LoginComponent } from "./login/login.component";
-
-import { OnlyNumbersDirective } from "../common/directives/only-numbers/only-numbers.directive";
-import { RegisterComponent } from "./register/register.component";
-import { ForgotPassService } from "./forgot-pass/forgot-pass.service";
+import { ApiEndpoints } from "./api.endpoints";
 import { ForgotPassComponent } from "./forgot-pass/forgot-pass.component";
+import { ForgotPassService } from "./forgot-pass/forgot-pass.service";
+import { LoginComponent } from "./login/login.component";
+import { LoginService } from "./login/login.service";
+import { LogueoRoutes } from "./logueo.routing";
+import { RegisterComponent } from "./register/register.component";
 
 @NgModule({
   declarations: [
@@ -55,6 +50,6 @@ import { ForgotPassComponent } from "./forgot-pass/forgot-pass.component";
 })
 export class LogueoModule {
   constructor() {
-    console.log("logueo module");
+    //  console.log("logueo module");
   }
 }

@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="row mt-3" >
+  <div class="row mt-3">
     <div class="col">
       <form
         [formGroup]="updateInfoForm"
@@ -144,9 +144,17 @@
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-lg-6 offset-md-3">
-            <button class="btn btn-success" type="submit">
+        <div
+          class="row"
+          style="margin-top: 10px; text-align: center; margin-bottom: 10px;"
+        >
+          <div class="col-sm-12 col-md-12 col-lg-12">
+            <button
+              style="color: #fec524; background: #8b2131; border-color: black;"
+              [disabled]="updateInfoForm.invalid"
+              class="btn btn-success"
+              type="submit"
+            >
               <i class="fa fa-floppy-o"></i> Guardar
             </button>
           </div>
@@ -154,13 +162,12 @@
       </form>
     </div>
   </div>
-  <!-- <pre>{{ updateInfoForm.value | json }}</pre> -->
   <ngx-spinner
-  bdColor="rgba(51,51,51,0.8)"
-  size="medium"
-  color="#fff"
-  type="ball-scale-multiple"
->
-  <p style="font-size: 20px; color: white;">Cargando...</p>
-</ngx-spinner>
+    bdColor="rgba(51,51,51,0.8)"
+    size="medium"
+    color="#fff"
+    type="ball-scale-multiple"
+  >
+    <p style="font-size: 20px; color: white;">Cargando...</p>
+  </ngx-spinner>
 </div>

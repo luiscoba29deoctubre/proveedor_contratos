@@ -7,24 +7,20 @@ import { Router } from "@angular/router";
 
 import { NotificationService } from "../../../shared/services/notification.service";
 
-import {
-  Parameter,
-  ParameterContribuyente,
-  ParameterCode,
-} from "../../../common/domain/param/parameters";
-
 import { ProcessIDB } from "../../../shared/bd/process.indexedDB";
 import { NgxIndexedDBService } from "ngx-indexed-db";
 
 import { NgxSpinnerService } from "ngx-spinner";
 import { FormularioService } from "../formulario.service";
-import { listas } from "../../../shared/bd/indexedDB";
+import { storageList } from "../../../shared/bd/indexedDB";
 import { LoginService } from "../../../logueo/login/login.service";
+
 import {
-  ParameterActividad,
-  ParameterCategoria,
-  ParameterCatalogoCategoria,
-} from "../../../common/domain/param/parameters";
+  Parameter,
+  ParamContribuyente,
+  ParamCategoria,
+  ParamCatalogoCategoria,
+} from "../../../common/dtos/parameters";
 
 @Component({
   selector: "app-identificacion",
@@ -39,17 +35,27 @@ export class IdentificacionComponent implements OnInit {
   /** Flag que indica si el formulario 'Identificacion' ya se hizo submit */
   submitted: boolean;
 
-  /** Para almacenar la lista de tipopersona */
-  personas: Parameter[];
-  contribuyentes: ParameterContribuyente[];
-  contribuyentesCompleto: ParameterContribuyente[];
   proveedores: Parameter[];
-  // listas de actividades
-  actividades: ParameterCode[] = [];
-  categorias: ParameterCode[] = [];
-  catalogocategorias: ParameterCode[] = [];
+
+  personas: Parameter[];
+  contribuyentesPorPersona: ParamContribuyente[] = [];
+  contribuyentesCompleto: ParamContribuyente[];
+
+  actividades: Parameter[] = [];
+  categoriasCompleto: ParamCategoria[] = [];
+  catalogocategoriasCompleto: ParamCatalogoCategoria[] = [];
+
+  catalogocategoriasPorCategoria: ParamCatalogoCategoria[] = [];
+  categoriasPorActividad: ParamCategoria[] = [];
+
+  catalogocategoriasPorCategoriaPadre: ParamCatalogoCategoria[][] = [];
+  categoriasPorActividadPadre: ParamCategoria[][] = [];
 
   personaSeleccionado: Parameter;
+
+  categoriaSeleccionada: ParamCategoria[] = [];
+  actividadSeleccionada: Parameter[] = [];
+  catalogocategoriaSeleccionada: ParamCatalogoCategoria[] = [];
 
   /**
    * Constructor del Componente {@link IdentificacionComponent}
@@ -71,11 +77,15 @@ export class IdentificacionComponent implements OnInit {
   ) {
     this.spinner.show();
 
-    // anulamos para mostrar que deben de 'seleccionar value'
     this.personaSeleccionado = null;
 
+    this.actividadSeleccionada.push(null);
+    this.categoriaSeleccionada.push(null);
+    this.catalogocategoriaSeleccionada.push(null);
+
     this.initForm();
-    this.processIDB = new ProcessIDB(dbService); // creamos una instancia para manejar la base de datos
+    // creamos una instancia para manejar la base de datos
+    this.processIDB = new ProcessIDB(dbService);
   }
   // sacado de https://morioh.com/p/526559a86600 el Toast que muestra mensajes
   showToasterSuccess() {
@@ -87,17 +97,28 @@ export class IdentificacionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loginService.checkToken(); // para que salga, cuando el token expire
+    this.spinner.show();
+    this.loginService.checkExpirationToken(); // para que salga, cuando el token expire
 
     this.formsService.getIdentificacion().subscribe(
       async (identificacionDto) => {
-        // console.log(" llega allForms", identificacionDto);
-        if (identificacionDto.estado) {
-          console.log("componente ", identificacionDto);
+        console.log("llega allForms", identificacionDto);
 
-          this.loadIdentificacion(identificacionDto); // carga los datos en pantalla
-          await this.loadCombos(identificacionDto);
-          this.setearCombosActividades(identificacionDto);
+        await this.loadProveedor();
+        await this.loadPersonaContribuyente();
+        await this.loadActividadesCompletas();
+
+        if (this.isEmpty(identificacionDto)) {
+          console.log("vacioooo");
+        } else {
+          // Object is NOT empty
+          await this.setProveedor(identificacionDto);
+          await this.setPersonaContribuyente(identificacionDto);
+          this.setInicialContribuyentesPorPersona(identificacionDto);
+
+          this.setIdentificacion(identificacionDto); // carga los datos en pantalla
+          this.loadCombosActividades(identificacionDto);
+          await this.setearCombosActividades(identificacionDto);
         }
         this.spinner.hide();
       },
@@ -107,6 +128,15 @@ export class IdentificacionComponent implements OnInit {
       }
     );
   }
+
+  isEmpty = (obj) => {
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        return false;
+      }
+    }
+    return true;
+  };
 
   private initForm() {
     this.identificacionForm = this.fb.group({
@@ -119,9 +149,9 @@ export class IdentificacionComponent implements OnInit {
 
       lstActividades: this.fb.array([
         this.fb.group({
-          actividad: [null, [Validators.required]],
-          categoria: [null, [Validators.required]],
-          detalle: [null, [Validators.required]],
+          actividad: [null],
+          categoria: [null],
+          detalle: [null],
         }),
       ]),
     });
@@ -132,12 +162,39 @@ export class IdentificacionComponent implements OnInit {
   }
 
   removeActividad(i) {
-    this.getActividades.removeAt(i);
+    const id = this.getActividades.value[i].id;
+    this.formsService.deleteActividad(id).subscribe(
+      (data) => {
+        console.log("llega data ", data);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+    const newCategoriasPorActividadPadre = [];
+    for (let k = 0; k < this.categoriasPorActividad.length; k++) {
+      if (k !== i) {
+        newCategoriasPorActividadPadre.push(this.categoriasPorActividad[k]);
+      }
+    }
+    this.categoriasPorActividad = newCategoriasPorActividadPadre;
+
+    const newCatalogocategoriasPorCategoriaPadre = [];
+    for (let k = 0; k < this.catalogocategoriasPorCategoria.length; k++) {
+      if (k !== i) {
+        newCatalogocategoriasPorCategoriaPadre.push(
+          this.catalogocategoriasPorCategoria[k]
+        );
+      }
+    }
+    this.catalogocategoriasPorCategoria = newCatalogocategoriasPorCategoriaPadre;
+    this.getActividades.removeAt(i); // eliminamos visualmente del form
   }
 
-  loadIdentificacion = (i: IdentificacionDto) => {
-    this.removeActividad(0);
-
+  setIdentificacion = (i: IdentificacionDto) => {
+    //  this.removeActividad(0);
+    this.getActividades.removeAt(0);
     // cargamos con la informacion inicial al componente
     this.identificacionForm.controls["rucrise"].setValue(i.rucrise);
     this.identificacionForm.controls["nombrerazonsocial"].setValue(
@@ -146,26 +203,23 @@ export class IdentificacionComponent implements OnInit {
     this.identificacionForm.controls["nombrecomercial"].setValue(
       i.nombrecomercial
     );
-    // carga persona
-    this.dbService.getAll(listas[0]).then(
-      (personas) => {
-        this.personas = personas;
+  };
 
-        let persona: Parameter;
-        this.personas.forEach((element) => {
-          if (element.id === i.idtipopersona) {
-            persona = element;
-
-            this.identificacionForm.controls["persona"].setValue(persona);
-          }
-        });
+  loadProveedor = async () => {
+    // carga proveedor
+    const proveedorNoUsado = await this.dbService.getAll(storageList[1]).then(
+      (proveedores) => {
+        this.proveedores = proveedores;
       },
       (error) => {
         console.log(error);
       }
     );
+  };
+
+  setProveedor = async (i: IdentificacionDto) => {
     // carga proveedor
-    this.dbService.getAll(listas[1]).then(
+    this.dbService.getAll(storageList[1]).then(
       (proveedores) => {
         this.proveedores = proveedores;
         let proveedor: Parameter;
@@ -181,22 +235,30 @@ export class IdentificacionComponent implements OnInit {
         console.log(error);
       }
     );
-    // carga contribuyente
-    this.dbService.getAll(listas[2]).then(
-      (contribuyentes) => {
-        this.contribuyentes = contribuyentes;
-        this.contribuyentesCompleto = contribuyentes;
+  };
 
-        let contribuyente: Parameter;
-        this.contribuyentes.forEach((element) => {
-          if (element.id === i.idtipocontribuyente) {
-            contribuyente = element;
+  setInicialPersona = (i: IdentificacionDto) => {
+    this.personas.forEach((persona) => {
+      if (persona.id === i.idtipopersona) {
+        this.identificacionForm.controls["persona"].setValue(persona);
+      }
+    });
+  };
 
-            this.identificacionForm.controls["contribuyente"].setValue(
-              contribuyente
-            );
-          }
-        });
+  setPersonaContribuyente = async (i: IdentificacionDto) => {
+    await this.setInicialPersona(i);
+    await this.cargarListaContribuyentesPorPersona(i);
+  };
+
+  loadPersonaContribuyente = async () => {
+    await this.cargarListaPersonas();
+    await this.cargarListaContribuyentesCompleta();
+  };
+
+  cargarListaPersonas = async () => {
+    const personadNoUsada = await this.dbService.getAll(storageList[0]).then(
+      (personas) => {
+        this.personas = personas;
       },
       (error) => {
         console.log(error);
@@ -204,137 +266,244 @@ export class IdentificacionComponent implements OnInit {
     );
   };
 
-  loadCombos = async (i: IdentificacionDto) => {
-    const actividadNoUsada = await this.dbService.getAll(listas[3]).then(
-      (actividades) => {
-        this.actividades = actividades;
-        console.log("actividades ddddd", actividades);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-
-    //this.actividades[0]. = 1;
-
-    console.log("loadCombos this.actividades", this.actividades);
-    const categoriaNoUsada = await this.dbService.getAll(listas[4]).then(
-      (categorias) => {
-        this.categorias = categorias;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-    console.log("loadCombos this.categorias", this.categorias);
-    const catalogoCategoriaNoUsada = await this.dbService
-      .getAll(listas[5])
+  cargarListaContribuyentesCompleta = async () => {
+    const contribuyenteNoUsado = await this.dbService
+      .getAll(storageList[2])
       .then(
-        (catalogoCategorias) => {
-          this.catalogocategorias = catalogoCategorias;
+        (contribuyentes) => {
+          this.contribuyentesCompleto = contribuyentes;
         },
         (error) => {
           console.log(error);
         }
       );
-    console.log("loadCombos this.catalogocategorias", this.catalogocategorias);
   };
 
-  setearCombosActividades = async (i: IdentificacionDto) => {
-    // carga la lista de actividades dinámicamente
-
-    for (let k = 0; k < i.lstActividades.length; k++) {
-      let actividad: ParameterActividad = new ParameterActividad();
-      const tamanioActividades = this.actividades.length;
-
-      for (let j = 0; j < tamanioActividades; j++) {
-        if (this.actividades[j].code === i.lstActividades[k].idactividad) {
-          actividad.id = i.lstActividades[k].id;
-          actividad.code = i.lstActividades[k].idactividad;
-          actividad.name = this.actividades[j].name;
-          console.log("dentro de actividad", actividad);
-          j = tamanioActividades;
-        }
+  cargarListaContribuyentesPorPersona = (i: IdentificacionDto) => {
+    this.contribuyentesCompleto.forEach((e) => {
+      if (e.idtipopersona === i.idtipopersona) {
+        this.contribuyentesPorPersona.push(e);
       }
-      console.log("actividad xxx", actividad);
+    });
+  };
 
-      let categoria: ParameterCategoria = new ParameterCategoria();
-      const tamanioCategorias = this.categorias.length;
-
-      for (let j = 0; j < tamanioCategorias; j++) {
-        if (this.categorias[j].code === i.lstActividades[k].idcategoria) {
-          categoria.id = i.lstActividades[k].id;
-          categoria.code = i.lstActividades[k].idcategoria;
-          categoria.name = this.categorias[j].name;
-          console.log("dentro de categoria", categoria);
-
-          j = tamanioCategorias;
-        }
+  setInicialContribuyentesPorPersona = (i: IdentificacionDto) => {
+    this.contribuyentesPorPersona.forEach((contribuyente) => {
+      if (contribuyente.id === i.idtipocontribuyente) {
+        this.identificacionForm.controls["contribuyente"].setValue(
+          contribuyente
+        );
       }
-      console.log("categoria", categoria);
-      let catalogoCategoria: ParameterCategoria = new ParameterCategoria();
-      const tamanioCatalogoCategorias = this.actividades.length;
-      for (let j = 0; j < tamanioCatalogoCategorias; j++) {
-        if (
-          this.catalogocategorias[j].code ===
-          i.lstActividades[k].idcatalogocategoria
-        ) {
-          catalogoCategoria.id = i.lstActividades[k].id;
-          catalogoCategoria.code = i.lstActividades[k].idcatalogocategoria;
-          catalogoCategoria.name = this.catalogocategorias[j].name;
+    });
+  };
 
-          console.log("dentro de catalogoCategoria", catalogoCategoria);
-
-          j = tamanioCatalogoCategorias;
-        }
+  loadActividadesCompletas = async () => {
+    const actividadNoUsada = await this.dbService.getAll(storageList[3]).then(
+      (actividades) => {
+        this.actividades = actividades;
+      },
+      (error) => {
+        console.log(error);
       }
+    );
+    const categoriaNoUsada = await this.dbService.getAll(storageList[4]).then(
+      (categorias) => {
+        this.categoriasPorActividad = categorias;
+        this.categoriasCompleto = categorias;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    const catalogoCategoriaNoUsada = await this.dbService
+      .getAll(storageList[5])
+      .then(
+        (catalogoCategorias) => {
+          this.catalogocategoriasPorCategoria = catalogoCategorias;
+          this.catalogocategoriasCompleto = catalogoCategorias;
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+  };
 
-      this.seteoActividad(actividad, categoria, catalogoCategoria);
+  loadCombosActividades = (i: IdentificacionDto) => {
+    if (i.lstActividades) {
+      for (let k = 0; k < i.lstActividades.length; k++) {
+        /**************************************************************/
+
+        // cargamos categoriasPorActividadPadre
+        const paramscatcom: ParamCategoria[] = [];
+        this.categoriasCompleto.forEach((catcom) => {
+          if (catcom.idactividad === i.lstActividades[k].idactividad) {
+            const c: ParamCategoria = new ParamCategoria(
+              catcom.id,
+              catcom.idactividad,
+              catcom.name
+            );
+            paramscatcom.push(c);
+          }
+        });
+        this.categoriasPorActividadPadre[k] = paramscatcom;
+
+        /**************************************************************/
+
+        // cargamos catalogoCategoriaPadre
+        const paramscatcatcom: ParamCatalogoCategoria[] = [];
+        this.catalogocategoriasCompleto.forEach((catcatcom) => {
+          if (catcatcom.idcategoria === i.lstActividades[k].idcategoria) {
+            const cc: ParamCatalogoCategoria = new ParamCatalogoCategoria(
+              catcatcom.id,
+              catcatcom.idcategoria,
+              catcatcom.name
+            );
+            paramscatcatcom.push(cc);
+          }
+        });
+
+        this.catalogocategoriasPorCategoriaPadre[k] = paramscatcatcom;
+      }
+    } else {
+      this.addNewActividad();
     }
   };
 
-  onSelect($event) {
-    // You will get the target with bunch of other options as well.
-    console.log("llegaa");
-    console.log($event.target.value);
-  }
+  setearCombosActividades = async (i: IdentificacionDto) => {
+    if (i.lstActividades) {
+      for (let k = 0; k < i.lstActividades.length; k++) {
+        let actividad: Parameter;
+        const tamanioActividades = this.actividades.length;
+        for (let j = 0; j < tamanioActividades; j++) {
+          if (this.actividades[j].id === i.lstActividades[k].idactividad) {
+            actividad = this.actividades[j];
+            j = tamanioActividades;
+          }
+        }
 
-  seteoActividad(actividad, categoria, catalogoCategoria) {
+        let categoria: ParamCategoria; // busqueda de la categoria
+        this.categoriasPorActividadPadre[k].forEach(
+          (categoriasPorActividad) => {
+            if (categoriasPorActividad.id === i.lstActividades[k].idcategoria) {
+              categoria = categoriasPorActividad;
+            }
+          }
+        );
+
+        let catalogoCategoria: ParamCatalogoCategoria; // busqueda de la categoria
+        this.catalogocategoriasPorCategoriaPadre[k].forEach(
+          (catalogocategoriasPorCategoria) => {
+            if (
+              catalogocategoriasPorCategoria.id ===
+              i.lstActividades[k].idcatalogocategoria
+            ) {
+              catalogoCategoria = catalogocategoriasPorCategoria;
+            }
+          }
+        );
+
+        this.loadNewActividad(
+          i.lstActividades[k].id,
+          actividad,
+          categoria,
+          catalogoCategoria
+        );
+      }
+    } else {
+      this.addNewActividad();
+    }
+  };
+
+  loadNewActividad(
+    id: number,
+    actividad: Parameter,
+    categoria: ParamCategoria,
+    catalogoCategoria: ParamCatalogoCategoria
+  ) {
     this.getActividades.push(
       this.fb.group({
-        actividad: [actividad, [Validators.required]],
-        categoria: [categoria, [Validators.required]],
-        detalle: [catalogoCategoria, [Validators.required]],
+        id: [id],
+        actividad: [actividad],
+        categoria: [categoria],
+        detalle: [catalogoCategoria],
       })
     );
   }
 
   addNewActividad() {
+    const tamanioGetActividades = this.getActividades.length;
     this.getActividades.push(
       this.fb.group({
-        actividad: [null, [Validators.required]],
-        categoria: [null, [Validators.required]],
-        detalle: [null, [Validators.required]],
+        actividad: [null],
+        categoria: [null],
+        detalle: [null],
       })
     );
+    this.actividadSeleccionada[tamanioGetActividades] = null;
+    this.categoriaSeleccionada[tamanioGetActividades] = null;
+    this.catalogocategoriaSeleccionada[tamanioGetActividades] = null;
   }
 
-  capturarPersona = () => {
-    console.log("entra a capturar");
-    let params: ParameterContribuyente[] = [];
+  capturaActividad = (actividad: Parameter, i) => {
+    const params: ParamCategoria[] = [];
+    this.categoriasCompleto.forEach((categoria) => {
+      if (categoria.idactividad === actividad.id) {
+        const c: ParamCategoria = new ParamCategoria(
+          categoria.id,
+          categoria.idactividad,
+          categoria.name
+        );
+        params.push(c);
+      }
+    });
+
+    this.categoriasPorActividadPadre[i] = params;
+
+    const params2: ParamCategoria[] = [];
+    this.catalogocategoriasCompleto.forEach((catalogoCategoria) => {
+      if (params[0].id === catalogoCategoria.idcategoria) {
+        const cc: ParamCatalogoCategoria = new ParamCatalogoCategoria(
+          catalogoCategoria.id,
+          catalogoCategoria.idcategoria,
+          catalogoCategoria.name
+        );
+        params2.push(cc);
+      }
+    });
+
+    this.catalogocategoriasPorCategoriaPadre[i] = params2;
+  };
+
+  capturaCategoria = (categoria: ParamCategoria, i) => {
+    const params: ParamCatalogoCategoria[] = [];
+    this.catalogocategoriasCompleto.forEach((catalogoCategoria) => {
+      if (catalogoCategoria.idcategoria === categoria.id) {
+        const cc: ParamCatalogoCategoria = new ParamCatalogoCategoria(
+          catalogoCategoria.id,
+          catalogoCategoria.idcategoria,
+          catalogoCategoria.name
+        );
+        params.push(cc);
+      }
+    });
+
+    this.catalogocategoriasPorCategoriaPadre[i] = params;
+  };
+
+  capturaPersona = () => {
+    const params: ParamContribuyente[] = [];
     this.contribuyentesCompleto.forEach((element) => {
       if (element.idtipopersona === this.personaSeleccionado.id) {
-        let e: ParameterContribuyente = new ParameterContribuyente(
+        const e: ParamContribuyente = new ParamContribuyente(
           element.id,
           element.idtipopersona,
           element.name
         );
-        console.log("cambia los contribuyentes", element);
         params.push(e);
       }
     });
-    console.log("this.opcionSeleccionado.id", this.personaSeleccionado.id);
-    this.contribuyentes = params;
+    this.contribuyentesPorPersona = params;
+    this.identificacionForm.controls["contribuyente"].setValue(null);
   };
 
   /**
@@ -346,20 +515,16 @@ export class IdentificacionComponent implements OnInit {
     this.submitted = true;
     if (valid) {
       this.spinner.show();
-      console.log("this.identificacionFormffff", this.identificacionForm.value);
       this.formsService
         .saveIdentificacion(this.identificacionForm.value)
         .subscribe(
           (identificacionDto: IdentificacionDto) => {
-            console.log("regresa Identificacion", identificacionDto);
-
             this.router.navigate(["/infocontacto"]);
 
             this.showToasterSuccess();
             this.spinner.hide();
           },
           (error) => {
-            this.loginService.checkToken(); // para que salga, cuando el token expire
             this.showToasterError();
             console.log(error);
             this.spinner.hide();

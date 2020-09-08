@@ -1,4 +1,4 @@
-import { Parameter } from "../../domain/param/parameters";
+import { Parameter } from "../parameters";
 export class IdentificacionDto {
   constructor(
     public estado?: boolean,

@@ -1,8 +1,7 @@
 <div class="card">
-  <h5 class="card-title" style="margin: 10px;">
+  <h5 class="card-title" style="margin: 10px; text-align: center;">
     INFORMACIÓN DE CONTACTO
   </h5>
-
   <form
     class="card"
     [formGroup]="infocontactoForm"
@@ -11,7 +10,7 @@
   >
     <div class="card-body">
       <div class="row">
-        <div class="col">
+        <div class="col-sm-12 col-md-8 col-lg-8">
           <div class="form-group">
             <label for="direccion">Dirección: </label>
             <input
@@ -23,69 +22,78 @@
             />
           </div>
         </div>
-        <div class="col">
-          <div class="form-group">
-            <label for="telefono0">Teléfono: </label>
-            <input
-              formControlName="telefono0"
-              type="text"
-              class="form-control"
-              placeholder="Teléfono"
-              id="telefono0"
-            />
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
+
+        <div class="col-sm-12 col-md-3 col-lg-3">
           <div class="form-group">
             <label for="pais">Pais: </label>
-            <select formControlName="pais" class="select">
+            <select
+              (ngModelChange)="capturaPais($event)"
+              id="pais"
+              style="margin-left: 0%;"
+              formControlName="pais"
+              class="form-control"
+            >
               <option [ngValue]="null" disabled>Escoger pais </option>
               <option *ngFor="let pais of paises" [ngValue]="pais">
-                {{ pais.viewValue }}
+                {{ pais.name }}
               </option>
             </select>
           </div>
         </div>
-        <div class="col">
+      </div>
+      <div class="row">
+        <div class="col-sm-12 col-md-4 col-lg-4">
           <div class="form-group">
             <label for="provincia">Provincia: </label>
-            <select formControlName="provincia" class="select">
+            <select
+              (ngModelChange)="capturaProvincia($event)"
+              id="provincia"
+              style="margin-left: 0%;"
+              formControlName="provincia"
+              class="form-control"
+            >
               <option [ngValue]="null" disabled>Escoger provincia </option>
               <option
                 *ngFor="let provincia of provincias"
                 [ngValue]="provincia"
               >
-                {{ provincia.viewValue }}
+                {{ provincia.name }}
               </option>
             </select>
           </div>
         </div>
-      </div>
-
-      <div class="row">
-        <div class="col">
+        <div class="col-sm-12 col-md-4 col-lg-4">
           <div class="form-group">
             <label for="canton">Cantón: </label>
-            <select formControlName="canton" class="select">
+            <select
+              (ngModelChange)="capturaCanton($event)"
+              style="margin-left: 0%;"
+              formControlName="canton"
+              class="form-control"
+            >
               <option [ngValue]="null" disabled>Escoger cantón </option>
               <option *ngFor="let canton of cantones" [ngValue]="canton">
-                {{ canton.viewValue }}
+                {{ canton.name }}
               </option>
             </select>
           </div>
         </div>
-        <div class="col">
+        <div class="col-sm-12 col-md-4 col-lg-4">
           <div class="form-group">
             <label for="parroquia">Parroquia: </label>
-            <select formControlName="parroquia" class="select">
+            <select
+              #parroquia
+              id="parroquia"
+              style="margin-left: 0%;"
+              formControlName="parroquia"
+              class="form-control"
+            >
               <option [ngValue]="null" disabled>Escoger parroquia </option>
               <option
                 *ngFor="let parroquia of parroquias"
                 [ngValue]="parroquia"
               >
-                {{ parroquia.viewValue }}
+                {{ parroquia.name }}
               </option>
             </select>
           </div>
@@ -93,7 +101,46 @@
       </div>
 
       <div class="row">
-        <div class="col">
+        <div class="col-sm-12 col-md-4 col-lg-4">
+          <div class="form-group">
+            <label for="celular">Celular: </label>
+            <input
+              formControlName="celular"
+              type="text"
+              class="form-control"
+              placeholder="Teléfono comercial"
+              id="celular"
+            />
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-4 col-lg-4">
+          <div class="form-group">
+            <label for="telefono">Teléfono: </label>
+            <input
+              formControlName="telefono"
+              type="text"
+              class="form-control"
+              placeholder="Teléfono"
+              id="telefono"
+            />
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-4 col-lg-4">
+          <div class="form-group">
+            <label for="mailproveedor">Correo proveedor: </label>
+            <input
+              formControlName="mailproveedor"
+              type="text"
+              class="form-control"
+              placeholder="Contacto comercial"
+              id="mailproveedor"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12 col-md-6 col-lg-8">
           <div class="form-group">
             <label for="contactocomercial">Contacto comercial: </label>
             <input
@@ -105,23 +152,24 @@
             />
           </div>
         </div>
-        <div class="col">
-            <div class="form-group">
-              <label for="telefono">Teléfono: </label>
-              <input
-                formControlName="telefonocomercial"
-                type="text"
-                class="form-control"
-                placeholder="Teléfono"
-                id="telefono"
-              />
+        <div class="col-sm-12 col-md-6 col-lg-4">
+          <div class="form-group">
+            <label for="telefonocontactocomercial">Teléfono comercial: </label>
+            <input
+              formControlName="telefonocontactocomercial"
+              type="text"
+              class="form-control"
+              placeholder="Teléfono comercial"
+              id="telefonocontactocomercial"
+            />
           </div>
         </div>
       </div>
+
       <div class="row">
-        <div class="col">
+        <div class="col-sm-12 col-md-6 col-lg-6">
           <div class="form-group">
-            <label for="celular">Celular 1: </label>
+            <label for="celular1">Celular 1: </label>
             <input
               formControlName="celular1"
               type="text"
@@ -131,24 +179,24 @@
             />
           </div>
         </div>
-        <div class="col">
+        <div class="col-sm-12 col-md-6 col-lg-6">
           <div class="form-group">
-            <label for="correo">Correo 1: </label>
+            <label for="mail1">Correo 1: </label>
             <input
-              formControlName="correo1"
+              formControlName="mail1"
               type="text"
               class="form-control"
               placeholder="Correo 1"
-              id="correo1"
+              id="mail1"
             />
           </div>
         </div>
       </div>
 
       <div class="row">
-        <div class="col">
+        <div class="col-sm-12 col-md-6 col-lg-6">
           <div class="form-group">
-            <label for="celular">Celular 2: </label>
+            <label for="celular2">Celular 2: </label>
             <input
               formControlName="celular2"
               type="text"
@@ -158,44 +206,51 @@
             />
           </div>
         </div>
-        <div class="col">
+        <div class="col-sm-12 col-md-6 col-lg-6">
           <div class="form-group">
-            <label for="correo">Correo 2: </label>
+            <label for="mail2">Correo 2: </label>
             <input
-              formControlName="correo2"
+              formControlName="mail2"
               type="text"
               class="form-control"
               placeholder="Correo 2"
-              id="correo2"
+              id="mail2"
             />
           </div>
         </div>
       </div>
 
-
       <div style="text-align: center; margin-bottom: 10px;" class="row mt-3">
         <!-- Button -->
         <div class="col">
-          <button class="btn btn-info" type="submit">
-            <i class="fa fa-sign-in"></i> Atrás
+          <button
+            style="color: #fec524; background: #8b2131; border-color: black;"
+            (click)="retrocederForm()"
+            class="btn btn-info"
+            type="submit"
+          >
+            <i class="fa fa-sign-in"></i>Atrás
           </button>
         </div>
         <div class="col">
-          <button class="btn btn-info" type="submit">
-            <i class="fa fa-sign-in"></i> Siguiente
+          <button
+            [disabled]="infocontactoForm.invalid"
+            style="color: #fec524; background: #8b2131; border-color: black;"
+            class="btn btn-info button-guardar"
+            type="submit"
+          >
+            <i class="fa fa-sign-in"></i>Continuar
           </button>
         </div>
       </div>
     </div>
   </form>
   <ngx-spinner
-  bdColor="rgba(51,51,51,0.8)"
-  size="medium"
-  color="#fff"
-  type="ball-scale-multiple"
->
-  <p style="font-size: 20px; color: white;">Cargando...</p>
-</ngx-spinner>
-  <pre>{{ infocontactoForm.status }}</pre>
-  <pre>{{ infocontactoForm.value | json }}</pre>
-</div>
+    bdColor="rgba(51,51,51,0.8)"
+    size="medium"
+    color="#fff"
+    type="ball-scale-multiple"
+  >
+    <p style="font-size: 20px; color: white;">Cargando...</p>
+  </ngx-spinner>
+ </div>

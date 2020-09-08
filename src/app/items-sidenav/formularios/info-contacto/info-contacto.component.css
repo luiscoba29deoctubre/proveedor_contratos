@@ -16,3 +16,7 @@ select{
 button {
   width: 120px;
 }
+
+.button-guardar {
+  width: 220px;
+}
