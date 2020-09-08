@@ -46,7 +46,7 @@ export class DocumentalComponent implements OnInit {
 
         if (this.isEmpty(documentalDto.lstDocumento)) {
         } else {
-  //        this.seteoDocumentos(documentalDto.lstDocumento);
+          //        this.seteoDocumentos(documentalDto.lstDocumento);
         }
 
         this.spinner.hide();
@@ -81,9 +81,23 @@ export class DocumentalComponent implements OnInit {
   agregaLetraAlaPregunta = (lstDocumentos: ParamDocumento[]) => {
     let j = 65;
 
+    const paramDocumentoPerfilDocumental: ParamDocumentoPerfilDocumental = new ParamDocumentoPerfilDocumental();
+    paramDocumentoPerfilDocumental.id = 1;
+    paramDocumentoPerfilDocumental.iddocumento = 2;
+    paramDocumentoPerfilDocumental.name = "luis";
+    paramDocumentoPerfilDocumental.size = 232323;
+
+    const lstParamDocumentoPerfilDocumental: ParamDocumentoPerfilDocumental[] = [];
+
+    lstParamDocumentoPerfilDocumental.push(paramDocumentoPerfilDocumental);
+
     for (let i = 0; i < lstDocumentos.length; i++) {
       lstDocumentos[i].name =
         String.fromCharCode(j) + ". " + lstDocumentos[i].name;
+
+      lstDocumentos[
+        i
+      ].lstDocumentoPerfilDocumental = lstParamDocumentoPerfilDocumental;
 
       j++;
     }

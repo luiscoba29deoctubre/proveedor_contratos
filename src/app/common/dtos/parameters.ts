@@ -97,7 +97,7 @@ export class ParamDocumentoPerfilDocumental {
   constructor(
     public id?: number,
     public iddocumento?: number,
-    public nombre?: string,
-    public tamanio?: number
+    public name?: string,
+    public size?: number
   ) { }
 }

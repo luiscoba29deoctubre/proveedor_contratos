@@ -36,7 +36,7 @@ export class AngularFileUploaderComponent implements OnChanges {
   numberFileUpload;
 
   @Input()
-  allowedFiles: File[] // = [];
+  allowedFiles: File[]  = [];
 
   // Outputs
   @Output()
