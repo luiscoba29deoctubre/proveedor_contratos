@@ -8,14 +8,13 @@ import { ParamPerfilFinanciero } from "../../../../common/dtos/parameters";
   styleUrls: ["./dialog-box.component.css"],
 })
 export class DialogBoxComponent {
-
   action: string;
 
   anio: number;
   local_data: any;
   cuenta: string;
-  resultadoPenultimo:number;
-  resultadoUltimo:number;
+  resultadoPenultimo: number;
+  resultadoUltimo: number;
 
   constructor(
     public dialogRef: MatDialogRef<DialogBoxComponent>,
@@ -25,7 +24,7 @@ export class DialogBoxComponent {
     this.local_data = { ...data };
 
     this.action = this.local_data.action;
-    
+
     this.anio = this.local_data.anio;
     this.resultadoPenultimo = this.local_data.resultadoPenultimo;
     this.resultadoUltimo = this.local_data.resultadoUltimo;
