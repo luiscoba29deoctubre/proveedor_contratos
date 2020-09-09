@@ -31,6 +31,7 @@ import { ApiEndpoints } from "../logueo/api.endpoints";
 import { BsDatepickerModule } from "ngx-bootstrap/datepicker";
 import { AngularFileUploaderModule } from "./formularios/documental/angular-file-uploader/src/lib/angular-file-uploader.module";
 import { FileSaverModule } from "ngx-filesaver";
+import { DialogBoxComponent } from './formularios/financiero/dialog-box/dialog-box.component';
 
 export function tokenGetter() {
   return sessionStorage.getItem("token");
@@ -81,6 +82,7 @@ export function tokenGetter() {
     ComercialComponent,
     DocumentalComponent,
     AceptacionComponent,
+    DialogBoxComponent
   ],
 })
 export class SidenavModule {}

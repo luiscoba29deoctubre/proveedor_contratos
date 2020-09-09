@@ -1,5 +1,5 @@
 export class Parameter {
-  constructor(public id?: number, public name?: string) { }
+  constructor(public id?: number, public name?: string) {}
 }
 
 export class ParamContribuyente {
@@ -7,7 +7,7 @@ export class ParamContribuyente {
     public id?: number,
     public idtipopersona?: number,
     public name?: string
-  ) { }
+  ) {}
 }
 
 export class ParamCategoria {
@@ -15,7 +15,7 @@ export class ParamCategoria {
     public id?: number,
     public idactividad?: number,
     public name?: string
-  ) { }
+  ) {}
 }
 
 export class ParamCatalogoCategoria {
@@ -23,7 +23,7 @@ export class ParamCatalogoCategoria {
     public id?: number,
     public idcategoria?: number,
     public name?: string
-  ) { }
+  ) {}
 }
 
 export class ParamProvincia {
@@ -31,7 +31,7 @@ export class ParamProvincia {
     public id?: number,
     public idpais?: number,
     public name?: string
-  ) { }
+  ) {}
 }
 
 export class ParamCanton {
@@ -39,7 +39,7 @@ export class ParamCanton {
     public id?: number,
     public idprovincia?: number,
     public name?: string
-  ) { }
+  ) {}
 }
 
 export class ParamParroquia {
@@ -47,7 +47,7 @@ export class ParamParroquia {
     public id?: number,
     public idcanton?: number,
     public name?: string
-  ) { }
+  ) {}
 }
 
 export class ParamAllQuestions {
@@ -55,7 +55,7 @@ export class ParamAllQuestions {
     public id?: number,
     public question?: string,
     public answers?: ParamRespuestaSeleccionada[]
-  ) { }
+  ) {}
 }
 
 export class ParamPregunta {
@@ -63,7 +63,7 @@ export class ParamPregunta {
     public id?: number,
     public name?: string,
     public idtipoperfil?: number
-  ) { }
+  ) {}
 }
 
 export class ParamRespuesta {
@@ -72,7 +72,7 @@ export class ParamRespuesta {
     public idpregunta?: number,
     public name?: string,
     public idtipoperfil?: number
-  ) { }
+  ) {}
 }
 
 export class ParamRespuestaSeleccionada {
@@ -81,7 +81,7 @@ export class ParamRespuestaSeleccionada {
     public idpregunta?: number,
     public idrespuesta?: number,
     public name?: string
-  ) { }
+  ) {}
 }
 
 export class ParamDocumento {
@@ -90,7 +90,7 @@ export class ParamDocumento {
     public name?: string,
     public numero?: number,
     public lstDocumentoPerfilDocumental?: ParamDocumentoPerfilDocumental[]
-  ) { }
+  ) {}
 }
 
 export class ParamDocumentoPerfilDocumental {
@@ -99,5 +99,15 @@ export class ParamDocumentoPerfilDocumental {
     public iddocumento?: number,
     public name?: string,
     public size?: number
-  ) { }
+  ) {}
+}
+
+export class ParamPerfilFinanciero {
+  constructor(
+    public id?: number,
+    public idcuenta?: string,
+    public cuenta?: string,
+    public resultadoUltimo?: number,
+    public resultadoPenultimo?: number
+  ) {}
 }

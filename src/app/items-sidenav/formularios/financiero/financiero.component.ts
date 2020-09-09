@@ -7,34 +7,11 @@ import { FinancieroDto } from "../../../common/dtos/form/FinancieroDto";
 import { LoginService } from "../../../logueo/login/login.service";
 import { NotificationService } from "../../../shared/services/notification.service";
 import { FormularioService } from "../formulario.service";
+import { MatDialog } from "@angular/material";
+import { DialogBoxComponent } from "./dialog-box/dialog-box.component";
+import { ParamPerfilFinanciero } from '../../../common/dtos/parameters';
 
-export class Cuenta {
-  constructor(
-    public id?: number,
-    public nombre?: string,
-    public anioUltimo?: number,
-    public anioPenultimo?: number
-  ) {}
-}
 
-export interface PeriodicElement {
-  name: string;
-  weight: number;
-  symbol: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {  name: "Hydrogen", weight: 1.0079, symbol: "H" },
-  {  name: "Helium", weight: 4.0026, symbol: "He" },
-  {  name: "Lithium", weight: 6.941, symbol: "Li" },
-  {  name: "Beryllium", weight: 9.0122, symbol: "Be" },
-  {  name: "Boron", weight: 10.811, symbol: "B" },
-  {  name: "Carbon", weight: 12.0107, symbol: "C" },
-  {  name: "Nitrogen", weight: 14.0067, symbol: "N" },
-  {  name: "Oxygen", weight: 15.9994, symbol: "O" },
-  {  name: "Fluorine", weight: 18.9984, symbol: "F" },
-  {  name: "Neon", weight: 20.1797, symbol: "Ne" },
-];
 
 @Component({
   selector: "app-financiero",
@@ -42,8 +19,9 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ["./financiero.component.css"],
 })
 export class FinancieroComponent implements OnInit {
-  displayedColumns: string[] = ["name", "weight", "symbol"];
-  dataSource = ELEMENT_DATA;
+  //  displayedColumns: string[] = [ "Cuenta", "weight", "symbol"];
+  displayedColumns: string[] = ["cuenta", "resultado", "resultado2", "action"];
+  dataSource;
 
   submitted: boolean;
 
@@ -54,9 +32,12 @@ export class FinancieroComponent implements OnInit {
 
   tipoPersona: string;
 
-  lstCuentas: Cuenta[] = [];
+  lstCuentas: ParamPerfilFinanciero[] = [];
+
+  dataParameters: any[] = [];
 
   constructor(
+    public dialog: MatDialog,
     private fb: FormBuilder,
     private router: Router,
     private spinner: NgxSpinnerService,
@@ -71,17 +52,24 @@ export class FinancieroComponent implements OnInit {
   }
 
   ngOnInit() {
-    const cuenta1: Cuenta = new Cuenta();
-    cuenta1.nombre = "ingresos";
-    cuenta1.anioUltimo = 1200;
-    cuenta1.anioPenultimo = 3000;
-    const cuenta2: Cuenta = new Cuenta();
-    cuenta2.nombre = "gastos";
-    cuenta2.anioUltimo = 4;
-    cuenta2.anioPenultimo = 7;
+    const cuenta1: ParamPerfilFinanciero = new ParamPerfilFinanciero();
+    cuenta1.id = 3;
+    cuenta1.cuenta = "ingresos";
+    cuenta1.resultadoUltimo = 1200;
+    cuenta1.resultadoPenultimo = 3000;
+    const cuenta2: ParamPerfilFinanciero = new ParamPerfilFinanciero();
+    cuenta2.id = 2;
+    cuenta2.cuenta = "gastos";
+    cuenta2.resultadoUltimo = 4;
+    cuenta2.resultadoPenultimo = 7;
 
     this.lstCuentas.push(cuenta1);
     this.lstCuentas.push(cuenta2);
+
+    // this.dataSource = this.lstCuentas;
+    this.dataParameters = this.lstCuentas;
+
+    this.dataSource = this.dataParameters;
 
     console.log("this.lstCuentas", this.lstCuentas);
 
@@ -92,7 +80,6 @@ export class FinancieroComponent implements OnInit {
         console.log("llega allForms", financieroDto.anioActual);
 
         this.currentYear = financieroDto.anioActual;
-
         this.tipoPersona = financieroDto.tipoPersona;
 
         console.log("this.tipoPersona", this.tipoPersona);
@@ -107,6 +94,86 @@ export class FinancieroComponent implements OnInit {
         this.spinner.hide();
       }
     );
+  }
+
+  openDialog(action, obj) {
+    console.log("action", action);
+    console.log("obj", obj);
+
+    obj.action = action;
+    const dialogRef = this.dialog.open(DialogBoxComponent, {
+      width: "250px",
+      data: obj,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result.event === "Agregar") {
+        this.addRowData(result.data);
+      } else if (result.event === "Actualizar") {
+        this.updateRowData(result.data);
+      } else if (result.event === "Eliminar") {
+        this.deleteRowData(result.data);
+      }
+      this.dataParameters = this.lstCuentas;
+      //  this.enviarDataParameterOnServer();
+      this.dataSource = this.dataParameters;
+    });
+  }
+
+  addRowData(row_obj) {
+    // comprobaciòn para ver si ya existe el codigo
+    const foundElement = this.dataParameters.find(
+      (element) => row_obj.id === element.id
+    );
+
+    if (foundElement) {
+      // se muestra mensaje de advertencia
+      this.showToasterError();
+    } else {
+      const d = new Date();
+      this.dataParameters.push({
+        id: d.getTime(),
+        code: row_obj.code,
+        name: row_obj.name,
+      });
+    }
+    // this.paginator.renderRows();
+  }
+
+  updateRowData(row_obj) {
+    console.log("row_objvvvv", row_obj);
+
+    // comprobaciòn para ver si ya existe el codigo
+    const foundElement = this.dataParameters.find(
+      (element) => row_obj.id === element.id
+    );
+
+    if (foundElement) {
+      // se muestra mensaje de advertencia
+      this.showToasterError();
+    } else {
+      let id_row: number;
+      for (let i = 0; i < this.dataParameters.length; i++) {
+        if (this.dataParameters[i].id === row_obj.id) {
+          id_row = row_obj.id;
+          break;
+        }
+      }
+      this.dataParameters = this.dataParameters.filter((value, key) => {
+        return value.id !== row_obj.id;
+      });
+      this.dataParameters.push({
+        id: id_row,
+        code: row_obj.code,
+        name: row_obj.name,
+      });
+    }
+  }
+
+  deleteRowData(row_obj) {
+    this.dataParameters = this.dataParameters.filter((value, key) => {
+      return value.id !== row_obj.id;
+    });
   }
 
   guardar() {

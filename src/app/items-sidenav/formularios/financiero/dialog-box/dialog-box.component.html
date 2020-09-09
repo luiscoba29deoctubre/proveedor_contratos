@@ -1,0 +1,48 @@
+<!-- dialog-box.component.html -->
+<form #dialogForm="ngForm">
+  <h1 mat-dialog-title>
+    <strong>{{ action }}</strong> parámetro
+  </h1>
+
+  <div mat-dialog-content>
+    <mat-form-field *ngIf="action != 'Eliminar'">
+      <input
+        name="code"
+        required
+        #inputAccion="ngModel"
+        placeholder="{{ action }} codigo"
+        matInput
+        [(ngModel)]="local_data.code"
+      />
+    </mat-form-field>
+    <mat-form-field *ngIf="action != 'Eliminar'; else elseTemplate">
+      <input
+        name="name"
+        required
+        #inputAccion="ngModel"
+        placeholder="{{ action }} nombre"
+        matInput
+        [(ngModel)]="local_data.name"
+      />
+    </mat-form-field>
+    <ng-template #elseTemplate>
+      ¿Seguro de eliminar <b>{{ local_data.name }}</b
+      >, con codigo <b>{{ local_data.code }}</b
+      >?
+    </ng-template>
+  </div>
+
+  <div mat-dialog-actions style="width: 210px">
+    <button
+      type="submit"
+      [disabled]="!dialogForm.valid"
+      mat-button
+      (click)="doAction()"
+    >
+      {{ action }}
+    </button>
+    <button mat-button (click)="closeDialog()" mat-flat-button color="warn">
+      Cancelar
+    </button>
+  </div>
+</form>

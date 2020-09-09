@@ -1,13 +1,13 @@
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-sm-12 col-md-6 col-lg-6">
-      <div class="card" style="margin-top: 70px;">
-        <h5 class="card-title" style="margin: 10px;">
+      <div class="card" style="margin-top: 70px">
+        <h5 class="card-title" style="margin: 10px">
           ¿Olvidaste la contraseña?
         </h5>
-        <div style="border: 1px solid #cccccc;" class="card-body">
+        <div style="border: 1px solid #cccccc" class="card-body">
           <form
-            class="card"
+           
             novalidate
             [formGroup]="forgotForm"
             (ngSubmit)="sendPass(forgotForm.value, forgotForm.valid)"
@@ -17,7 +17,7 @@
               Introduce el correo electrónico que registraste en el sistema,
               para recibir una clave en esa cuenta de correo.
             </p>
-            <div style="margin-top: 25px;" class="form-group">
+            <div style="margin-top: 25px" class="form-group">
               <div class="input-group">
                 <span class="input-group-addon">
                   <i class="glyphicon glyphicon-envelope"></i>
@@ -104,14 +104,24 @@
             </div>
             <div class="row justify-content-center">
               <div class="col d-flex justify-content-center">
-                <button *ngIf="!enviado" class="btn btn-success" type="submit">
+                <button
+                  style="color: #86202f; background-color: #dd9c25; width: 150px"
+                  *ngIf="!enviado"
+                  class="btn "
+                  type="submit"
+                >
                   <i class="fa fa-floppy-o"></i> Enviar correo
                 </button>
               </div>
               <div class="col d-flex justify-content-center">
                 <button
                   *ngIf="!enviado"
-                  class="btn btn-warning"
+                  style="
+                    color: #fec524;
+                    background: #8b2131;
+                    border-color: black;
+                  "
+                  class="btn"
                   type="button"
                   routerLink="/"
                 >
@@ -123,7 +133,12 @@
               <div class="col d-flex justify-content-center">
                 <button
                   *ngIf="enviado"
-                  class="btn btn-primary"
+                  style="
+                    color: #fec524;
+                    background: #8b2131;
+                    border-color: black;
+                  "
+                  class="btn"
                   type="button"
                   routerLink="/"
                 >
@@ -135,14 +150,13 @@
         </div>
       </div>
     </div>
-
   </div>
   <ngx-spinner
-      bdColor="rgba(51,51,51,0.8)"
-      size="medium"
-      color="#fff"
-      type="ball-scale-multiple"
-    >
-      <p style="font-size: 20px; color: white;">Cargando...</p>
-    </ngx-spinner>
+    bdColor="rgba(51,51,51,0.8)"
+    size="medium"
+    color="#fff"
+    type="ball-scale-multiple"
+  >
+    <p style="font-size: 20px; color: white">Cargando...</p>
+  </ngx-spinner>
 </div>
