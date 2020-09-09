@@ -48,7 +48,7 @@ export class FinancieroComponent implements OnInit {
   }
 
   ngOnInit() {
-    /* const cuenta1: ParamPerfilFinanciero = new ParamPerfilFinanciero();
+    const cuenta1: ParamPerfilFinanciero = new ParamPerfilFinanciero();
     cuenta1.id = 3;
     cuenta1.cuenta = "ingresos";
     cuenta1.resultadoUltimo = 1200;
@@ -60,7 +60,7 @@ export class FinancieroComponent implements OnInit {
     cuenta2.resultadoPenultimo = 7;
 
     this.lstCuentas.push(cuenta1);
-    this.lstCuentas.push(cuenta2);*/
+    this.lstCuentas.push(cuenta2);
 
     this.dataSource = this.lstCuentas;
 
