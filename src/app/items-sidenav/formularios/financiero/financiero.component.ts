@@ -32,8 +32,6 @@ export class FinancieroComponent implements OnInit {
 
   lstCuentas: ParamPerfilFinanciero[] = [];
 
-  dataParameters: any[] = [];
-
   constructor(
     public dialog: MatDialog,
     private fb: FormBuilder,
@@ -64,10 +62,7 @@ export class FinancieroComponent implements OnInit {
     this.lstCuentas.push(cuenta1);
     this.lstCuentas.push(cuenta2);
 
-    // this.dataSource = this.lstCuentas;
-    this.dataParameters = this.lstCuentas;
-
-    this.dataSource = this.dataParameters;
+    this.dataSource = this.lstCuentas;
 
     console.log("this.lstCuentas", this.lstCuentas);
 
@@ -94,13 +89,10 @@ export class FinancieroComponent implements OnInit {
     );
   }
 
-  openDialog(action: string, obj:any) {
-    console.log("action", action);
-    console.log("obj", obj);
-
+  openDialog(action: string, obj: any) {
+    obj.action = action;
     obj.anio = this.currentYear;
 
-    console.log("new obj", obj);
     const dialogRef = this.dialog.open(DialogBoxComponent, {
       width: "250px",
       data: obj,
@@ -110,45 +102,24 @@ export class FinancieroComponent implements OnInit {
       if (result.event === "Actualizar") {
         this.updateRowData(result.data);
       }
-      this.dataParameters = this.lstCuentas;
-      //  this.enviarDataParameterOnServer();
-      this.dataSource = this.dataParameters;
     });
   }
 
   updateRowData(row_obj: ParamPerfilFinanciero) {
-    console.log("row_objvvvv", row_obj);
-
-    // comprobaciòn para ver si ya existe el codigo
-    const foundElement = this.dataParameters.find(
-      (element) => row_obj.id === element.id
-    );
-
-    if (foundElement) {
-      // se muestra mensaje de advertencia
-      this.showToasterError();
-    } else {
-      let id_row: number;
-      for (let i = 0; i < this.dataParameters.length; i++) {
-        if (this.dataParameters[i].id === row_obj.id) {
-          id_row = row_obj.id;
-          break;
-        }
+    for (let i = 0; i < this.lstCuentas.length; i++) {
+      if (this.lstCuentas[i].id === row_obj.id) {
+        this.lstCuentas[i].resultadoPenultimo = row_obj.resultadoPenultimo;
+        this.lstCuentas[i].resultadoUltimo = row_obj.resultadoUltimo;
       }
-      this.dataParameters = this.dataParameters.filter((value, key) => {
-        return value.id !== row_obj.id;
-      });
-      this.dataParameters.push({
-        id: id_row,
-        code: row_obj.id,
-        name: row_obj.resultadoPenultimo,
-      });
     }
   }
 
-  guardar() {
-    console.log("this.lstCuentas", this.lstCuentas);
-  }
+  /*actualizaCuentaOnServer() {
+    this.apiservice.putSaveDataParameters(dataParameters).subscribe(
+      (success) => console.log("enviarDataParameterOnServer() successful."),
+      (error) => console.log("enviarDataParameterOnServer() error.")
+    );
+  }*/
 
   showToasterSuccess() {
     this.notifyService.showSuccess("guardada exitosamente", "Financiero");
