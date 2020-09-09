@@ -23,13 +23,13 @@
           <!--- Note that these columns can be defined in any order.
               The actual rendered columns are set as a property on the row definition" -->
 
-          <!-- Name Column -->
+          <!-- cuenta Column -->
           <ng-container matColumnDef="cuenta">
             <th mat-header-cell *matHeaderCellDef>Cuenta</th>
             <td mat-cell *matCellDef="let element">{{ element.cuenta }}</td>
           </ng-container>
 
-          <!-- Weight Column -->
+          <!-- resultadoPenultimo Column -->
           <ng-container matColumnDef="resultado">
             <th mat-header-cell *matHeaderCellDef>
               Resultado {{ currentYear - 1 }}
@@ -39,7 +39,7 @@
             </td>
           </ng-container>
 
-          <!-- Symbol Column -->
+          <!-- resultadoUltimo Column -->
           <ng-container matColumnDef="resultado2">
             <th mat-header-cell *matHeaderCellDef>
               Resultado {{ currentYear }}
@@ -51,22 +51,32 @@
 
           <!-- Action Column -->
           <ng-container matColumnDef="action">
-            <th class="espaciado-central" mat-header-cell *matHeaderCellDef
-              style="width: 30%; text-align: center; font-weight: bold">
+            <th
+              class="espaciado-central"
+              mat-header-cell
+              *matHeaderCellDef
+              style="width: 30%; text-align: center; font-weight: bold"
+            >
               Acción
             </th>
-            <td class="espaciado-central" mat-cell *matCellDef="let element" class="action-link" style="
-                            color: royalblue;
+            <td
+              class="espaciado-central"
+              mat-cell
+              *matCellDef="let element"
+              class="action-link"
+              style="
+                color: royalblue;
 
-                            width: 30%;
-                            text-align: center;
-                          ">
+                width: 30%;
+                text-align: center;
+              "
+            >
               <a class="puntero" (click)="openDialog('Actualizar', element)">
-                <mat-icon class="puntero" style="position: relative; top: 5px; color: royalblue">create</mat-icon>Editar
-              </a>
-              |
-              <a class="puntero" (click)="openDialog('Eliminar', element)" style="color: tomato">
-                <mat-icon class="puntero" style="position: relative; top: 5px; color: tomato">delete</mat-icon>Eliminar
+                <mat-icon
+                  class="puntero"
+                  style="position: relative; top: 5px; color: royalblue"
+                  >create</mat-icon
+                >Editar
               </a>
             </td>
           </ng-container>

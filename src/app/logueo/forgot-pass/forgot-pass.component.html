@@ -7,7 +7,6 @@
         </h5>
         <div style="border: 1px solid #cccccc" class="card-body">
           <form
-           
             novalidate
             [formGroup]="forgotForm"
             (ngSubmit)="sendPass(forgotForm.value, forgotForm.valid)"
@@ -105,9 +104,13 @@
             <div class="row justify-content-center">
               <div class="col d-flex justify-content-center">
                 <button
-                  style="color: #86202f; background-color: #dd9c25; width: 150px"
+                  style="
+                    color: #86202f;
+                    background-color: #dd9c25;
+                    width: 150px;
+                  "
                   *ngIf="!enviado"
-                  class="btn "
+                  class="btn"
                   type="submit"
                 >
                   <i class="fa fa-floppy-o"></i> Enviar correo

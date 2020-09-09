@@ -1,16 +1,8 @@
+import { ParamPerfilFinanciero } from '../parameters';
 export class FinancieroDto {
   constructor(
     public anioActual?: number,
-    public tipoPersona?: string
+    public tipoPersona?: string,
+    public lstCuentas?: ParamPerfilFinanciero[]
   ) {}
 }
-
-/*
-export class CuentaResultado {
-  constructor(
-    public idCuenta?: number,
-    public resultadoAnioPenultimo?: number,
-    public resultadoAnioUltimo?: number
-  ) {}
-}
-*/

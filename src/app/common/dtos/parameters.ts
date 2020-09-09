@@ -107,7 +107,7 @@ export class ParamPerfilFinanciero {
     public id?: number,
     public idcuenta?: string,
     public cuenta?: string,
-    public resultadoUltimo?: number,
-    public resultadoPenultimo?: number
+    public resultadoPenultimo?: number,
+    public resultadoUltimo?: number
   ) {}
 }

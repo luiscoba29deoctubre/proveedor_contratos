@@ -9,9 +9,7 @@ import { NotificationService } from "../../../shared/services/notification.servi
 import { FormularioService } from "../formulario.service";
 import { MatDialog } from "@angular/material";
 import { DialogBoxComponent } from "./dialog-box/dialog-box.component";
-import { ParamPerfilFinanciero } from '../../../common/dtos/parameters';
-
-
+import { ParamPerfilFinanciero } from "../../../common/dtos/parameters";
 
 @Component({
   selector: "app-financiero",
@@ -96,23 +94,21 @@ export class FinancieroComponent implements OnInit {
     );
   }
 
-  openDialog(action, obj) {
+  openDialog(action: string, obj:any) {
     console.log("action", action);
     console.log("obj", obj);
 
-    obj.action = action;
+    obj.anio = this.currentYear;
+
+    console.log("new obj", obj);
     const dialogRef = this.dialog.open(DialogBoxComponent, {
       width: "250px",
       data: obj,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result.event === "Agregar") {
-        this.addRowData(result.data);
-      } else if (result.event === "Actualizar") {
+      if (result.event === "Actualizar") {
         this.updateRowData(result.data);
-      } else if (result.event === "Eliminar") {
-        this.deleteRowData(result.data);
       }
       this.dataParameters = this.lstCuentas;
       //  this.enviarDataParameterOnServer();
@@ -120,27 +116,7 @@ export class FinancieroComponent implements OnInit {
     });
   }
 
-  addRowData(row_obj) {
-    // comprobaciòn para ver si ya existe el codigo
-    const foundElement = this.dataParameters.find(
-      (element) => row_obj.id === element.id
-    );
-
-    if (foundElement) {
-      // se muestra mensaje de advertencia
-      this.showToasterError();
-    } else {
-      const d = new Date();
-      this.dataParameters.push({
-        id: d.getTime(),
-        code: row_obj.code,
-        name: row_obj.name,
-      });
-    }
-    // this.paginator.renderRows();
-  }
-
-  updateRowData(row_obj) {
+  updateRowData(row_obj: ParamPerfilFinanciero) {
     console.log("row_objvvvv", row_obj);
 
     // comprobaciòn para ver si ya existe el codigo
@@ -164,16 +140,10 @@ export class FinancieroComponent implements OnInit {
       });
       this.dataParameters.push({
         id: id_row,
-        code: row_obj.code,
-        name: row_obj.name,
+        code: row_obj.id,
+        name: row_obj.resultadoPenultimo,
       });
     }
-  }
-
-  deleteRowData(row_obj) {
-    this.dataParameters = this.dataParameters.filter((value, key) => {
-      return value.id !== row_obj.id;
-    });
   }
 
   guardar() {
