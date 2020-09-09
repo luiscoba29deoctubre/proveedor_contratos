@@ -17,6 +17,7 @@ import { OperativoDto } from "../../common/dtos/form/OperativoDto";
 import { ApiEndpoints } from "../../logueo/api.endpoints";
 import { AceptacionDto } from "./../../common/dtos/form/AceptacionDto";
 import { IdentificacionDto } from "./../../common/dtos/form/IdentificacionDto";
+import { ParamPerfilFinanciero } from "../../common/dtos/parameters";
 
 /**
  * Servicio para el manejo del formulario que ingresa el proveedor
@@ -47,6 +48,18 @@ export class FormularioService {
    */
   public deleteActividad(id: number): Observable<any> {
     return this.http.get(this.endpoints.url_api_delete_actividad + "/" + id);
+  }
+
+  public actualizarPerfilFinanciero(cuenta): Observable<FinancieroDto> {
+    return this.http
+      .put(this.endpoints.url_api_update_perfilFinanciero, cuenta)
+      .pipe(
+        map((financieroDto: FinancieroDto) => {
+          console.log("vienneeeeeee", financieroDto);
+          return financieroDto;
+        }),
+        catchError((err) => this.handleError(err))
+      );
   }
 
   /**
@@ -211,7 +224,7 @@ export class FormularioService {
     );
   }
 
- /* public downloadPdf(): Observable<any> {
+  /* public downloadPdf(): Observable<any> {
     return this.http
       .get(this.endpoints.url_api_download_pdf, {
         headers: this.headers,

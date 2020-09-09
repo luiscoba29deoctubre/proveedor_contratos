@@ -48,7 +48,7 @@ export class FinancieroComponent implements OnInit {
   }
 
   ngOnInit() {
-    const cuenta1: ParamPerfilFinanciero = new ParamPerfilFinanciero();
+    /* const cuenta1: ParamPerfilFinanciero = new ParamPerfilFinanciero();
     cuenta1.id = 3;
     cuenta1.cuenta = "ingresos";
     cuenta1.resultadoUltimo = 1200;
@@ -60,7 +60,7 @@ export class FinancieroComponent implements OnInit {
     cuenta2.resultadoPenultimo = 7;
 
     this.lstCuentas.push(cuenta1);
-    this.lstCuentas.push(cuenta2);
+    this.lstCuentas.push(cuenta2);*/
 
     this.dataSource = this.lstCuentas;
 
@@ -70,7 +70,7 @@ export class FinancieroComponent implements OnInit {
 
     this.formsService.getFinanciero().subscribe(
       async (financieroDto: FinancieroDto) => {
-        console.log("llega allForms", financieroDto.anioActual);
+        console.log("llega financieroDto", financieroDto);
 
         this.currentYear = financieroDto.anioActual;
         this.tipoPersona = financieroDto.tipoPersona;
@@ -106,20 +106,27 @@ export class FinancieroComponent implements OnInit {
   }
 
   updateRowData(row_obj: ParamPerfilFinanciero) {
-    for (let i = 0; i < this.lstCuentas.length; i++) {
+    const longitudCuenta = this.lstCuentas.length;
+    for (let i = 0; i < longitudCuenta; i++) {
       if (this.lstCuentas[i].id === row_obj.id) {
         this.lstCuentas[i].resultadoPenultimo = row_obj.resultadoPenultimo;
         this.lstCuentas[i].resultadoUltimo = row_obj.resultadoUltimo;
+        i = longitudCuenta;
+        this.actualizaCuentaOnServer(this.lstCuentas[i]);
       }
     }
   }
 
-  /*actualizaCuentaOnServer() {
-    this.apiservice.putSaveDataParameters(dataParameters).subscribe(
-      (success) => console.log("enviarDataParameterOnServer() successful."),
-      (error) => console.log("enviarDataParameterOnServer() error.")
+  actualizaCuentaOnServer(cuentaAactualizar: ParamPerfilFinanciero) {
+    this.formsService.actualizarPerfilFinanciero(cuentaAactualizar).subscribe(
+      (data) => {
+        console.log("llega data ", data);
+      },
+      (error) => {
+        console.log(error);
+      }
     );
-  }*/
+  }
 
   showToasterSuccess() {
     this.notifyService.showSuccess("guardada exitosamente", "Financiero");

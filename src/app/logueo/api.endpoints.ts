@@ -112,4 +112,9 @@ export class ApiEndpoints {
   // elimina una actividad
   public url_api_delete_actividad: string =
     this.url_api_formulario + "/delete-actividad";
+
+
+  public url_api_update_perfilFinanciero: string =
+    this.url_api_formulario + "/update-perfilFinanciero";
+
 }
