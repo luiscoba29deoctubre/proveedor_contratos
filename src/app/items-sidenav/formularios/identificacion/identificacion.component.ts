@@ -14,7 +14,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { FormularioService } from "../formulario.service";
 import { storageList } from "../../../shared/bd/indexedDB";
 import { LoginService } from "../../../logueo/login/login.service";
-import { ParamService } from '../../../dashboard/param.service';
+import { ParamService } from "../../../dashboard/param.service";
 
 import {
   Parameter,

@@ -85,10 +85,6 @@ export class InfoContactoComponent implements OnInit {
 
         await this.loadCombos();
 
-        console.log("ppppppppppppp", this.paises);
-        console.log("ppppppppppppp", this.provincias);
-        console.log("ppppppppppppp", this.cantones);
-        console.log("ppppppppppppp", this.parroquias);
         if (this.isEmpty(infoContactoDto)) {
           this.setDefaultValuesCombos(infoContactoDto);
         } else {
@@ -98,7 +94,6 @@ export class InfoContactoComponent implements OnInit {
         //   await this.loadCombos();
 
         console.log("componente ", infoContactoDto);
-        //   this.setearCombosActividades(identificacionDto);
 
         this.spinner.hide();
       },
@@ -259,6 +254,10 @@ export class InfoContactoComponent implements OnInit {
       });
 
       this.parroquias = newParroquas;
+
+      this.infocontactoForm.controls["provincia"].setValue(null);
+      this.infocontactoForm.controls["canton"].setValue(null);
+      this.infocontactoForm.controls["parroquia"].setValue(null);
     }
   };
 
@@ -280,6 +279,9 @@ export class InfoContactoComponent implements OnInit {
       this.cantones = newCantones;
 
       this.capturaCanton(newCantones[0]);
+
+      this.infocontactoForm.controls["canton"].setValue(null);
+      this.infocontactoForm.controls["parroquia"].setValue(null);
     }
   };
 
@@ -299,6 +301,8 @@ export class InfoContactoComponent implements OnInit {
       });
       console.log("newParroquias", newParroquias);
       this.parroquias = newParroquias;
+
+      this.infocontactoForm.controls["parroquia"].setValue(null);
     }
   };
 
