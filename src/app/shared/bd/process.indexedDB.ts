@@ -4,7 +4,10 @@ import { storageList } from "./indexedDB";
 
 // manejaremos la bd
 export class ProcessIDB {
-  constructor(private dbService: NgxIndexedDBService) {}
+  constructor(private dbService: NgxIndexedDBService) {
+   
+  }
+
 
   fillingParameters = (allParameters) => {
     this.addLstActividadDto(

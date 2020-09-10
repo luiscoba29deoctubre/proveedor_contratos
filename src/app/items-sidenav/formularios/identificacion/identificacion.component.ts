@@ -14,6 +14,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { FormularioService } from "../formulario.service";
 import { storageList } from "../../../shared/bd/indexedDB";
 import { LoginService } from "../../../logueo/login/login.service";
+import { ParamService } from '../../../dashboard/param.service';
 
 import {
   Parameter,
@@ -69,6 +70,7 @@ export class IdentificacionComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
+    private paramService: ParamService,
     private spinner: NgxSpinnerService,
     private formsService: FormularioService,
     private notifyService: NotificationService,
@@ -86,6 +88,21 @@ export class IdentificacionComponent implements OnInit {
     this.initForm();
     // creamos una instancia para manejar la base de datos
     this.processIDB = new ProcessIDB(dbService);
+
+    this.processIDB.clearIndexedDB(); // para borrar los stores del indexedDB
+
+    this.paramService.getParameters().subscribe(
+      (allParameters) => {
+        console.log("allParameterssssssssss", allParameters);
+        // llenamos la base 'indexed-db'
+        this.processIDB.fillingParameters(allParameters);
+        this.spinner.hide();
+      },
+      (error) => {
+        console.log(error);
+        this.spinner.hide();
+      }
+    );
   }
   // sacado de https://morioh.com/p/526559a86600 el Toast que muestra mensajes
   showToasterSuccess() {
