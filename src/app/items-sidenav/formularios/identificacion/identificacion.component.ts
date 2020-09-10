@@ -88,21 +88,6 @@ export class IdentificacionComponent implements OnInit {
     this.initForm();
     // creamos una instancia para manejar la base de datos
     this.processIDB = new ProcessIDB(dbService);
-
-    this.processIDB.clearIndexedDB(); // para borrar los stores del indexedDB
-
-    this.paramService.getParameters().subscribe(
-      (allParameters) => {
-        console.log("allParameterssssssssss", allParameters);
-        // llenamos la base 'indexed-db'
-        this.processIDB.fillingParameters(allParameters);
-        this.spinner.hide();
-      },
-      (error) => {
-        console.log(error);
-        this.spinner.hide();
-      }
-    );
   }
   // sacado de https://morioh.com/p/526559a86600 el Toast que muestra mensajes
   showToasterSuccess() {

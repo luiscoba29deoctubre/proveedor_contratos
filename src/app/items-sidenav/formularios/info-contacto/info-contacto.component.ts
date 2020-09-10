@@ -77,7 +77,6 @@ export class InfoContactoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.loginService.checkExpirationToken(); // para que salga, cuando el token expire
 
     this.formsService.getInfoContacto().subscribe(
@@ -279,6 +278,8 @@ export class InfoContactoComponent implements OnInit {
       });
       console.log("newCantones", newCantones);
       this.cantones = newCantones;
+
+      this.capturaCanton(newCantones[0]);
     }
   };
 
