@@ -4,15 +4,12 @@ import { Router } from "@angular/router";
 import { BsLocaleService } from "ngx-bootstrap/datepicker";
 import { NgxIndexedDBService } from "ngx-indexed-db";
 import { NgxSpinnerService } from "ngx-spinner";
-import {
-  ParamDocumento,
-  ParamDocumentoPerfilDocumental,
-} from "../../../common/dtos/parameters";
+import { DocumentalDto } from "../../../common/dtos/form/DocumentalDto";
+import { ParamDocumento } from "../../../common/dtos/parameters";
 import { LoginService } from "../../../logueo/login/login.service";
 import { storageList } from "../../../shared/bd/indexedDB";
 import { NotificationService } from "../../../shared/services/notification.service";
 import { FormularioService } from "../formulario.service";
-import { DocumentalDto } from "../../../common/dtos/form/DocumentalDto";
 
 @Component({
   selector: "app-documental",

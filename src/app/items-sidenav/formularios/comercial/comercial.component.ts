@@ -1,20 +1,20 @@
 import { Component, OnInit } from "@angular/core";
-import { LoginService } from "../../../logueo/login/login.service";
-import { ComercialDto } from "../../../common/dtos/form/ComercialDto";
-import { Router } from "@angular/router";
 import { FormBuilder } from "@angular/forms";
-import { NgxSpinnerService } from "ngx-spinner";
+import { Router } from "@angular/router";
 import { NgxIndexedDBService } from "ngx-indexed-db";
-import { FormularioService } from "../formulario.service";
+import { NgxSpinnerService } from "ngx-spinner";
+import { ComercialDto } from "../../../common/dtos/form/ComercialDto";
+import {
+  ParamAllQuestions,
+  ParamPregunta,
+  ParamRespuesta,
+  ParamRespuestaSeleccionada,
+} from "../../../common/dtos/parameters";
+import { LoginService } from "../../../logueo/login/login.service";
 import { storageList } from "../../../shared/bd/indexedDB";
 import { ProcessIDB } from "../../../shared/bd/process.indexedDB";
 import { NotificationService } from "../../../shared/services/notification.service";
-import {
-  ParamRespuestaSeleccionada,
-  ParamPregunta,
-  ParamRespuesta,
-  ParamAllQuestions,
-} from "../../../common/dtos/parameters";
+import { FormularioService } from "../formulario.service";
 
 @Component({
   selector: "app-comercial",

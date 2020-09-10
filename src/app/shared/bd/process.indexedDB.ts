@@ -4,10 +4,7 @@ import { storageList } from "./indexedDB";
 
 // manejaremos la bd
 export class ProcessIDB {
-  constructor(private dbService: NgxIndexedDBService) {
-   
-  }
-
+  constructor(private dbService: NgxIndexedDBService) {}
 
   fillingParameters = (allParameters) => {
     this.addLstActividadDto(
@@ -93,9 +90,9 @@ export class ProcessIDB {
     for (const index in vector) {
       this.dbService
         .add(store, {
-          id: vector[ index ].id,
-          name: vector[ index ].name,
-          numero: vector[ index ].numero,
+          id: vector[index].id,
+          name: vector[index].name,
+          numero: vector[index].numero,
         })
         .then(
           () => {
@@ -107,7 +104,7 @@ export class ProcessIDB {
           }
         );
     }
-  }
+  };
 
   addLstPaisDto = (key, vector) => {
     // tslint:disable-next-line: forin

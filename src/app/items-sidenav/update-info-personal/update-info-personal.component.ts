@@ -1,10 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { Validators, FormGroup, FormBuilder } from "@angular/forms";
-import { Usuario } from "../../common/domain/usuario";
-
-import { UsuarioService } from "../../common/services/usuario.service";
-
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NgxSpinnerService } from "ngx-spinner";
+import { Usuario } from "../../common/domain/usuario";
+import { UsuarioService } from "../../common/services/usuario.service";
 
 /**
  * Componente del formulario de actualización de datos del usuario
@@ -115,7 +113,7 @@ export class UpdateInfoPersonalComponent implements OnInit {
           this.alerts.msg =
             "Información actualizada, actualize el navegador para ver los cambios reflejados";
           this.spinner.hide();
-          },
+        },
         (error) => {
           console.log(error);
           this.alerts.error = "Error al actualizar la información";

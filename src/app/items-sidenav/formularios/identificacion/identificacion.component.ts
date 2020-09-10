@@ -1,27 +1,21 @@
-import { IdentificacionDto } from "./../../../common/dtos/form/IdentificacionDto";
 import { Component, OnInit } from "@angular/core";
-
-import { FormBuilder, FormGroup, Validators, FormArray } from "@angular/forms";
-
+import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-
-import { NotificationService } from "../../../shared/services/notification.service";
-
-import { ProcessIDB } from "../../../shared/bd/process.indexedDB";
 import { NgxIndexedDBService } from "ngx-indexed-db";
-
 import { NgxSpinnerService } from "ngx-spinner";
-import { FormularioService } from "../formulario.service";
-import { storageList } from "../../../shared/bd/indexedDB";
-import { LoginService } from "../../../logueo/login/login.service";
-import { ParamService } from "../../../dashboard/param.service";
-
 import {
-  Parameter,
-  ParamContribuyente,
-  ParamCategoria,
   ParamCatalogoCategoria,
+  ParamCategoria,
+  ParamContribuyente,
+  Parameter,
 } from "../../../common/dtos/parameters";
+import { ParamService } from "../../../dashboard/param.service";
+import { LoginService } from "../../../logueo/login/login.service";
+import { storageList } from "../../../shared/bd/indexedDB";
+import { ProcessIDB } from "../../../shared/bd/process.indexedDB";
+import { NotificationService } from "../../../shared/services/notification.service";
+import { FormularioService } from "../formulario.service";
+import { IdentificacionDto } from "./../../../common/dtos/form/IdentificacionDto";
 
 @Component({
   selector: "app-identificacion",

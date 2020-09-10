@@ -1,10 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { Validators, FormGroup, FormBuilder } from "@angular/forms";
-import { Usuario } from "../../common/domain/usuario";
-
-import { UsuarioService } from "../../common/services/usuario.service";
-
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NgxSpinnerService } from "ngx-spinner";
+import { Usuario } from "../../common/domain/usuario";
+import { UsuarioService } from "../../common/services/usuario.service";
 
 /**
  * Componente para la actualización de password de usuarios
@@ -45,9 +43,7 @@ export class ChangePasswordComponent implements OnInit {
   /**
    * Método que se ejecuta al iniciar el componente
    */
-  ngOnInit() {
-   
-  }
+  ngOnInit() {}
 
   /**
    * Inicializa el Formulario de Cambio de Password
@@ -78,7 +74,7 @@ export class ChangePasswordComponent implements OnInit {
         this.alerts.error = "";
         this.spinner.show();
 
-        const valuePass1:string = this.changePassForm.get("pass1").value;
+        const valuePass1: string = this.changePassForm.get("pass1").value;
 
         this.usuarioService.changePass(valuePass1).subscribe(
           (data) => {
@@ -117,7 +113,7 @@ export class ChangePasswordComponent implements OnInit {
       this.usuarioService.validatePassUsuario(valuePass0).subscribe(
         (data) => {
           this.errorPass0 = data ? false : true;
-            this.spinner.hide();
+          this.spinner.hide();
         },
         (error) => {
           console.log(error);

@@ -1,15 +1,15 @@
 import { Component, OnInit } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MatDialog } from "@angular/material";
 import { Router } from "@angular/router";
 import { NgxIndexedDBService } from "ngx-indexed-db";
 import { NgxSpinnerService } from "ngx-spinner";
 import { FinancieroDto } from "../../../common/dtos/form/FinancieroDto";
+import { ParamPerfilFinanciero } from "../../../common/dtos/parameters";
 import { LoginService } from "../../../logueo/login/login.service";
 import { NotificationService } from "../../../shared/services/notification.service";
 import { FormularioService } from "../formulario.service";
-import { MatDialog } from "@angular/material";
 import { DialogBoxComponent } from "./dialog-box/dialog-box.component";
-import { ParamPerfilFinanciero } from "../../../common/dtos/parameters";
 
 @Component({
   selector: "app-financiero",

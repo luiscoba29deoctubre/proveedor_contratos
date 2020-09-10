@@ -1,23 +1,23 @@
 import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { LoginService } from "../../../logueo/login/login.service";
-import { NotificationService } from "../../../shared/services/notification.service";
-import { NgxIndexedDBService } from "ngx-indexed-db";
-import { FormularioService } from "../formulario.service";
-import { NgxSpinnerService } from "ngx-spinner";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
+import { format } from "date-fns";
+import { defineLocale, esLocale } from "ngx-bootstrap/chronos";
+import { BsLocaleService } from "ngx-bootstrap/datepicker";
+import { NgxIndexedDBService } from "ngx-indexed-db";
+import { NgxSpinnerService } from "ngx-spinner";
+import { EmpresarialDto } from "../../../common/dtos/form/EmpresarialDto";
 import {
+  ParamAllQuestions,
   ParamPregunta,
   ParamRespuesta,
-  ParamAllQuestions,
   ParamRespuestaSeleccionada,
 } from "../../../common/dtos/parameters";
-import { EmpresarialDto } from "../../../common/dtos/form/EmpresarialDto";
+import { LoginService } from "../../../logueo/login/login.service";
 import { storageList } from "../../../shared/bd/indexedDB";
 import { ProcessIDB } from "../../../shared/bd/process.indexedDB";
-import { BsLocaleService } from "ngx-bootstrap/datepicker";
-import { defineLocale, esLocale } from "ngx-bootstrap/chronos";
-import { format } from "date-fns";
+import { NotificationService } from "../../../shared/services/notification.service";
+import { FormularioService } from "../formulario.service";
 
 @Component({
   selector: "app-empresarial",
@@ -289,7 +289,6 @@ export class EmpresarialComponent implements OnInit {
       empresarialDto.lstRespuestaSeleccionada = this.lstRespuestasSeleccionadas;
 
       console.log("empresarialDto enviado", empresarialDto);
-
 
       this.formsService.saveEmpresarial(empresarialDto).subscribe(
         (empresarial: EmpresarialDto) => {

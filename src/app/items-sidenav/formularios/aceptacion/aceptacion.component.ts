@@ -1,15 +1,14 @@
+import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
+import { FormBuilder } from "@angular/forms";
+import { Router } from "@angular/router";
+import { saveAs } from "file-saver";
+import { BsLocaleService } from "ngx-bootstrap/datepicker";
+import { NgxIndexedDBService } from "ngx-indexed-db";
+import { NgxSpinnerService } from "ngx-spinner";
 import { LoginService } from "../../../logueo/login/login.service";
 import { NotificationService } from "../../../shared/services/notification.service";
-import { Router } from "@angular/router";
-import { FormBuilder } from "@angular/forms";
-import { NgxSpinnerService } from "ngx-spinner";
-import { NgxIndexedDBService } from "ngx-indexed-db";
-import { BsLocaleService } from "ngx-bootstrap/datepicker";
 import { FormularioService } from "../formulario.service";
-
-import { saveAs } from "file-saver";
-import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: "app-aceptacion",

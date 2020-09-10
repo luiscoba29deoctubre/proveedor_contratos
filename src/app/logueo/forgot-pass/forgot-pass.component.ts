@@ -1,10 +1,8 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { FormGroup, Validators, FormBuilder } from "@angular/forms";
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-
-import { ForgotPassService } from "./forgot-pass.service";
-
 import { NgxSpinnerService } from "ngx-spinner";
+import { ForgotPassService } from "./forgot-pass.service";
 
 @Component({
   selector: "app-forgot-pass",
