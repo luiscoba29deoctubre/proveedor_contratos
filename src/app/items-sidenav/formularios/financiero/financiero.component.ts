@@ -77,8 +77,12 @@ export class FinancieroComponent implements OnInit {
 
         console.log("this.tipoPersona", this.tipoPersona);
 
-        this.esNatural();
-        this.esJuridico();
+        if (this.tipoPersona) {
+          this.esNatural();
+          this.esJuridico();
+        } else {
+          this.showToasterError();
+        }
 
         this.spinner.hide();
       },
@@ -133,7 +137,10 @@ export class FinancieroComponent implements OnInit {
   }
 
   showToasterError() {
-    this.notifyService.showError("Error al guardar perfil financiero", "Error");
+    this.notifyService.showError(
+      "Aún no llena la sección de Identificacion",
+      "Error"
+    );
   }
 
   private initNaturalForm() {
@@ -170,6 +177,11 @@ export class FinancieroComponent implements OnInit {
 
   esNatural = () => {
     if (this.tipoPersona === "Natural") {
+
+
+
+
+
       return false;
     } else {
       return true;

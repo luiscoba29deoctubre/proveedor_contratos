@@ -9,7 +9,7 @@ import {
   ParamCanton,
   Parameter,
   ParamParroquia,
-  ParamProvincia
+  ParamProvincia,
 } from "../../../common/dtos/parameters";
 import { LoginService } from "../../../logueo/login/login.service";
 import { storageList } from "../../../shared/bd/indexedDB";
@@ -79,7 +79,7 @@ export class InfoContactoComponent implements OnInit {
 
     this.formsService.getInfoContacto().subscribe(
       async (infoContactoDto) => {
-        console.log(" llega allForms", InfoContactoDto);
+        console.log(" llega allForms", infoContactoDto);
 
         await this.loadCombos();
 
@@ -88,11 +88,6 @@ export class InfoContactoComponent implements OnInit {
         } else {
           this.infocontactoForm.setValue(infoContactoDto);
         }
-        //      this.loadInfoContacto(infoContactoDto); // carga los datos en pantalla
-        //   await this.loadCombos();
-
-        console.log("componente ", infoContactoDto);
-
         this.spinner.hide();
       },
       (error) => {
@@ -122,7 +117,7 @@ export class InfoContactoComponent implements OnInit {
   loadCombos = async () => {
     const paisNoUsada = await this.dbService.getAll(storageList[6]).then(
       (paises) => {
-        console.log("paises", paises);
+        //     console.log("paises", paises);
         this.paises = paises;
         this.parroquiasCompleto = paises;
       },
@@ -134,7 +129,7 @@ export class InfoContactoComponent implements OnInit {
       (provincias) => {
         this.provincias = provincias;
         this.provinciasCompleto = provincias;
-        console.log("provincias", provincias);
+        //   console.log("provincias", provincias);
       },
       (error) => {
         console.log(error);
@@ -144,7 +139,6 @@ export class InfoContactoComponent implements OnInit {
       (cantones) => {
         this.cantones = cantones;
         this.cantonesCompleto = cantones;
-        console.log("cantones", cantones);
       },
       (error) => {
         console.log(error);
@@ -154,7 +148,6 @@ export class InfoContactoComponent implements OnInit {
       (parroquias) => {
         this.parroquias = parroquias;
         this.parroquiasCompleto = parroquias;
-        console.log("parroquias", this.parroquias);
       },
       (error) => {
         console.log(error);

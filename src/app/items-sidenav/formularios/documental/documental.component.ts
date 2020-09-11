@@ -1,7 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder } from "@angular/forms";
 import { Router } from "@angular/router";
-import { BsLocaleService } from "ngx-bootstrap/datepicker";
 import { NgxIndexedDBService } from "ngx-indexed-db";
 import { NgxSpinnerService } from "ngx-spinner";
 import { DocumentalDto } from "../../../common/dtos/form/DocumentalDto";
@@ -23,11 +21,9 @@ export class DocumentalComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private fb: FormBuilder,
     private spinner: NgxSpinnerService,
     private loginService: LoginService,
     private dbService: NgxIndexedDBService,
-    private localeService: BsLocaleService,
     private formsService: FormularioService,
     private notifyService: NotificationService
   ) {}

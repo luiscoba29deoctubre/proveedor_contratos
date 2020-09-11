@@ -1,5 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder } from "@angular/forms";
 import { Router } from "@angular/router";
 import { NgxIndexedDBService } from "ngx-indexed-db";
 import { NgxSpinnerService } from "ngx-spinner";
@@ -36,7 +35,6 @@ export class ComercialComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private fb: FormBuilder,
     private spinner: NgxSpinnerService,
     private loginService: LoginService,
     private dbService: NgxIndexedDBService,

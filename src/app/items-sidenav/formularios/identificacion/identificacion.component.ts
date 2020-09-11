@@ -9,7 +9,6 @@ import {
   ParamContribuyente,
   Parameter,
 } from "../../../common/dtos/parameters";
-import { ParamService } from "../../../dashboard/param.service";
 import { LoginService } from "../../../logueo/login/login.service";
 import { storageList } from "../../../shared/bd/indexedDB";
 import { ProcessIDB } from "../../../shared/bd/process.indexedDB";
@@ -64,7 +63,6 @@ export class IdentificacionComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private paramService: ParamService,
     private spinner: NgxSpinnerService,
     private formsService: FormularioService,
     private notifyService: NotificationService,

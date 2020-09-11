@@ -7,6 +7,8 @@ export class ProcessIDB {
   constructor(private dbService: NgxIndexedDBService) {}
 
   fillingParameters = (allParameters) => {
+    this.clearIndexedDB(); // para borrar los stores del indexedDB
+
     this.addLstActividadDto(
       "lstActividadDto",
       allParameters["lstActividadDto"]
@@ -25,11 +27,6 @@ export class ProcessIDB {
     );
 
     this.addLstPaisDto("lstPaisDto", allParameters["lstPaisDto"]);
-
-    this.storeLstParroquiaDto(
-      "lstParroquiaDto",
-      allParameters["lstParroquiaDto"]
-    );
 
     this.storeLstProvinciaDto(
       "lstProvinciaDto",
@@ -61,6 +58,11 @@ export class ProcessIDB {
     this.addLstDocumentoDto(
       "lstDocumentoDto",
       allParameters["lstDocumentoDto"]
+    );
+
+    this.storeLstParroquiaDto(
+      "lstParroquiaDto",
+      allParameters["lstParroquiaDto"]
     );
   };
 

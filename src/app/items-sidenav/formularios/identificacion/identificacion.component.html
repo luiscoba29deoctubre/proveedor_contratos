@@ -240,7 +240,7 @@
             <button
               [disabled]="
                 identificacionForm.invalid ||
-                getActividades.controls.length === 0
+                !getActividades.controls[0].dirty
               "
               style="color: #fec524; background: #8b2131; border-color: black;"
               class="btn btn-info"
@@ -261,4 +261,6 @@
       <p style="font-size: 20px; color: white;">Cargando...</p>
     </ngx-spinner>
   </div>
+  <!-- <pre>{{ identificacionForm.status }}</pre>
+  <pre>{{ identificacionForm.value | json }}</pre> -->
 </div>
