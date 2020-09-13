@@ -116,17 +116,7 @@ export class FinancieroComponent implements OnInit {
     console.log("row_objxxx", row_obj);
     const longitudCuenta = this.lstCuentas.length;
     for (let i = 0; i < longitudCuenta; i++) {
-      console.log("this.lstCuentas[i] xxx", this.lstCuentas[i]);
-
-      if (this.lstCuentas[i].id === row_obj.id) {
-        console.log("entraaaa");
-
-        console.log("antes this.lstCuentas[i]", this.lstCuentas[i]);
-
-        this.lstCuentas[i].resultadoPenultimo = row_obj.resultadoPenultimo;
-        this.lstCuentas[i].resultadoUltimo = row_obj.resultadoUltimo;
-        i = longitudCuenta;
-
+      if (this.lstCuentas[i].idcuenta === row_obj.idcuenta) {
         console.log("despues this.lstCuentas[i]", this.lstCuentas[i]);
 
         this.actualizaCuentaOnServer(this.lstCuentas[i]);
@@ -178,7 +168,7 @@ export class FinancieroComponent implements OnInit {
           cuentas.forEach((element: ParamCuenta) => {
             const cuenta = new ParamPerfilFinanciero();
 
-            cuenta.id = element.id;
+            cuenta.idcuenta = element.id;
             cuenta.cuenta = element.name;
 
             cuenta.resultadoPenultimo = 0;

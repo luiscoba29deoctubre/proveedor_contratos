@@ -114,7 +114,7 @@ export class ParamDocumentoPerfilDocumental {
 
 export class ParamPerfilFinanciero {
   constructor(
-    public id?: number,
+    public idcuenta?: number,
     public cuenta?: string,
     public resultadoPenultimo?: number,
     public resultadoUltimo?: number
