@@ -18,6 +18,8 @@ export const storageList = [
   "lstPreguntaDto", // 11
   // documental
   "lstDocumentoDto",
+  // financiero
+  "lstCuentaDto",
 ];
 
 export const dbConfig: DBConfig = {
@@ -180,6 +182,24 @@ export const dbConfig: DBConfig = {
         { name: "id", keypath: "id", options: { unique: false } },
         { name: "name", keypath: "name", options: { unique: false } },
         { name: "numero", keypath: "numero", options: { unique: false } },
+      ],
+    },
+    {
+      store: storageList[13], // cuenta
+      storeConfig: { keyPath: "id", autoIncrement: false },
+      storeSchema: [
+        { name: "id", keypath: "id", options: { unique: false } },
+        { name: "name", keypath: "name", options: { unique: false } },
+        {
+          name: "idtiporatio",
+          keypath: "idtiporatio",
+          options: { unique: false },
+        },
+        {
+          name: "idtipopersona",
+          keypath: "idtipopersona",
+          options: { unique: false },
+        },
       ],
     },
   ],

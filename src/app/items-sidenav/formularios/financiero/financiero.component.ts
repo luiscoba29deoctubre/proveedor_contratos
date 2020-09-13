@@ -1,12 +1,16 @@
 import { Component, OnInit } from "@angular/core";
-import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormArray, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material";
 import { Router } from "@angular/router";
 import { NgxIndexedDBService } from "ngx-indexed-db";
 import { NgxSpinnerService } from "ngx-spinner";
 import { FinancieroDto } from "../../../common/dtos/form/FinancieroDto";
-import { ParamPerfilFinanciero } from "../../../common/dtos/parameters";
+import {
+  ParamPerfilFinanciero,
+  ParamCuenta,
+} from "../../../common/dtos/parameters";
 import { LoginService } from "../../../logueo/login/login.service";
+import { storageList } from "../../../shared/bd/indexedDB";
 import { NotificationService } from "../../../shared/services/notification.service";
 import { FormularioService } from "../formulario.service";
 import { DialogBoxComponent } from "./dialog-box/dialog-box.component";
@@ -17,7 +21,6 @@ import { DialogBoxComponent } from "./dialog-box/dialog-box.component";
   styleUrls: ["./financiero.component.css"],
 })
 export class FinancieroComponent implements OnInit {
-  //  displayedColumns: string[] = [ "Cuenta", "weight", "symbol"];
   displayedColumns: string[] = ["cuenta", "resultado", "resultado2", "action"];
   dataSource;
 
@@ -29,25 +32,24 @@ export class FinancieroComponent implements OnInit {
   currentYear;
 
   tipoPersona: string;
+  idTipoPersona;
 
   lstCuentas: ParamPerfilFinanciero[] = [];
 
   constructor(
-    public dialog: MatDialog,
-    private fb: FormBuilder,
     private router: Router,
+    public dialog: MatDialog,
     private spinner: NgxSpinnerService,
     private loginService: LoginService,
+    private dbService: NgxIndexedDBService,
     private notifyService: NotificationService,
-    private formsService: FormularioService,
-    private dbService: NgxIndexedDBService
+    private formsService: FormularioService
   ) {
     this.spinner.show();
-    this.initNaturalForm();
-    this.initJuridicoForm();
   }
 
   ngOnInit() {
+    /*
     const cuenta1: ParamPerfilFinanciero = new ParamPerfilFinanciero();
     cuenta1.id = 3;
     cuenta1.cuenta = "ingresos";
@@ -63,8 +65,7 @@ export class FinancieroComponent implements OnInit {
     this.lstCuentas.push(cuenta2);
 
     this.dataSource = this.lstCuentas;
-
-    console.log("this.lstCuentas", this.lstCuentas);
+    */
 
     this.loginService.checkExpirationToken(); // para que salga, cuando el token expire
 
@@ -73,13 +74,13 @@ export class FinancieroComponent implements OnInit {
         console.log("llega financieroDto", financieroDto);
 
         this.currentYear = financieroDto.anioActual;
-        this.tipoPersona = financieroDto.tipoPersona;
+        this.tipoPersona = financieroDto.tipoPersona.toUpperCase();
 
         console.log("this.tipoPersona", this.tipoPersona);
 
         if (this.tipoPersona) {
-          this.esNatural();
-          this.esJuridico();
+          this.idTipoPersona = financieroDto.idTipoPersona;
+          this.loadCuentas();
         } else {
           this.showToasterError();
         }
@@ -143,57 +144,32 @@ export class FinancieroComponent implements OnInit {
     );
   }
 
-  private initNaturalForm() {
-    this.naturalForm = this.fb.group({
-      lstNatural: this.fb.array([
-        this.fb.group({
-          cuentaPenultimo: [null, [Validators.required]],
-          cuentaUltimo: [null, [Validators.required]],
-        }),
-      ]),
-    });
-  }
-
-  private initJuridicoForm() {
-    this.juridicoForm = this.fb.group({
-      pasivoUltimo: [null, [Validators.required]],
-      pasivoPenultimo: [null, [Validators.required]],
-      patrimonioPenultimo: [null, [Validators.required]],
-      patrimonioUltimo: [null, [Validators.required]],
-      activoPenultimo: [null, [Validators.required]],
-      activoUltimo: [null, [Validators.required]],
-      activoCorrientePenultimo: [null, [Validators.required]],
-      activoCorrienteUltimo: [null, [Validators.required]],
-      pasivoCorrientePenultimo: [null, [Validators.required]],
-      pasivoCorrienteUltimo: [null, [Validators.required]],
-      utilidadNetaPenultimo: [null, [Validators.required]],
-      utilidadNetaUltimo: [null, [Validators.required]],
-    });
-  }
-
   get getLstNatural(): FormArray {
     return this.naturalForm.get("lstNatural") as FormArray;
   }
 
-  esNatural = () => {
-    if (this.tipoPersona === "Natural") {
+  loadCuentas = async () => {
+    const cuentasNoUsada = await this.dbService
+      .getAllByIndex(storageList[13], "idtipopersona", this.idTipoPersona)
+      .then(
+        (cuentas) => {
+          this.lstCuentas = [];
+          cuentas.forEach((element: ParamCuenta) => {
+            const cuenta = new ParamPerfilFinanciero();
 
+            cuenta.id = element.id;
+            cuenta.cuenta = element.name;
 
+            this.lstCuentas.push(cuenta);
+          });
 
-
-
-      return false;
-    } else {
-      return true;
-    }
-  };
-
-  esJuridico = () => {
-    if (this.tipoPersona === "Juridico") {
-      return false;
-    } else {
-      return true;
-    }
+          this.dataSource = this.lstCuentas;
+          console.log("this.lstCuentas", this.lstCuentas);
+        },
+        (error) => {
+          console.log("getByIndex", error);
+        }
+      );
   };
 
   sendNaturalForm(value: any, valid: boolean) {

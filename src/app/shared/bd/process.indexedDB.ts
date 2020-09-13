@@ -64,6 +64,8 @@ export class ProcessIDB {
       "lstParroquiaDto",
       allParameters["lstParroquiaDto"]
     );
+
+    this.storeLstCuentaDto("lstCuentaDto", allParameters["lstCuentaDto"]);
   };
 
   addLstTipoProveedorDto = (key, vector) => {
@@ -247,6 +249,28 @@ export class ProcessIDB {
           id: vector[index].id,
           idcanton: vector[index].idcanton,
           name: vector[index].name,
+        })
+        .then(
+          () => {
+            // Do something after the value was added
+            console.log("se llena store ", store);
+          },
+          (error) => {
+            console.log(store, error);
+          }
+        );
+    }
+  }
+
+  storeLstCuentaDto(store, vector): void {
+    // tslint:disable-next-line: forin
+    for (const index in vector) {
+      this.dbService
+        .add(store, {
+          id: vector[index].id,
+          name: vector[index].name,
+          idtiporatio: vector[index].idtiporatio,
+          idtipopersona: vector[index].idtipopersona,
         })
         .then(
           () => {

@@ -1,6 +1,6 @@
 <div>
   <div class="card">
-    <h5 class="card-title" style="margin: 10px; text-align: center;">
+    <h5 class="card-title" style="margin: 10px; text-align: center">
       IDENTIFICACIÓN DEL PROVEEDOR
     </h5>
 
@@ -16,9 +16,7 @@
           <div class="col-sm-12 col-md-6 col-lg-6">
             <div class="form-group">
               <label for="nombrerazonsocial">
-                <strong>
-                  Nombre o Razón Social:
-                </strong>
+                <strong> Nombre o Razón Social: </strong>
               </label>
               <input
                 formControlName="nombrerazonsocial"
@@ -39,6 +37,7 @@
                 placeholder="RUC / RISE"
                 id="rucrise"
                 maxlength="{{ 13 }}"
+                min="0"
               />
             </div>
           </div>
@@ -64,13 +63,13 @@
             <div class="form-group">
               <label for="persona">Persona: </label>
               <select
-                style="margin-left: 0%;"
+                style="margin-left: 0%"
                 formControlName="persona"
                 class="form-control"
                 (change)="capturaPersona()"
                 [(ngModel)]="personaSeleccionado"
               >
-                <option [ngValue]="null" disabled>Escoger persona </option>
+                <option [ngValue]="null" disabled>Escoger persona</option>
                 <option *ngFor="let persona of personas" [ngValue]="persona">
                   {{ persona.name }}
                 </option>
@@ -82,13 +81,11 @@
             <div class="form-group">
               <label for="contribuyente">Contribuyente: </label>
               <select
-                style="margin-left: 0%;"
+                style="margin-left: 0%"
                 formControlName="contribuyente"
                 class="form-control"
               >
-                <option [ngValue]="null" disabled
-                  >Escoger contribuyente
-                </option>
+                <option [ngValue]="null" disabled>Escoger contribuyente</option>
                 <option
                   *ngFor="let contribuyente of contribuyentesPorPersona"
                   [ngValue]="contribuyente"
@@ -105,11 +102,11 @@
             <div class="form-group">
               <label for="proveedor">Proveedor: </label>
               <select
-                style="margin-left: 0%;"
+                style="margin-left: 0%"
                 formControlName="proveedor"
                 class="form-control"
               >
-                <option [ngValue]="null" disabled>Escoger proveedor </option>
+                <option [ngValue]="null" disabled>Escoger proveedor</option>
                 <option
                   *ngFor="let proveedor of proveedores"
                   [ngValue]="proveedor"
@@ -136,12 +133,12 @@
                       <select
                         (ngModelChange)="capturaActividad($event, i)"
                         id="actividad"
-                        style="margin-left: 0%;"
+                        style="margin-left: 0%"
                         formControlName="actividad"
                         class="form-control"
                       >
-                        <option [ngValue]="null" disabled
-                          >Escoger actividad
+                        <option [ngValue]="null" disabled>
+                          Escoger actividad
                         </option>
                         <option
                           *ngFor="let actividad of actividades"
@@ -160,12 +157,12 @@
                         #categoria
                         (ngModelChange)="capturaCategoria($event, i)"
                         id="categoria"
-                        style="margin-left: 0%;"
+                        style="margin-left: 0%"
                         formControlName="categoria"
                         class="form-control"
                       >
-                        <option [ngValue]="null" disabled
-                          >Escoger categor&iacute;a
+                        <option [ngValue]="null" disabled>
+                          Escoger categor&iacute;a
                         </option>
                         <option
                           *ngFor="
@@ -185,12 +182,12 @@
                       <select
                         #detalle
                         id="detalle"
-                        style="margin-left: 0%;"
+                        style="margin-left: 0%"
                         formControlName="detalle"
                         class="form-control"
                       >
-                        <option [ngValue]="null" disabled
-                          >Escoger detalle
+                        <option [ngValue]="null" disabled>
+                          Escoger detalle
                         </option>
                         <option
                           *ngFor="
@@ -211,7 +208,7 @@
                       type="button"
                       class="quitar-actividad btn btn-link"
                       (click)="removeActividad(i)"
-                      style="font-size: 10px; margin-left: 0%;"
+                      style="font-size: 10px; margin-left: 0%"
                     >
                       <i class="fa fa-close equiz"></i>
                     </button>
@@ -224,7 +221,7 @@
             <strong
               class="agregar-actividad btn btn-link"
               (click)="addNewActividad()"
-              style="font-family: Times New Roman, Times, serif;"
+              style="font-family: Times New Roman, Times, serif"
             >
               Agregar otra actividad +
             </strong>
@@ -232,18 +229,19 @@
         </div>
 
         <div
-          style="margin-top: 10px; text-align: center;"
+          style="margin-top: 10px; text-align: center"
           class="row mt-3 form-group"
         >
           <!-- Button -->
           <div class="col">
+            <!-- arreglar esta validacion -->
             <button
               [disabled]="
                 identificacionForm.invalid ||
-                !getActividades.controls[0].dirty
+                getActividades.controls.length == 0
               "
-              style="color: #fec524; background: #8b2131; border-color: black;"
-              class="btn "
+              style="color: #fec524; background: #8b2131; border-color: black"
+              class="btn"
               type="submit"
             >
               <i class="fa fa-sign-in"></i> Guardar y Continuar
@@ -258,7 +256,7 @@
       color="#fff"
       type="ball-scale-multiple"
     >
-      <p style="font-size: 20px; color: white;">Cargando...</p>
+      <p style="font-size: 20px; color: white">Cargando...</p>
     </ngx-spinner>
   </div>
   <!-- <pre>{{ identificacionForm.status }}</pre>
