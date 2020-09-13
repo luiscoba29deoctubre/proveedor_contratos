@@ -7,6 +7,9 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { map } from "rxjs/internal/operators/map";
 import { catchError } from "rxjs/operators";
 import { throwError } from "rxjs";
+import { NotificationService } from "../../shared/services/notification.service";
+import { Router } from "@angular/router";
+import { NgxSpinnerService } from "ngx-spinner";
 
 /**
  * Servicio para el manejo de la data de usuarios
@@ -21,7 +24,13 @@ export class UsuarioService {
    * @param http
    * @param endpoints
    */
-  constructor(private http: HttpClient, private endpoints: ApiEndpoints) {}
+  constructor(
+    private spinner: NgxSpinnerService,
+    private router: Router,
+    private http: HttpClient,
+    private endpoints: ApiEndpoints,
+    private notifyService: NotificationService
+  ) {}
 
   /**
    * Registra un usuario
@@ -70,6 +79,7 @@ export class UsuarioService {
   }
 
   private handleError(error: HttpErrorResponse) {
+    this.spinner.show();
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error("An error occurred:", error.error.message);
@@ -79,9 +89,21 @@ export class UsuarioService {
       console.error(
         `Backend returned code ${error.status}, ` + `body was: ${error.error}`
       );
+      if (error.status === 401) {
+        this.showToasterError();
+        this.router.navigate(["/"]);
+      }
     }
+    this.spinner.hide();
     // Return an observable with a user-facing error message.
     return throwError("Something bad happened; please try again later.");
+  }
+
+  showToasterError() {
+    this.notifyService.showError(
+      "Por favor, vuelva a loguearse",
+      "Sesión caducada"
+    );
   }
 
   /**

@@ -104,10 +104,12 @@ export class FinancieroComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result.event === "Actualizar") {
-        console.log("result.data", result.data);
+      if (result) {
+        if (result.event === "Actualizar") {
+          console.log("result.data", result.data);
 
-        this.updateRowData(result.data);
+          this.updateRowData(result.data);
+        }
       }
     });
   }
@@ -125,6 +127,7 @@ export class FinancieroComponent implements OnInit {
   }
 
   actualizaCuentaOnServer(cuentaAactualizar: ParamPerfilFinanciero) {
+    this.loginService.checkExpirationToken();
     console.log("cuentaAactualizar xxx", cuentaAactualizar);
     this.formsService.actualizarPerfilFinanciero(cuentaAactualizar).subscribe(
       (financieroDto: FinancieroDto) => {
@@ -159,7 +162,7 @@ export class FinancieroComponent implements OnInit {
 
   loadCuentas = async () => {
     const cuentasNoUsada = await this.dbService
-      .getAllByIndex(storageList[ 13 ], "idtipopersona", this.idTipoPersona)
+      .getAllByIndex(storageList[13], "idtipopersona", this.idTipoPersona)
       .then(
         (cuentas) => {
           console.log("cuentas", cuentas);

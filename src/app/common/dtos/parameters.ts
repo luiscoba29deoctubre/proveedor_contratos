@@ -98,7 +98,7 @@ export class ParamCuenta {
     public id?: number,
     public name?: string,
     public idtiporatio?: number,
-    public idTipoPersona?: number,
+    public idtipopersona?: number,
     public lstDocumentoPerfilDocumental?: ParamDocumentoPerfilDocumental[]
   ) {}
 }
