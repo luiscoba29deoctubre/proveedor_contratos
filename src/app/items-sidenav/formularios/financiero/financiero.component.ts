@@ -129,7 +129,7 @@ export class FinancieroComponent implements OnInit {
     this.formsService.actualizarPerfilFinanciero(cuentaAactualizar).subscribe(
       (financieroDto: FinancieroDto) => {
         console.log("llega FinancieroDto ", FinancieroDto);
-        this.router.navigate(["/operativo"]);
+        // this.router.navigate(["/operativo"]);
 
         this.showToasterSuccess();
         this.spinner.hide();
@@ -159,7 +159,7 @@ export class FinancieroComponent implements OnInit {
 
   loadCuentas = async () => {
     const cuentasNoUsada = await this.dbService
-      .getAllByIndex(storageList[13], "idtipopersona", this.idTipoPersona)
+      .getAllByIndex(storageList[ 13 ], "idtipopersona", this.idTipoPersona)
       .then(
         (cuentas) => {
           console.log("cuentas", cuentas);
