@@ -105,30 +105,49 @@ export class FinancieroComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result.event === "Actualizar") {
+        console.log("result.data", result.data);
+
         this.updateRowData(result.data);
       }
     });
   }
 
   updateRowData(row_obj: ParamPerfilFinanciero) {
+    console.log("row_objxxx", row_obj);
     const longitudCuenta = this.lstCuentas.length;
     for (let i = 0; i < longitudCuenta; i++) {
+      console.log("this.lstCuentas[i] xxx", this.lstCuentas[i]);
+
       if (this.lstCuentas[i].id === row_obj.id) {
+        console.log("entraaaa");
+
+        console.log("antes this.lstCuentas[i]", this.lstCuentas[i]);
+
         this.lstCuentas[i].resultadoPenultimo = row_obj.resultadoPenultimo;
         this.lstCuentas[i].resultadoUltimo = row_obj.resultadoUltimo;
         i = longitudCuenta;
+
+        console.log("despues this.lstCuentas[i]", this.lstCuentas[i]);
+
         this.actualizaCuentaOnServer(this.lstCuentas[i]);
       }
     }
   }
 
   actualizaCuentaOnServer(cuentaAactualizar: ParamPerfilFinanciero) {
+    console.log("cuentaAactualizar xxx", cuentaAactualizar);
     this.formsService.actualizarPerfilFinanciero(cuentaAactualizar).subscribe(
-      (data) => {
-        console.log("llega data ", data);
+      (financieroDto: FinancieroDto) => {
+        console.log("llega FinancieroDto ", FinancieroDto);
+        this.router.navigate(["/operativo"]);
+
+        this.showToasterSuccess();
+        this.spinner.hide();
       },
       (error) => {
+        this.showToasterError();
         console.log(error);
+        this.spinner.hide();
       }
     );
   }
@@ -153,12 +172,17 @@ export class FinancieroComponent implements OnInit {
       .getAllByIndex(storageList[13], "idtipopersona", this.idTipoPersona)
       .then(
         (cuentas) => {
+          console.log("cuentas", cuentas);
+
           this.lstCuentas = [];
           cuentas.forEach((element: ParamCuenta) => {
             const cuenta = new ParamPerfilFinanciero();
 
             cuenta.id = element.id;
             cuenta.cuenta = element.name;
+
+            cuenta.resultadoPenultimo = 0;
+            cuenta.resultadoUltimo = 0;
 
             this.lstCuentas.push(cuenta);
           });
@@ -172,49 +196,7 @@ export class FinancieroComponent implements OnInit {
       );
   };
 
-  sendNaturalForm(value: any, valid: boolean) {
-    this.submitted = true;
-
-    console.log("this.naturalForm.value", this.naturalForm.value);
-
-    this.spinner.show();
-    this.formsService.saveFinancieroNatural(this.naturalForm.value).subscribe(
-      (financieroDto: FinancieroDto) => {
-        console.log("llega FinancieroDto ", financieroDto);
-        this.router.navigate(["/operativo"]);
-
-        this.showToasterSuccess();
-        this.spinner.hide();
-      },
-      (error) => {
-        this.showToasterError();
-        console.log(error);
-        this.spinner.hide();
-      }
-    );
-  }
-
   retrocederForm() {
-    this.router.navigate(["/empresarial"]);
-  }
-
-  sendJuridicoForm(value: any, valid: boolean) {
-    this.submitted = true;
-
-    this.spinner.show();
-    this.formsService.saveFinancieroJuridico(this.juridicoForm.value).subscribe(
-      (financieroDto: FinancieroDto) => {
-        console.log("llega FinancieroDto ", FinancieroDto);
-        this.router.navigate(["/operativo"]);
-
-        this.showToasterSuccess();
-        this.spinner.hide();
-      },
-      (error) => {
-        this.showToasterError();
-        console.log(error);
-        this.spinner.hide();
-      }
-    );
+    this.router.navigate(["/operativo"]);
   }
 }
