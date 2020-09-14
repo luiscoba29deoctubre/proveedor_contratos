@@ -1,13 +1,13 @@
 import { Component, OnInit } from "@angular/core";
-import { FormArray, FormGroup, Validators } from "@angular/forms";
+import { FormArray, FormGroup } from "@angular/forms";
 import { MatDialog } from "@angular/material";
 import { Router } from "@angular/router";
 import { NgxIndexedDBService } from "ngx-indexed-db";
 import { NgxSpinnerService } from "ngx-spinner";
 import { FinancieroDto } from "../../../common/dtos/form/FinancieroDto";
 import {
-  ParamPerfilFinanciero,
   ParamCuenta,
+  ParamPerfilFinanciero,
 } from "../../../common/dtos/parameters";
 import { LoginService } from "../../../logueo/login/login.service";
 import { storageList } from "../../../shared/bd/indexedDB";
@@ -80,7 +80,12 @@ export class FinancieroComponent implements OnInit {
 
         if (this.tipoPersona) {
           this.idTipoPersona = financieroDto.idTipoPersona;
-          this.loadCuentas();
+          await this.loadCuentas();
+
+          if (financieroDto.lstCuentas.length > 0) {
+            console.log("entra en if");
+            this.setCuentas(financieroDto.lstCuentas);
+          }
         } else {
           this.showToasterError();
         }
@@ -162,6 +167,21 @@ export class FinancieroComponent implements OnInit {
     return this.naturalForm.get("lstNatural") as FormArray;
   }
 
+  setCuentas = async (lstCuentas: ParamPerfilFinanciero[]) => {
+    for (let i = 0; i < this.lstCuentas.length; i++) {
+      const elementFound = lstCuentas.find(
+        (c) => c.idcuenta === this.lstCuentas[i].idcuenta
+      );
+      if (elementFound) {
+        this.lstCuentas[i].resultadoPenultimo = elementFound.resultadoPenultimo;
+        this.lstCuentas[i].resultadoUltimo = elementFound.resultadoUltimo;
+      }
+    }
+
+    this.dataSource = this.lstCuentas;
+    console.log("this.lstCuentas setCuentas", this.lstCuentas);
+  };
+
   loadCuentas = async () => {
     const cuentasNoUsada = await this.dbService
       .getAllByIndex(storageList[13], "idtipopersona", this.idTipoPersona)
@@ -183,7 +203,7 @@ export class FinancieroComponent implements OnInit {
           });
 
           this.dataSource = this.lstCuentas;
-          console.log("this.lstCuentas", this.lstCuentas);
+          console.log("this.lstCuentas loadCuentas", this.lstCuentas);
         },
         (error) => {
           console.log("getByIndex", error);
