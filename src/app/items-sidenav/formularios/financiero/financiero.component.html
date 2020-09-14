@@ -5,7 +5,7 @@
 
   <div class="card">
     <div class="card-body">
-      <h4>PERSONA {{tipoPersona}}</h4>
+      <h4>PERSONA {{ tipoPersona }}</h4>
       <p style="font-size: 13px">
         Ingrese los valores correspondientes a los años
         {{ currentYear - 1 }} y {{ currentYear }}
@@ -83,6 +83,7 @@
       <button
         class="btn"
         style="color: #fec524; background: #8b2131; border-color: black"
+        (click)="retrocederForm()"
       >
         <i class="fa fa-sign-in"></i> Atrás
       </button>
@@ -90,8 +91,8 @@
     <div class="col">
       <button
         class="btn"
-        type="submit"
         style="color: #fec524; background: #8b2131; border-color: black"
+        (click)="siguienteForm()"
       >
         <i class="fa fa-sign-in"></i> Siguiente
       </button>

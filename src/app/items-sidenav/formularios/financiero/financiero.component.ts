@@ -15,6 +15,7 @@ import { NotificationService } from "../../../shared/services/notification.servi
 import { FormularioService } from "../formulario.service";
 import { DialogBoxComponent } from "./dialog-box/dialog-box.component";
 
+
 @Component({
   selector: "app-financiero",
   templateUrl: "./financiero.component.html",
@@ -49,24 +50,6 @@ export class FinancieroComponent implements OnInit {
   }
 
   ngOnInit() {
-    /*
-    const cuenta1: ParamPerfilFinanciero = new ParamPerfilFinanciero();
-    cuenta1.id = 3;
-    cuenta1.cuenta = "ingresos";
-    cuenta1.resultadoUltimo = 1200;
-    cuenta1.resultadoPenultimo = 3000;
-    const cuenta2: ParamPerfilFinanciero = new ParamPerfilFinanciero();
-    cuenta2.id = 2;
-    cuenta2.cuenta = "gastos";
-    cuenta2.resultadoUltimo = 4;
-    cuenta2.resultadoPenultimo = 7;
-
-    this.lstCuentas.push(cuenta1);
-    this.lstCuentas.push(cuenta2);
-
-    this.dataSource = this.lstCuentas;
-    */
-
     this.loginService.checkExpirationToken(); // para que salga, cuando el token expire
 
     this.formsService.getFinanciero().subscribe(
@@ -190,11 +173,11 @@ export class FinancieroComponent implements OnInit {
           console.log("cuentas", cuentas);
 
           this.lstCuentas = [];
-          cuentas.forEach((element: ParamCuenta) => {
+          cuentas.forEach((pc: ParamCuenta) => {
             const cuenta = new ParamPerfilFinanciero();
 
-            cuenta.idcuenta = element.id;
-            cuenta.cuenta = element.name;
+            cuenta.idcuenta = pc.id;
+            cuenta.cuenta = pc.name;
 
             cuenta.resultadoPenultimo = 0;
             cuenta.resultadoUltimo = 0;
@@ -212,6 +195,23 @@ export class FinancieroComponent implements OnInit {
   };
 
   retrocederForm() {
-    this.router.navigate(["/operativo"]);
+    this.router.navigate(["/empresarial"]);
+  }
+
+  siguienteForm() {
+    let faltanDatos = false;
+
+    this.lstCuentas.forEach((cuenta) => {
+      if (cuenta.resultadoPenultimo === 0 || cuenta.resultadoUltimo === 0) {
+        faltanDatos = true;
+      }
+    });
+
+    if (faltanDatos) {
+      this.showToasterError();
+    } else {
+      this.showToasterSuccess();
+      this.router.navigate(["/operativo"]);
+    }
   }
 }
