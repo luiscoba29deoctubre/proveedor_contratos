@@ -15,7 +15,6 @@ import { NotificationService } from "../../../shared/services/notification.servi
 import { FormularioService } from "../formulario.service";
 import { DialogBoxComponent } from "./dialog-box/dialog-box.component";
 
-
 @Component({
   selector: "app-financiero",
   templateUrl: "./financiero.component.html",
@@ -94,8 +93,6 @@ export class FinancieroComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         if (result.event === "Actualizar") {
-          console.log("result.data", result.data);
-
           this.updateRowData(result.data);
         }
       }
@@ -103,13 +100,11 @@ export class FinancieroComponent implements OnInit {
   }
 
   updateRowData(row_obj: ParamPerfilFinanciero) {
-    console.log("row_objxxx", row_obj);
     const longitudCuenta = this.lstCuentas.length;
     for (let i = 0; i < longitudCuenta; i++) {
       if (this.lstCuentas[i].idcuenta === row_obj.idcuenta) {
         this.lstCuentas[i].resultadoPenultimo = row_obj.resultadoPenultimo;
         this.lstCuentas[i].resultadoUltimo = row_obj.resultadoUltimo;
-        console.log("despues this.lstCuentas[i]", this.lstCuentas[i]);
 
         this.actualizaCuentaOnServer(this.lstCuentas[i]);
       }
@@ -118,7 +113,6 @@ export class FinancieroComponent implements OnInit {
 
   actualizaCuentaOnServer(cuentaAactualizar: ParamPerfilFinanciero) {
     this.loginService.checkExpirationToken();
-    console.log("cuentaAactualizar xxx", cuentaAactualizar);
     this.formsService.actualizarPerfilFinanciero(cuentaAactualizar).subscribe(
       (financieroDto: FinancieroDto) => {
         console.log("llega FinancieroDto ", financieroDto);
@@ -186,7 +180,6 @@ export class FinancieroComponent implements OnInit {
           });
 
           this.dataSource = this.lstCuentas;
-          console.log("this.lstCuentas loadCuentas", this.lstCuentas);
         },
         (error) => {
           console.log("getByIndex", error);
