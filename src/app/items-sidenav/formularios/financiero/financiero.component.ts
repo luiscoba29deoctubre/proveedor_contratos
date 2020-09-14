@@ -119,6 +119,8 @@ export class FinancieroComponent implements OnInit {
     const longitudCuenta = this.lstCuentas.length;
     for (let i = 0; i < longitudCuenta; i++) {
       if (this.lstCuentas[i].idcuenta === row_obj.idcuenta) {
+        this.lstCuentas[i].resultadoPenultimo = row_obj.resultadoPenultimo;
+        this.lstCuentas[i].resultadoUltimo = row_obj.resultadoUltimo;
         console.log("despues this.lstCuentas[i]", this.lstCuentas[i]);
 
         this.actualizaCuentaOnServer(this.lstCuentas[i]);
@@ -131,7 +133,7 @@ export class FinancieroComponent implements OnInit {
     console.log("cuentaAactualizar xxx", cuentaAactualizar);
     this.formsService.actualizarPerfilFinanciero(cuentaAactualizar).subscribe(
       (financieroDto: FinancieroDto) => {
-        console.log("llega FinancieroDto ", FinancieroDto);
+        console.log("llega FinancieroDto ", financieroDto);
         // this.router.navigate(["/operativo"]);
 
         this.showToasterSuccess();

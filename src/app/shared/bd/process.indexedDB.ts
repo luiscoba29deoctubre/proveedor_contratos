@@ -101,7 +101,6 @@ export class ProcessIDB {
         .then(
           () => {
             // Do something after the value was added
-            console.log("se llena store ", store);
           },
           (error) => {
             console.log(store, error);
@@ -130,7 +129,6 @@ export class ProcessIDB {
         .then(
           () => {
             // Do something after the value was added
-            console.log("se llena store ", store);
           },
           (error) => {
             console.log(store, error);
@@ -151,7 +149,6 @@ export class ProcessIDB {
         .then(
           () => {
             // Do something after the value was added
-            console.log("se llena store ", store);
           },
           (error) => {
             console.log(store, error);
@@ -171,7 +168,6 @@ export class ProcessIDB {
         .then(
           () => {
             // Do something after the value was added
-            console.log("se llena store ", store);
           },
           (error) => {
             console.log(store, error);
@@ -192,7 +188,6 @@ export class ProcessIDB {
         .then(
           () => {
             // Do something after the value was added
-            console.log("se llena store ", store);
           },
           (error) => {
             console.log(store, error);
@@ -212,7 +207,6 @@ export class ProcessIDB {
         .then(
           () => {
             // Do something after the value was added
-            console.log("se llena store ", store);
           },
           (error) => {
             console.log(store, error);
@@ -232,7 +226,6 @@ export class ProcessIDB {
         .then(
           () => {
             // Do something after the value was added
-            console.log("se llena store ", store);
           },
           (error) => {
             console.log(store, error);
@@ -253,7 +246,6 @@ export class ProcessIDB {
         .then(
           () => {
             // Do something after the value was added
-            console.log("se llena store ", store);
           },
           (error) => {
             console.log(store, error);
@@ -275,7 +267,6 @@ export class ProcessIDB {
         .then(
           () => {
             // Do something after the value was added
-            console.log("se llena store ", store);
           },
           (error) => {
             console.log(store, error);
@@ -296,7 +287,6 @@ export class ProcessIDB {
         .then(
           () => {
             // Do something after the value was added
-            console.log("se llena store ", store);
           },
           (error) => {
             console.log(store, error);
@@ -309,7 +299,6 @@ export class ProcessIDB {
     this.dbService.add(store, { id: id, name: name }).then(
       () => {
         // Do something after the value was added
-        // console.log("se llena store ", store);
       },
       (error) => {
         console.log(store, error);
@@ -318,10 +307,7 @@ export class ProcessIDB {
   }
 
   clearIndexedDB = () => {
-    console.log("entra en clear");
-
     storageList.forEach((store) => {
-      console.log("entra a borrrar listas");
       this.dbService.clear(store).then(
         () => {
           // Do something after clear

@@ -17,6 +17,10 @@ import { OperativoDto } from "../../common/dtos/form/OperativoDto";
 import { ApiEndpoints } from "../../logueo/api.endpoints";
 import { AceptacionDto } from "./../../common/dtos/form/AceptacionDto";
 import { IdentificacionDto } from "./../../common/dtos/form/IdentificacionDto";
+import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { NotificationService } from '../../shared/services/notification.service';
+
 
 /**
  * Servicio para el manejo del formulario que ingresa el proveedor
@@ -33,7 +37,13 @@ export class FormularioService {
    * @param http
    * @param endpoints
    */
-  constructor(private http: HttpClient, private endpoints: ApiEndpoints) {}
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+    private endpoints: ApiEndpoints,
+    private spinner: NgxSpinnerService,
+    private notifyService: NotificationService
+  ) {}
 
   setTokenInHeader() {
     const headerWithToken = new HttpHeaders({
@@ -311,6 +321,7 @@ export class FormularioService {
   }
 
   private handleError(error: HttpErrorResponse) {
+    this.spinner.show();
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error("An error occurred:", error.error.message);
@@ -320,8 +331,20 @@ export class FormularioService {
       console.error(
         `Backend returned code ${error.status}, ` + `body was: ${error.error}`
       );
+      if (error.status === 401) {
+        this.showToasterError();
+        this.router.navigate(["/"]);
+      }
     }
+    this.spinner.hide();
     // Return an observable with a user-facing error message.
     return throwError("Something bad happened; please try again later.");
+  }
+
+  showToasterError() {
+    this.notifyService.showError(
+      "Por favor, vuelva a loguearse",
+      "Sesión caducada"
+    );
   }
 }

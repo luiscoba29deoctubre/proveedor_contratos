@@ -25,10 +25,10 @@ export class UsuarioService {
    * @param endpoints
    */
   constructor(
-    private spinner: NgxSpinnerService,
     private router: Router,
     private http: HttpClient,
     private endpoints: ApiEndpoints,
+    private spinner: NgxSpinnerService,
     private notifyService: NotificationService
   ) {}
 
