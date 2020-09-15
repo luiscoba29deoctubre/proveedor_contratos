@@ -61,7 +61,7 @@ export class InfoContactoComponent implements OnInit {
     private dbService: NgxIndexedDBService
   ) {
     this.spinner.show();
-    this.processIDB = new ProcessIDB(dbService); // creamos una instancia para manejar la base de datos
+    //  this.processIDB = new ProcessIDB(dbService); // creamos una instancia para manejar la base de datos
     this.initForm();
   }
 
@@ -74,14 +74,14 @@ export class InfoContactoComponent implements OnInit {
     this.notifyService.showError("Error al guardar identificación", "Error");
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.loginService.checkExpirationToken(); // para que salga, cuando el token expire
+
+    await this.loadCombos();
 
     this.formsService.getInfoContacto().subscribe(
       async (infoContactoDto) => {
         console.log(" llega allForms", infoContactoDto);
-
-        await this.loadCombos();
 
         if (this.isEmpty(infoContactoDto)) {
           this.setDefaultValuesCombos(infoContactoDto);

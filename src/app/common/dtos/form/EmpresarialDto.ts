@@ -1,4 +1,4 @@
-import { ParamRespuesta, ParamRespuestaSeleccionada } from '../parameters';
+import { ParamRespuestaSeleccionada } from '../parameters';
 
 export class EmpresarialDto {
   constructor(

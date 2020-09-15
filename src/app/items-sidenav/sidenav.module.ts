@@ -31,13 +31,15 @@ import { ApiEndpoints } from "../logueo/api.endpoints";
 import { BsDatepickerModule } from "ngx-bootstrap/datepicker";
 import { AngularFileUploaderModule } from "./formularios/documental/angular-file-uploader/src/lib/angular-file-uploader.module";
 import { FileSaverModule } from "ngx-filesaver";
-import { DialogBoxComponent } from './formularios/financiero/dialog-box/dialog-box.component';
+import { DialogBoxComponent } from "./formularios/financiero/dialog-box/dialog-box.component";
 
 export function tokenGetter() {
   return sessionStorage.getItem("token");
 }
 
 @NgModule({
+  exports: [LogueoModule],
+
   imports: [
     CommonModule,
     RouterModule.forChild(SidenavRoutes),
@@ -47,7 +49,6 @@ export function tokenGetter() {
     ReactiveFormsModule,
     FlexLayoutModule,
     CdkTableModule,
-
 
     NgxSpinnerModule,
 
@@ -82,7 +83,7 @@ export function tokenGetter() {
     ComercialComponent,
     DocumentalComponent,
     AceptacionComponent,
-    DialogBoxComponent
+    DialogBoxComponent,
   ],
 })
 export class SidenavModule {}

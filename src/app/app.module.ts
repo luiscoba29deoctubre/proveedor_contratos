@@ -32,6 +32,8 @@ export function tokenGetter() {
     SpinnerComponent,
     AppSidebarComponent,
   ],
+  exports: [LogueoModule],
+
   imports: [
     ToastrModule.forRoot(),
     BrowserModule,

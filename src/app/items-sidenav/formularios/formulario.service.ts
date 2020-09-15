@@ -149,7 +149,7 @@ export class FormularioService {
   /**
    * Registra informacion de contacto
    *
-   * @param InfoContacto registramaso el formulario 'info-contacto'
+   * @param InfoContacto registramos el formulario 'info-contacto'
    */
   public saveInfoContacto(infoContacto): Observable<InfoContactoDto> {
     this.setTokenInHeader();

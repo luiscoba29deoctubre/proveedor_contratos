@@ -12,8 +12,7 @@ import { ForgotPassService } from "./forgot-pass.service";
 export class ForgotPassComponent implements OnInit {
   /** Formulario de Login */
   forgotForm: FormGroup;
-  // /** Atributo usuario para el bind del formulario de login */
-  // usuarioPass: UsuarioPass;
+
   /** Flag que indica si el formulario ya se hizo submit */
   submitted: boolean;
   /** Object para control de mensajes de usuario */
