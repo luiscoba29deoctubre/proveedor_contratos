@@ -134,10 +134,7 @@ export class FinancieroComponent implements OnInit {
   }
 
   showToasterError() {
-    this.notifyService.showError(
-      "Aún no llena la sección de Identificacion",
-      "Error"
-    );
+    this.notifyService.showError("Tiene algun valor igual a cero", "Error");
   }
 
   get getLstNatural(): FormArray {
