@@ -39,9 +39,12 @@ export class DocumentalComponent implements OnInit {
         await this.loadDocuments();
 
         if (this.isEmpty(documentalDto.lstDocumento)) {
+          console.log("esta adentro");
         } else {
           this.seteoDocumentos(documentalDto);
         }
+
+        console.log(" this.lstDocumentos", this.lstDocumentos);
 
         this.spinner.hide();
       },
@@ -72,41 +75,13 @@ export class DocumentalComponent implements OnInit {
     );
   };
 
-  /*
-  agregaLetraAlaPregunta = (lstDocumentos: ParamDocumento[]) => {
-    let j = 65;
-
-    const paramDocumentoPerfilDocumental: ParamDocumentoPerfilDocumental = new ParamDocumentoPerfilDocumental();
-    paramDocumentoPerfilDocumental.id = 1;
-    paramDocumentoPerfilDocumental.iddocumento = 2;
-    paramDocumentoPerfilDocumental.name = "luis";
-    paramDocumentoPerfilDocumental.size = 232323;
-
-    const lstParamDocumentoPerfilDocumental: ParamDocumentoPerfilDocumental[] = [];
-
-    lstParamDocumentoPerfilDocumental.push(paramDocumentoPerfilDocumental);
-
-    for (let i = 0; i < lstDocumentos.length; i++) {
-      lstDocumentos[i].name =
-        String.fromCharCode(j) + ". " + lstDocumentos[i].name;
-
-      lstDocumentos[
-        i
-      ].lstDocumentoPerfilDocumental = lstParamDocumentoPerfilDocumental;
-
-      j++;
-    }
-    this.lstDocumentos = lstDocumentos;
-  };
-*/
-
   agregaLetraAlaPregunta = (lstDocumentos: ParamDocumento[]) => {
     let j = 65;
 
     for (let i = 0; i < lstDocumentos.length; i++) {
       lstDocumentos[i].name =
         String.fromCharCode(j) + ". " + lstDocumentos[i].name;
-
+      lstDocumentos[i].lstDocumentoPerfilDocumental = [];
       j++;
     }
     this.lstDocumentos = lstDocumentos;
