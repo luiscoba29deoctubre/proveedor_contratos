@@ -23,7 +23,7 @@ export class AceptacionComponent implements OnInit {
     formatsAllowed: ".pdf",
     maxSize: "2", // MB
     uploadAPI: {
-      url: "http://localhost:3000/proveedor-api/v1/forms/upload-pdf/",
+      url: "http://localhost:3003/proveedor-api/v1/forms/upload-pdf/",
       method: "POST",
       params: {
         page: "1",
@@ -64,7 +64,7 @@ export class AceptacionComponent implements OnInit {
     console.log("dio click");
 
     this.http
-      .get("http://localhost:3000/proveedor-api/v1/forms/download-pdf", {
+      .get("http://localhost:3003/proveedor-api/v1/forms/download-pdf", {
         responseType: "blob",
       }) // set response Type properly (it is not part of headers)
       .toPromise()

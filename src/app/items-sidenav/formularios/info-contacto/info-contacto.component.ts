@@ -163,7 +163,6 @@ export class InfoContactoComponent implements OnInit {
       mailproveedor: [null, [Validators.required]],
       contactocomercial: [null, [Validators.required]],
       telefonocontactocomercial: [null, [Validators.required]],
-      //    technologies: [null, [Validators.required]],
       celular1: [null, [Validators.required]],
       mail1: [null, [Validators.required]],
       celular2: [null, [Validators.required]],

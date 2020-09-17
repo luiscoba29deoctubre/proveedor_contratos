@@ -102,7 +102,7 @@ export class DocumentalComponent implements OnInit {
       formatsAllowed: ".pdf",
       maxSize: "2", // MB
       uploadAPI: {
-        url: "http://localhost:3000/proveedor-api/v1/forms/upload-pdf/",
+        url: "http://localhost:3003/proveedor-api/v1/forms/upload-pdf/",
         method: "POST",
         params: {
           idDocumento: idDocumento,
