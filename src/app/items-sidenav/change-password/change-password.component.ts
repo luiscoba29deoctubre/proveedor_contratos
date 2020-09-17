@@ -63,7 +63,6 @@ export class ChangePasswordComponent implements OnInit {
    * @param valid Estado del formulario
    */
   changePass(value: any, valid: boolean) {
-    this.submitted = true;
     if (valid) {
       if (
         this.changePassForm.get("pass1").value !==
@@ -79,8 +78,9 @@ export class ChangePasswordComponent implements OnInit {
         this.usuarioService.changePass(valuePass1).subscribe(
           (data) => {
             if (data === true) {
-              this.alerts.msg = "Clave actualizado exitosamente";
+              this.alerts.msg = "Clave actualizada exitosamente";
               this.alerts.error = null;
+              this.clearInputs();
             } else {
               this.alerts.msg = null;
               this.alerts.error = "Ocurrio un error al actualizar la clave";
@@ -96,6 +96,12 @@ export class ChangePasswordComponent implements OnInit {
         );
       }
     }
+  }
+
+  clearInputs() {
+    this.changePassForm.controls["pass0"].setValue(null);
+    this.changePassForm.controls["pass1"].setValue(null);
+    this.changePassForm.controls["pass2"].setValue(null);
   }
 
   /**
