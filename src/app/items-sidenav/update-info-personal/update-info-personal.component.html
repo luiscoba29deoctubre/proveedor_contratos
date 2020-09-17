@@ -13,6 +13,7 @@
           <label for="inputEmail">Correo eléctronico</label>
           <fieldset disabled>
             <input
+              style="cursor: no-drop"
               formControlName="correo"
               type="email"
               class="form-control"
@@ -146,13 +147,13 @@
         </div>
         <div
           class="row"
-          style="margin-top: 10px; text-align: center; margin-bottom: 10px;"
+          style="margin-top: 10px; text-align: center; margin-bottom: 10px"
         >
           <div class="col-sm-12 col-md-12 col-lg-12">
             <button
-              style="color: #fec524; background: #8b2131; border-color: black;"
+              style="color: #fec524; background: #8b2131; border-color: black"
               [disabled]="updateInfoForm.invalid"
-              class="btn "
+              class="btn"
               type="submit"
             >
               <i class="fa fa-floppy-o"></i> Guardar
@@ -168,6 +169,6 @@
     color="#fff"
     type="ball-scale-multiple"
   >
-    <p style="font-size: 20px; color: white;">Cargando...</p>
+    <p style="font-size: 20px; color: white">Cargando...</p>
   </ngx-spinner>
 </div>

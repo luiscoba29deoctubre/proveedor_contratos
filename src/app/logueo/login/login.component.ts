@@ -90,10 +90,16 @@ export class LoginComponent implements OnInit {
       this.spinner.show();
 
       this.loginService.login(value.email, value.password).subscribe(
-        (tokeninicial) => {
-          this.router.navigate(["/dashboard"]);
-          this.showToasterSuccess();
+        (usaTemp) => {
+          console.log("usaTemp ", usaTemp);
 
+          if (usaTemp) {
+            this.router.navigate(["/admin"]);
+          } else {
+            this.router.navigate(["/dashboard"]);
+          }
+
+          this.showToasterSuccess();
           this.spinner.hide();
         },
         (error) => {

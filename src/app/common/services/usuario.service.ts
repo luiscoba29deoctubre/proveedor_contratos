@@ -3,7 +3,11 @@ import { Observable } from "rxjs/Observable";
 
 import { Usuario } from "../domain/usuario";
 import { ApiEndpoints } from "../../logueo/api.endpoints";
-import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from "@angular/common/http";
 import { map } from "rxjs/internal/operators/map";
 import { catchError } from "rxjs/operators";
 import { throwError } from "rxjs";
@@ -18,6 +22,8 @@ import { NgxSpinnerService } from "ngx-spinner";
   providedIn: "root",
 })
 export class UsuarioService {
+  headers: HttpHeaders;
+
   /**
    * Contructos del servicio {@link UsuarioService}
    *
@@ -31,6 +37,13 @@ export class UsuarioService {
     private spinner: NgxSpinnerService,
     private notifyService: NotificationService
   ) {}
+
+  setTokenInHeader() {
+    const headerWithToken = new HttpHeaders({
+      auth: "Bearer " + sessionStorage.getItem("token"),
+    });
+    this.headers = headerWithToken;
+  }
 
   /**
    * Registra un usuario
@@ -67,11 +80,17 @@ export class UsuarioService {
    * @param clave Clave a verificar
    */
   public validatePassUsuario(clave: string): Observable<any> {
+    this.setTokenInHeader();
     return this.http
-      .post<Boolean>(this.endpoints.url_api_validate_pass_usuario, { clave })
+      .post<Boolean>(
+        this.endpoints.url_api_validate_pass_usuario,
+        { clave },
+        {
+          headers: this.headers,
+        }
+      )
       .pipe(
         map((res: Boolean) => {
-          console.log("entra a responder RES");
           return res;
         }),
         catchError((err) => this.handleError(err))
@@ -112,7 +131,10 @@ export class UsuarioService {
    * @param email
    */
   public findUsuario(): Observable<Usuario> {
-    return this.http.get(this.endpoints.url_api_find_usuario);
+    this.setTokenInHeader();
+    return this.http.get(this.endpoints.url_api_find_usuario, {
+      headers: this.headers,
+    });
   }
 
   /**
@@ -121,9 +143,14 @@ export class UsuarioService {
    * @param usuario
    */
   public changePass(clave: string) {
-    return this.http.put(this.endpoints.url_api_change_pass_usuario, {
-      clave,
-    });
+    this.setTokenInHeader();
+    return this.http.put(
+      this.endpoints.url_api_change_pass_usuario,
+      {
+        clave,
+      },
+      { headers: this.headers }
+    );
   }
 
   /**

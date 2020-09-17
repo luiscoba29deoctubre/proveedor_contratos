@@ -65,10 +65,11 @@ export class LoginService {
       .pipe(
         map((response: TokenInitial) => {
           const usuario = helper.decodeToken(response.token).usuario;
+          const usoTemp = helper.decodeToken(response.token).usoTemp;
           this.saveUsuario(usuario);
           this.saveToken(response.token);
           this.loggedIn.next(true);
-          return response;
+          return usoTemp;
         }),
         catchError((err) => this.handleError(err))
       );
