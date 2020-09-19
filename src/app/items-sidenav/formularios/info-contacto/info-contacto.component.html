@@ -1,11 +1,13 @@
 <div class="card">
-  <h3 class="card-title" style="margin: 10px; text-align: center;">
+  <h3 class="card-title" style="margin: 10px; text-align: center">
     INFORMACIÓN DE CONTACTO
   </h3>
   <form
+    novalidate
     class="card"
+    form
+    #infoForm="ngForm"
     [formGroup]="infocontactoForm"
-    (ngSubmit)="sendForm(infocontactoForm.value, infocontactoForm.valid)"
     role="form"
   >
     <div class="card-body">
@@ -20,6 +22,15 @@
               placeholder="Dirección"
               id="direccion"
             />
+            <ng-container
+              *ngIf="
+                !infocontactoForm.get('direccion').valid && infoForm.submitted
+              "
+            >
+              <p class="alert alert-danger alert-dismissible">
+                Este campo es requerido
+              </p>
+            </ng-container>
           </div>
         </div>
 
@@ -29,15 +40,22 @@
             <select
               (ngModelChange)="capturaPais($event)"
               id="pais"
-              style="margin-left: 0%;"
+              style="margin-left: 0%"
               formControlName="pais"
               class="form-control"
             >
-              <option [ngValue]="null" disabled>Escoger pais </option>
+              <option [ngValue]="null" disabled>Escoger pais</option>
               <option *ngFor="let pais of paises" [ngValue]="pais">
                 {{ pais.name }}
               </option>
             </select>
+            <ng-container
+              *ngIf="!infocontactoForm.get('pais').valid && infoForm.submitted"
+            >
+              <p class="alert alert-danger alert-dismissible">
+                Este campo es requerido
+              </p>
+            </ng-container>
           </div>
         </div>
       </div>
@@ -48,11 +66,11 @@
             <select
               (ngModelChange)="capturaProvincia($event)"
               id="provincia"
-              style="margin-left: 0%;"
+              style="margin-left: 0%"
               formControlName="provincia"
               class="form-control"
             >
-              <option [ngValue]="null" disabled>Escoger provincia </option>
+              <option [ngValue]="null" disabled>Escoger provincia</option>
               <option
                 *ngFor="let provincia of provincias"
                 [ngValue]="provincia"
@@ -60,6 +78,15 @@
                 {{ provincia.name }}
               </option>
             </select>
+            <ng-container
+              *ngIf="
+                !infocontactoForm.get('provincia').valid && infoForm.submitted
+              "
+            >
+              <p class="alert alert-danger alert-dismissible">
+                Este campo es requerido
+              </p>
+            </ng-container>
           </div>
         </div>
         <div class="col-sm-12 col-md-4 col-lg-4">
@@ -67,15 +94,24 @@
             <label for="canton">Cantón: </label>
             <select
               (ngModelChange)="capturaCanton($event)"
-              style="margin-left: 0%;"
+              style="margin-left: 0%"
               formControlName="canton"
               class="form-control"
             >
-              <option [ngValue]="null" disabled>Escoger cantón </option>
+              <option [ngValue]="null" disabled>Escoger cantón</option>
               <option *ngFor="let canton of cantones" [ngValue]="canton">
                 {{ canton.name }}
               </option>
             </select>
+            <ng-container
+              *ngIf="
+                !infocontactoForm.get('canton').valid && infoForm.submitted
+              "
+            >
+              <p class="alert alert-danger alert-dismissible">
+                Este campo es requerido
+              </p>
+            </ng-container>
           </div>
         </div>
         <div class="col-sm-12 col-md-4 col-lg-4">
@@ -84,11 +120,11 @@
             <select
               #parroquia
               id="parroquia"
-              style="margin-left: 0%;"
+              style="margin-left: 0%"
               formControlName="parroquia"
               class="form-control"
             >
-              <option [ngValue]="null" disabled>Escoger parroquia </option>
+              <option [ngValue]="null" disabled>Escoger parroquia</option>
               <option
                 *ngFor="let parroquia of parroquias"
                 [ngValue]="parroquia"
@@ -96,6 +132,15 @@
                 {{ parroquia.name }}
               </option>
             </select>
+            <ng-container
+              *ngIf="
+                !infocontactoForm.get('parroquia').valid && infoForm.submitted
+              "
+            >
+              <p class="alert alert-danger alert-dismissible">
+                Este campo es requerido
+              </p>
+            </ng-container>
           </div>
         </div>
       </div>
@@ -111,6 +156,15 @@
               placeholder="Teléfono comercial"
               id="celular"
             />
+            <ng-container
+              *ngIf="
+                !infocontactoForm.get('celular').valid && infoForm.submitted
+              "
+            >
+              <p class="alert alert-danger alert-dismissible">
+                Este campo es requerido
+              </p>
+            </ng-container>
           </div>
         </div>
         <div class="col-sm-12 col-md-4 col-lg-4">
@@ -123,6 +177,15 @@
               placeholder="Teléfono"
               id="telefono"
             />
+            <ng-container
+              *ngIf="
+                !infocontactoForm.get('telefono').valid && infoForm.submitted
+              "
+            >
+              <p class="alert alert-danger alert-dismissible">
+                Este campo es requerido
+              </p>
+            </ng-container>
           </div>
         </div>
         <div class="col-sm-12 col-md-4 col-lg-4">
@@ -135,6 +198,16 @@
               placeholder="Contacto comercial"
               id="mailproveedor"
             />
+            <ng-container
+              *ngIf="
+                !infocontactoForm.get('mailproveedor').valid &&
+                infoForm.submitted
+              "
+            >
+              <p class="alert alert-danger alert-dismissible">
+                Este campo es requerido
+              </p>
+            </ng-container>
           </div>
         </div>
       </div>
@@ -150,6 +223,16 @@
               placeholder="Contacto comercial"
               id="contactocomercial"
             />
+            <ng-container
+              *ngIf="
+                !infocontactoForm.get('contactocomercial').valid &&
+                infoForm.submitted
+              "
+            >
+              <p class="alert alert-danger alert-dismissible">
+                Este campo es requerido
+              </p>
+            </ng-container>
           </div>
         </div>
         <div class="col-sm-12 col-md-6 col-lg-4">
@@ -162,6 +245,16 @@
               placeholder="Teléfono comercial"
               id="telefonocontactocomercial"
             />
+            <ng-container
+              *ngIf="
+                !infocontactoForm.get('telefonocontactocomercial').valid &&
+                infoForm.submitted
+              "
+            >
+              <p class="alert alert-danger alert-dismissible">
+                Este campo es requerido
+              </p>
+            </ng-container>
           </div>
         </div>
       </div>
@@ -177,6 +270,15 @@
               placeholder="Celular 1"
               id="celular1"
             />
+            <ng-container
+              *ngIf="
+                !infocontactoForm.get('celular1').valid && infoForm.submitted
+              "
+            >
+              <p class="alert alert-danger alert-dismissible">
+                Este campo es requerido
+              </p>
+            </ng-container>
           </div>
         </div>
         <div class="col-sm-12 col-md-6 col-lg-6">
@@ -189,6 +291,13 @@
               placeholder="Correo 1"
               id="mail1"
             />
+            <ng-container
+              *ngIf="!infocontactoForm.get('mail1').valid && infoForm.submitted"
+            >
+              <p class="alert alert-danger alert-dismissible">
+                Este campo es requerido
+              </p>
+            </ng-container>
           </div>
         </div>
       </div>
@@ -204,6 +313,15 @@
               placeholder="Celular 2"
               id="celular2"
             />
+            <ng-container
+              *ngIf="
+                !infocontactoForm.get('celular2').valid && infoForm.submitted
+              "
+            >
+              <p class="alert alert-danger alert-dismissible">
+                Este campo es requerido
+              </p>
+            </ng-container>
           </div>
         </div>
         <div class="col-sm-12 col-md-6 col-lg-6">
@@ -216,17 +334,24 @@
               placeholder="Correo 2"
               id="mail2"
             />
+            <ng-container
+              *ngIf="!infocontactoForm.get('mail2').valid && infoForm.submitted"
+            >
+              <p class="alert alert-danger alert-dismissible">
+                Este campo es requerido
+              </p>
+            </ng-container>
           </div>
         </div>
       </div>
 
-      <div style="text-align: center; margin-bottom: 10px;" class="row mt-3">
+      <div style="text-align: center; margin-bottom: 10px" class="row mt-3">
         <!-- Button -->
         <div class="col">
           <button
-            style="color: #fec524; background: #8b2131; border-color: black;"
+            style="color: #fec524; background: #8b2131; border-color: black"
             (click)="retrocederForm()"
-            class="btn "
+            class="btn"
             type="submit"
           >
             <i class="fa fa-sign-in"></i>Atrás
@@ -234,8 +359,12 @@
         </div>
         <div class="col">
           <button
-            [disabled]="infocontactoForm.invalid"
-            style="color: #fec524; background: #8b2131; border-color: black;"
+            (click)="
+              infoForm.valid
+                ? sendForm(infocontactoForm.value, infocontactoForm.valid)
+                : ''
+            "
+            style="color: #fec524; background: #8b2131; border-color: black"
             class="btn button-guardar"
             type="submit"
           >
@@ -251,6 +380,6 @@
     color="#fff"
     type="ball-scale-multiple"
   >
-    <p style="font-size: 20px; color: white;">Cargando...</p>
+    <p style="font-size: 20px; color: white">Cargando...</p>
   </ngx-spinner>
- </div>
+</div>

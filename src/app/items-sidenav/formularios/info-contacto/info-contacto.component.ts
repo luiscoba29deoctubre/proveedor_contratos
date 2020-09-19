@@ -167,10 +167,10 @@ export class InfoContactoComponent implements OnInit {
       mail1: [null, [Validators.required]],
       celular2: [null, [Validators.required]],
       mail2: [null, [Validators.required]],
-      pais: [null],
-      provincia: [null],
-      canton: [null],
-      parroquia: [null],
+      pais: [null, [Validators.required]],
+      provincia: [null, [Validators.required]],
+      canton: [null, [Validators.required]],
+      parroquia: [null, [Validators.required]],
     });
   }
 
