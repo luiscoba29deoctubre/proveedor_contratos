@@ -7,8 +7,9 @@
     <form
       novalidate
       class="card"
+      form
+      #identificaForm="ngForm"
       [formGroup]="identificacionForm"
-      (ngSubmit)="sendForm(identificacionForm.value, identificacionForm.valid)"
       role="form"
     >
       <div class="card-body">
@@ -25,6 +26,16 @@
                 placeholder="Nombre o Razón Social"
                 id="nombrerazonsocial"
               />
+              <ng-container
+                *ngIf="
+                  !identificacionForm.get('nombrerazonsocial').valid &&
+                  identificaForm.submitted
+                "
+              >
+                <p class="alert alert-danger alert-dismissible">
+                  Este campo es requerido
+                </p>
+              </ng-container>
             </div>
           </div>
           <div class="col-sm-12 col-md-6 col-lg-6">
@@ -39,6 +50,16 @@
                 maxlength="{{ 13 }}"
                 min="0"
               />
+              <ng-container
+                *ngIf="
+                  !identificacionForm.get('rucrise').valid &&
+                  identificaForm.submitted
+                "
+              >
+                <p class="alert alert-danger alert-dismissible">
+                  Este campo es requerido
+                </p>
+              </ng-container>
             </div>
           </div>
         </div>
@@ -54,6 +75,16 @@
                 placeholder="Nombre Comercial"
                 id="nombrecomercial"
               />
+              <ng-container
+                *ngIf="
+                  !identificacionForm.get('nombrecomercial').valid &&
+                  identificaForm.submitted
+                "
+              >
+                <p class="alert alert-danger alert-dismissible">
+                  Este campo es requerido
+                </p>
+              </ng-container>
             </div>
           </div>
         </div>
@@ -74,6 +105,16 @@
                   {{ persona.name }}
                 </option>
               </select>
+              <ng-container
+                *ngIf="
+                  !identificacionForm.get('persona').valid &&
+                  identificaForm.submitted
+                "
+              >
+                <p class="alert alert-danger alert-dismissible">
+                  Este campo es requerido
+                </p>
+              </ng-container>
             </div>
           </div>
 
@@ -93,6 +134,16 @@
                   {{ contribuyente.name }}
                 </option>
               </select>
+              <ng-container
+                *ngIf="
+                  !identificacionForm.get('contribuyente').valid &&
+                  identificaForm.submitted
+                "
+              >
+                <p class="alert alert-danger alert-dismissible">
+                  Este campo es requerido
+                </p>
+              </ng-container>
             </div>
           </div>
         </div>
@@ -114,6 +165,16 @@
                   {{ proveedor.name }}
                 </option>
               </select>
+              <ng-container
+                *ngIf="
+                  !identificacionForm.get('proveedor').valid &&
+                  identificaForm.submitted
+                "
+              >
+                <p class="alert alert-danger alert-dismissible">
+                  Este campo es requerido
+                </p>
+              </ng-container>
             </div>
           </div>
         </div>
@@ -129,7 +190,7 @@
                 <div class="row">
                   <div class="col-sm-12 col-md-3 col-lg-3">
                     <div class="form-group">
-                      <label for="actividad">Actividad: </label>
+                      <label for="actividad">Actividad:</label>
                       <select
                         (ngModelChange)="capturaActividad($event, i)"
                         id="actividad"
@@ -147,6 +208,17 @@
                           {{ actividad.name }}
                         </option>
                       </select>
+                      <ng-container
+                        *ngIf="
+                          !item.get('actividad').value &&
+                          identificaForm.submitted
+                        "
+                      >
+                        <p class="alert alert-danger alert-dismissible">
+                          Este campo es requerido
+                        </p>
+                      </ng-container>
+
                     </div>
                   </div>
 
@@ -173,6 +245,15 @@
                           {{ categoria.name }}
                         </option>
                       </select>
+<ng-container *ngIf="
+                          !item.get('categoria').value &&
+                          identificaForm.submitted
+                        ">
+  <p class="alert alert-danger alert-dismissible">
+    Este campo es requerido
+  </p>
+</ng-container>
+
                     </div>
                   </div>
 
@@ -200,6 +281,15 @@
                           {{ detalle.name }}
                         </option>
                       </select>
+<ng-container *ngIf="
+                          !item.get('detalle').value &&
+                          identificaForm.submitted
+                        ">
+  <p class="alert alert-danger alert-dismissible">
+    Este campo es requerido
+  </p>
+</ng-container>
+
                     </div>
                   </div>
 
@@ -236,9 +326,10 @@
           <div class="col">
             <!-- arreglar esta validacion -->
             <button
-              [disabled]="
-                identificacionForm.invalid ||
-                getActividades.controls.length == 0
+              (click)="
+                identificaForm.valid
+                  ? sendForm(identificacionForm.value, identificacionForm.valid)
+                  : ''
               "
               style="color: #fec524; background: #8b2131; border-color: black"
               class="btn"
@@ -259,6 +350,6 @@
       <p style="font-size: 20px; color: white">Cargando...</p>
     </ngx-spinner>
   </div>
-  <!-- <pre>{{ identificacionForm.status }}</pre>
-  <pre>{{ identificacionForm.value | json }}</pre> -->
+  <pre>{{ identificacionForm.status }}</pre>
+  <!--<pre>{{ identificacionForm.value | json }}</pre> -->
 </div>

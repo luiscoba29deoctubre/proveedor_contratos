@@ -157,9 +157,11 @@ export class IdentificacionComponent implements OnInit {
 
   removeActividad(i) {
     const id = this.getActividades.value[i].id;
+
     this.formsService.deleteActividad(id).subscribe(
       (data) => {
         console.log("llega data ", data);
+
       },
       (error) => {
         console.log(error);
@@ -508,6 +510,10 @@ export class IdentificacionComponent implements OnInit {
   sendForm(value: any, valid: boolean) {
     this.submitted = true;
     if (valid) {
+
+
+console.log('entraaaaaaaaaaaaaaaa');
+/*
       this.spinner.show();
       this.formsService
         .saveIdentificacion(this.identificacionForm.value)
@@ -524,6 +530,8 @@ export class IdentificacionComponent implements OnInit {
             this.spinner.hide();
           }
         );
+
+*/
     }
   }
 }

@@ -17,10 +17,9 @@ import { OperativoDto } from "../../common/dtos/form/OperativoDto";
 import { ApiEndpoints } from "../../logueo/api.endpoints";
 import { AceptacionDto } from "./../../common/dtos/form/AceptacionDto";
 import { IdentificacionDto } from "./../../common/dtos/form/IdentificacionDto";
-import { Router } from '@angular/router';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { NotificationService } from '../../shared/services/notification.service';
-
+import { Router } from "@angular/router";
+import { NgxSpinnerService } from "ngx-spinner";
+import { NotificationService } from "../../shared/services/notification.service";
 
 /**
  * Servicio para el manejo del formulario que ingresa el proveedor
@@ -72,7 +71,6 @@ export class FormularioService {
       })
       .pipe(
         map((financieroDto: FinancieroDto) => {
-          console.log("vienneeeeeee", financieroDto);
           return financieroDto;
         }),
         catchError((err) => this.handleError(err))
@@ -92,7 +90,6 @@ export class FormularioService {
       })
       .pipe(
         map((identificacionDto: IdentificacionDto) => {
-          console.log("vienneeeeeee", identificacionDto);
           return identificacionDto;
         }),
         catchError((err) => this.handleError(err))
@@ -107,7 +104,6 @@ export class FormularioService {
       })
       .pipe(
         map((empresarialDto: EmpresarialDto) => {
-          console.log("vienneeeeeee", empresarialDto);
           return empresarialDto;
         }),
         catchError((err) => this.handleError(err))
@@ -124,7 +120,6 @@ export class FormularioService {
       )
       .pipe(
         map((financieroDto: FinancieroDto) => {
-          console.log("vienneeeeeee", financieroDto);
           return financieroDto;
         }),
         catchError((err) => this.handleError(err))
@@ -139,7 +134,6 @@ export class FormularioService {
       })
       .pipe(
         map((financieroDto: FinancieroDto) => {
-          console.log("vienneeeeeee", financieroDto);
           return financieroDto;
         }),
         catchError((err) => this.handleError(err))
@@ -159,7 +153,6 @@ export class FormularioService {
       })
       .pipe(
         map((infoContactoDto: InfoContactoDto) => {
-          console.log("vienneeeeeee", infoContactoDto);
           return infoContactoDto;
         }),
         catchError((err) => this.handleError(err))
@@ -168,13 +161,13 @@ export class FormularioService {
 
   public saveOperativo(operativoDto): Observable<OperativoDto> {
     this.setTokenInHeader();
+
     return this.http
       .post(this.endpoints.url_api_save_operativo, operativoDto, {
         headers: this.headers,
       })
       .pipe(
         map((operativo: OperativoDto) => {
-          console.log("vienneeeeeee", operativo);
           return operativo;
         }),
         catchError((err) => this.handleError(err))
@@ -183,6 +176,7 @@ export class FormularioService {
 
   public saveComercial(comercialDto): Observable<ComercialDto> {
     this.setTokenInHeader();
+
     return this.http
       .post(this.endpoints.url_api_save_comercial, comercialDto, {
         headers: this.headers,
@@ -203,6 +197,7 @@ export class FormularioService {
    */
   public getIdentificacion(): Observable<IdentificacionDto> {
     this.setTokenInHeader();
+
     return this.http
       .get(this.endpoints.url_api_get_identificacion, { headers: this.headers })
       .pipe(
@@ -215,6 +210,7 @@ export class FormularioService {
 
   public getFinanciero(): Observable<FinancieroDto> {
     this.setTokenInHeader();
+
     return this.http
       .get(this.endpoints.url_api_get_financiero, { headers: this.headers })
       .pipe(
@@ -227,6 +223,7 @@ export class FormularioService {
 
   public getEmpresarial(): Observable<EmpresarialDto> {
     this.setTokenInHeader();
+
     return this.http
       .get(this.endpoints.url_api_get_empresarial, { headers: this.headers })
       .pipe(
@@ -239,6 +236,7 @@ export class FormularioService {
 
   public getOperativo(): Observable<OperativoDto> {
     this.setTokenInHeader();
+
     return this.http
       .get(this.endpoints.url_api_get_operativo, { headers: this.headers })
       .pipe(
@@ -251,6 +249,7 @@ export class FormularioService {
 
   public getComercial(): Observable<ComercialDto> {
     this.setTokenInHeader();
+
     return this.http
       .get(this.endpoints.url_api_get_comercial, { headers: this.headers })
       .pipe(
@@ -264,8 +263,6 @@ export class FormularioService {
   public getDocumental(): Observable<DocumentalDto> {
     this.setTokenInHeader();
 
-    console.log("this.headers", this.headers);
-
     return this.http
       .get(this.endpoints.url_api_get_documetal, { headers: this.headers })
       .pipe(
@@ -278,6 +275,7 @@ export class FormularioService {
 
   public getAceptacion(): Observable<AceptacionDto> {
     this.setTokenInHeader();
+
     return this.http
       .get(this.endpoints.url_api_get_aceptacion, { headers: this.headers })
       .pipe(
@@ -313,7 +311,6 @@ export class FormularioService {
       .get(this.endpoints.url_api_get_info_contacto, { headers: this.headers })
       .pipe(
         map((infoContactoDto: InfoContactoDto) => {
-          console.log("info contacto dto", infoContactoDto);
           return infoContactoDto;
         }),
         catchError((err) => this.handleError(err))
