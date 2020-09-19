@@ -82,12 +82,12 @@ export class IdentificacionComponent implements OnInit {
     this.processIDB = new ProcessIDB(dbService);
   }
   // sacado de https://morioh.com/p/526559a86600 el Toast que muestra mensajes
-  showToasterSuccess() {
-    this.notifyService.showSuccess("guardada exitosamente", "Identificación");
+  showToasterSuccess(subtitulo, titulo) {
+    this.notifyService.showSuccess(subtitulo, titulo);
   }
 
-  showToasterError() {
-    this.notifyService.showError("Error al guardar identificación", "Error");
+  showToasterError(subtitulo, titulo) {
+    this.notifyService.showError(subtitulo, titulo);
   }
 
   ngOnInit(): void {
@@ -143,9 +143,9 @@ export class IdentificacionComponent implements OnInit {
 
       lstActividades: this.fb.array([
         this.fb.group({
-          actividad: [null],
-          categoria: [null],
-          detalle: [null],
+          actividad: [null, [Validators.required]],
+          categoria: [null, [Validators.required]],
+          detalle: [null, [Validators.required]],
         }),
       ]),
     });
@@ -156,36 +156,43 @@ export class IdentificacionComponent implements OnInit {
   }
 
   removeActividad(i) {
-    const id = this.getActividades.value[i].id;
+    const vectorActividades: any[] = this.identificacionForm.get(
+      "lstActividades"
+    ).value;
 
-    this.formsService.deleteActividad(id).subscribe(
-      (data) => {
-        console.log("llega data ", data);
+    if (vectorActividades.length > 1) {
+      const id = this.getActividades.value[i].id;
 
-      },
-      (error) => {
-        console.log(error);
+      this.formsService.deleteActividad(id).subscribe(
+        (data) => {
+          console.log("llega data ", data);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+
+      const newCategoriasPorActividadPadre = [];
+      for (let k = 0; k < this.categoriasPorActividad.length; k++) {
+        if (k !== i) {
+          newCategoriasPorActividadPadre.push(this.categoriasPorActividad[k]);
+        }
       }
-    );
+      this.categoriasPorActividad = newCategoriasPorActividadPadre;
 
-    const newCategoriasPorActividadPadre = [];
-    for (let k = 0; k < this.categoriasPorActividad.length; k++) {
-      if (k !== i) {
-        newCategoriasPorActividadPadre.push(this.categoriasPorActividad[k]);
+      const newCatalogocategoriasPorCategoriaPadre = [];
+      for (let k = 0; k < this.catalogocategoriasPorCategoria.length; k++) {
+        if (k !== i) {
+          newCatalogocategoriasPorCategoriaPadre.push(
+            this.catalogocategoriasPorCategoria[k]
+          );
+        }
       }
+      this.catalogocategoriasPorCategoria = newCatalogocategoriasPorCategoriaPadre;
+      this.getActividades.removeAt(i); // eliminamos visualmente del form
+    } else {
+      this.showToasterError("No eliminar todas las actividad", "No eliminar");
     }
-    this.categoriasPorActividad = newCategoriasPorActividadPadre;
-
-    const newCatalogocategoriasPorCategoriaPadre = [];
-    for (let k = 0; k < this.catalogocategoriasPorCategoria.length; k++) {
-      if (k !== i) {
-        newCatalogocategoriasPorCategoriaPadre.push(
-          this.catalogocategoriasPorCategoria[k]
-        );
-      }
-    }
-    this.catalogocategoriasPorCategoria = newCatalogocategoriasPorCategoriaPadre;
-    this.getActividades.removeAt(i); // eliminamos visualmente del form
   }
 
   setIdentificacion = (i: IdentificacionDto) => {
@@ -419,9 +426,9 @@ export class IdentificacionComponent implements OnInit {
     this.getActividades.push(
       this.fb.group({
         id: [id],
-        actividad: [actividad],
-        categoria: [categoria],
-        detalle: [catalogoCategoria],
+        actividad: [actividad, [Validators.required]],
+        categoria: [categoria, [Validators.required]],
+        detalle: [catalogoCategoria, [Validators.required]],
       })
     );
   }
@@ -430,9 +437,9 @@ export class IdentificacionComponent implements OnInit {
     const tamanioGetActividades = this.getActividades.length;
     this.getActividades.push(
       this.fb.group({
-        actividad: [null],
-        categoria: [null],
-        detalle: [null],
+        actividad: [null, [Validators.required]],
+        categoria: [null, [Validators.required]],
+        detalle: [null, [Validators.required]],
       })
     );
     this.actividadSeleccionada[tamanioGetActividades] = null;
@@ -510,10 +517,8 @@ export class IdentificacionComponent implements OnInit {
   sendForm(value: any, valid: boolean) {
     this.submitted = true;
     if (valid) {
+      console.log("entraaaaaaaaaaaaaaaa");
 
-
-console.log('entraaaaaaaaaaaaaaaa');
-/*
       this.spinner.show();
       this.formsService
         .saveIdentificacion(this.identificacionForm.value)
@@ -521,17 +526,19 @@ console.log('entraaaaaaaaaaaaaaaa');
           (identificacionDto: IdentificacionDto) => {
             this.router.navigate(["/infocontacto"]);
 
-            this.showToasterSuccess();
+            this.showToasterSuccess("guardada exitosamente", "Identificación");
             this.spinner.hide();
           },
           (error) => {
-            this.showToasterError();
+            this.showToasterError("Error al guardar identificación", "Error");
             console.log(error);
             this.spinner.hide();
           }
         );
-
-*/
     }
+  }
+
+  hayError(entra) {
+    console.log("informa de error", entra);
   }
 }

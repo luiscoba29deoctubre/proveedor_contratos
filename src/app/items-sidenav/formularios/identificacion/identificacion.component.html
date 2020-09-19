@@ -190,7 +190,7 @@
                 <div class="row">
                   <div class="col-sm-12 col-md-3 col-lg-3">
                     <div class="form-group">
-                      <label for="actividad">Actividad:</label>
+                      <label for="actividad">Actividad: </label>
                       <select
                         (ngModelChange)="capturaActividad($event, i)"
                         id="actividad"
@@ -218,7 +218,6 @@
                           Este campo es requerido
                         </p>
                       </ng-container>
-
                     </div>
                   </div>
 
@@ -245,15 +244,16 @@
                           {{ categoria.name }}
                         </option>
                       </select>
-<ng-container *ngIf="
+                      <ng-container
+                        *ngIf="
                           !item.get('categoria').value &&
                           identificaForm.submitted
-                        ">
-  <p class="alert alert-danger alert-dismissible">
-    Este campo es requerido
-  </p>
-</ng-container>
-
+                        "
+                      >
+                        <p class="alert alert-danger alert-dismissible">
+                          Este campo es requerido
+                        </p>
+                      </ng-container>
                     </div>
                   </div>
 
@@ -281,15 +281,15 @@
                           {{ detalle.name }}
                         </option>
                       </select>
-<ng-container *ngIf="
-                          !item.get('detalle').value &&
-                          identificaForm.submitted
-                        ">
-  <p class="alert alert-danger alert-dismissible">
-    Este campo es requerido
-  </p>
-</ng-container>
-
+                      <ng-container
+                        *ngIf="
+                          !item.get('detalle').value && identificaForm.submitted
+                        "
+                      >
+                        <p class="alert alert-danger alert-dismissible">
+                          Este campo es requerido
+                        </p>
+                      </ng-container>
                     </div>
                   </div>
 
@@ -350,6 +350,11 @@
       <p style="font-size: 20px; color: white">Cargando...</p>
     </ngx-spinner>
   </div>
-  <pre>{{ identificacionForm.status }}</pre>
+  <!-- <pre>{{ identificacionForm.status }}</pre>
+  <pre>status {{ identificacionForm.get("lstActividades").status }}</pre>
+  <pre>value {{ identificacionForm.get("lstActividades").value }}</pre>
+  <pre>valid {{ identificacionForm.get("lstActividades").valid }}</pre>
+  <pre>enabled {{ identificacionForm.get("lstActividades").enabled }}</pre> -->
+
   <!--<pre>{{ identificacionForm.value | json }}</pre> -->
 </div>
