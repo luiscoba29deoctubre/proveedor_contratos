@@ -1,5 +1,10 @@
 import { NgxIndexedDBService } from "ngx-indexed-db";
-import { ParamPregunta, ParamRespuesta } from "../../common/dtos/parameters";
+import {
+  ParamPregunta,
+  ParamRespuesta,
+  Parameter,
+  ParamPais,
+} from "../../common/dtos/parameters";
 import { storageList } from "./indexedDB";
 
 // manejaremos la bd
@@ -109,12 +114,25 @@ export class ProcessIDB {
     }
   };
 
-  addLstPaisDto = (key, vector) => {
+  addLstPaisDto(store, vector: ParamPais[]): void {
     // tslint:disable-next-line: forin
     for (const index in vector) {
-      this.addParameterToDB(key, vector[index].id, vector[index].name);
+      this.dbService
+        .add(store, {
+          id: vector[index].id,
+          code: vector[index].code,
+          name: vector[index].name,
+        })
+        .then(
+          () => {
+            // Do something after the value was added
+          },
+          (error) => {
+            console.log(store, error);
+          }
+        );
     }
-  };
+  }
 
   storeLstRespuestaDto(store, vector: ParamRespuesta[]): void {
     // tslint:disable-next-line: forin

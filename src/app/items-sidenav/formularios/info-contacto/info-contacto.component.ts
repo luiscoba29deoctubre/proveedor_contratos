@@ -8,6 +8,7 @@ import { InfoContactoDto } from "../../../common/dtos/form/InfoContactoDto";
 import {
   ParamCanton,
   Parameter,
+  ParamPais,
   ParamParroquia,
   ParamProvincia,
 } from "../../../common/dtos/parameters";
@@ -16,14 +17,6 @@ import { storageList } from "../../../shared/bd/indexedDB";
 import { ProcessIDB } from "../../../shared/bd/process.indexedDB";
 import { NotificationService } from "../../../shared/services/notification.service";
 import { FormularioService } from "./../formulario.service";
-
-export class Technology {
-  constructor(
-    public techId: number,
-    public id: number,
-    public techName: string
-  ) {}
-}
 
 @Component({
   selector: "app-info-contacto",
@@ -40,7 +33,7 @@ export class InfoContactoComponent implements OnInit {
   /** Objeto processIDB para llenar todos los datos del usuario */
   processIDB: ProcessIDB;
 
-  paises: Parameter[] = [];
+  paises: ParamPais[] = [];
 
   provincias: ParamProvincia[] = [];
   provinciasCompleto: ParamProvincia[] = [];
@@ -61,7 +54,6 @@ export class InfoContactoComponent implements OnInit {
     private dbService: NgxIndexedDBService
   ) {
     this.spinner.show();
-    //  this.processIDB = new ProcessIDB(dbService); // creamos una instancia para manejar la base de datos
     this.initForm();
   }
 
@@ -82,10 +74,13 @@ export class InfoContactoComponent implements OnInit {
     this.formsService.getInfoContacto().subscribe(
       async (infoContactoDto) => {
         console.log(" llega allForms", infoContactoDto);
+        // setear por default el pais
+        infoContactoDto.pais = this.paises[0]; // a fuerza bruta poner el pais, antes q solo es 1 jeje
 
         if (this.isEmpty(infoContactoDto)) {
           this.setDefaultValuesCombos(infoContactoDto);
         } else {
+          console.log("hace el seteo");
           this.infocontactoForm.setValue(infoContactoDto);
         }
         this.spinner.hide();
@@ -117,9 +112,7 @@ export class InfoContactoComponent implements OnInit {
   loadCombos = async () => {
     const paisNoUsada = await this.dbService.getAll(storageList[6]).then(
       (paises) => {
-        //     console.log("paises", paises);
         this.paises = paises;
-        this.parroquiasCompleto = paises;
       },
       (error) => {
         console.log(error);
@@ -129,7 +122,6 @@ export class InfoContactoComponent implements OnInit {
       (provincias) => {
         this.provincias = provincias;
         this.provinciasCompleto = provincias;
-        //   console.log("provincias", provincias);
       },
       (error) => {
         console.log(error);
@@ -174,30 +166,10 @@ export class InfoContactoComponent implements OnInit {
     });
   }
 
-  loadInfoContacto = (i: InfoContactoDto) => {
-    // cargamos con la informacion inicial al componente
-    this.infocontactoForm.controls["direccion"].setValue(i.direccion);
-    this.infocontactoForm.controls["telefono"].setValue(i.telefono);
-    this.infocontactoForm.controls["celular"].setValue(i.celular);
-    this.infocontactoForm.controls["mailproveedor"].setValue(i.mailproveedor);
-    this.infocontactoForm.controls["contactocomercial"].setValue(
-      i.contactocomercial
-    );
-    this.infocontactoForm.controls["telefonocontactocomercial"].setValue(
-      i.telefonocontactocomercial
-    );
-    this.infocontactoForm.controls["celular1"].setValue(i.celular1);
-    this.infocontactoForm.controls["mail1"].setValue(i.mail1);
-    this.infocontactoForm.controls["celular2"].setValue(i.celular2);
-    this.infocontactoForm.controls["mail2"].setValue(i.mail2);
-  };
-
   capturaPais = (pais: Parameter) => {
-    console.log("pais", pais);
     if (pais) {
       const newProvincias: ParamProvincia[] = [];
       this.provinciasCompleto.forEach((provincia) => {
-        console.log(provincia);
         if (provincia.idpais === pais.id) {
           const pro: ParamProvincia = new ParamProvincia(
             provincia.id,
@@ -207,16 +179,8 @@ export class InfoContactoComponent implements OnInit {
           newProvincias.push(pro);
         }
       });
-      console.log("newProvincias", newProvincias);
-      this.provincias = newProvincias;
 
-      // estar pendiente que en este metodo se puede crear
-      // otro que se llame capturarProvincia
-      // y dentro de capturarProvincia deberia ir el metodo
-      // capturarCanton
-      // y dentro de ese metodo debe ir el de
-      // capturarParroquia
-      // para hacer las cargas de los combos
+      this.provincias = newProvincias;
 
       const newCantones: ParamCanton[] = [];
       this.cantonesCompleto.forEach((canton: ParamCanton) => {
@@ -252,7 +216,6 @@ export class InfoContactoComponent implements OnInit {
   };
 
   capturaProvincia = (provincia: ParamCanton) => {
-    console.log("provincia", provincia);
     if (provincia) {
       const newCantones: ParamCanton[] = [];
       this.cantonesCompleto.forEach((canton) => {
@@ -265,7 +228,7 @@ export class InfoContactoComponent implements OnInit {
           newCantones.push(cant);
         }
       });
-      console.log("newCantones", newCantones);
+
       this.cantones = newCantones;
 
       this.capturaCanton(newCantones[0]);
@@ -276,7 +239,6 @@ export class InfoContactoComponent implements OnInit {
   };
 
   capturaCanton = (canton: ParamCanton) => {
-    console.log("canton", canton);
     if (canton) {
       const newParroquias: ParamParroquia[] = [];
       this.parroquiasCompleto.forEach((parroquia) => {
@@ -289,7 +251,7 @@ export class InfoContactoComponent implements OnInit {
           newParroquias.push(parroq);
         }
       });
-      console.log("newParroquias", newParroquias);
+
       this.parroquias = newParroquias;
 
       this.infocontactoForm.controls["parroquia"].setValue(null);
@@ -307,7 +269,7 @@ export class InfoContactoComponent implements OnInit {
       this.spinner.show();
       this.formsService.saveInfoContacto(this.infocontactoForm.value).subscribe(
         (infoContactoDto: InfoContactoDto) => {
-          console.log("infoContactoDtoddd", infoContactoDto);
+          console.log("infoContactoDto", infoContactoDto);
           this.router.navigate(["/empresarial"]);
 
           this.showToasterSuccess();

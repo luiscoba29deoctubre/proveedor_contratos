@@ -1,9 +1,7 @@
 import {
-  ParamCanton,
-  Parameter,
-  ParamParroquia,
-  ParamProvincia,
-} from "../parameters";
+  ParamCanton, ParamPais, ParamParroquia,
+  ParamProvincia
+} from '../parameters';
 export class InfoContactoDto {
   constructor(
     public direccion?: string,
@@ -17,7 +15,7 @@ export class InfoContactoDto {
     public celular2?: string,
     public mail2?: string,
 
-    public pais?: Parameter,
+    public pais?: ParamPais,
     public provincia?: ParamProvincia,
     public canton?: ParamCanton,
     public parroquia?: ParamParroquia
