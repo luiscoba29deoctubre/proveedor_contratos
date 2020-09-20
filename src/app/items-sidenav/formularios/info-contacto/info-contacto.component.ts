@@ -75,12 +75,11 @@ export class InfoContactoComponent implements OnInit {
       async (infoContactoDto) => {
         console.log(" llega allForms", infoContactoDto);
         // setear por default el pais
-        infoContactoDto.pais = this.paises[0]; // a fuerza bruta poner el pais, antes q solo es 1 jeje
 
         if (this.isEmpty(infoContactoDto)) {
           this.setDefaultValuesCombos(infoContactoDto);
         } else {
-          console.log("hace el seteo");
+          infoContactoDto.pais = this.paises[0]; // a fuerza bruta poner el pais, antes q solo es 1
           this.infocontactoForm.setValue(infoContactoDto);
         }
         this.spinner.hide();
