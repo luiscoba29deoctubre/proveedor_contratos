@@ -35,6 +35,10 @@ export class EmpresarialComponent implements OnInit {
 
   processIDB: ProcessIDB;
 
+  fechaaperturaruc;
+  actividadeconomicaprincipal;
+  actividadeconomicasecundaria;
+
   submitted: boolean;
 
   idTipoPerfil;
