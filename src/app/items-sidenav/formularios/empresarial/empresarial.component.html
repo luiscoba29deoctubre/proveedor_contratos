@@ -3,7 +3,14 @@
     PERFIL EMPRESARIAL
   </h3>
 
-  <form class="card" [formGroup]="empresarialForm" role="form">
+  <form
+    novalidate
+    class="card"
+    form
+    #empForm="ngForm"
+    [formGroup]="empresarialForm"
+    role="form"
+  >
     <div class="card-body">
       <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-12">
@@ -14,6 +21,7 @@
               <div class="row">
                 <div class="col-xs-12">
                   <input
+                    style="cursor: pointer; text-align: center"
                     formControlName="fechaaperturaruc"
                     type="text"
                     placeholder="Escoge fecha"
@@ -22,6 +30,16 @@
                     #dp="bsDatepicker"
                     [readonly]="true"
                   />
+                  <ng-container
+                    *ngIf="
+                      !empresarialForm.get('fechaaperturaruc').valid &&
+                      empForm.submitted
+                    "
+                  >
+                    <p class="alert alert-danger alert-dismissible">
+                      Este campo es requerido
+                    </p>
+                  </ng-container>
                 </div>
               </div>
             </div>
@@ -42,6 +60,16 @@
               placeholder="Actividad económica principal"
               id="actividadeconomicaprincipal"
             />
+            <ng-container
+              *ngIf="
+                !empresarialForm.get('actividadeconomicaprincipal').valid &&
+                empForm.submitted
+              "
+            >
+              <p class="alert alert-danger alert-dismissible">
+                Este campo es requerido
+              </p>
+            </ng-container>
           </div>
         </div>
         <div class="col-sm-12 col-md-6 col-lg-6">
@@ -56,8 +84,41 @@
               placeholder="Actividad económica secundaria"
               id="actividadeconomicasecundaria"
             />
+            <ng-container
+              *ngIf="
+                !empresarialForm.get('actividadeconomicasecundaria').valid &&
+                empForm.submitted
+              "
+            >
+              <p class="alert alert-danger alert-dismissible">
+                Este campo es requerido
+              </p>
+            </ng-container>
           </div>
         </div>
+      </div>
+    </div>
+    <div style="text-align: center; margin-bottom: 10px" class="row mt-3">
+      <!-- Button -->
+      <div class="col">
+        <button
+          style="color: #fec524; background: #8b2131; border-color: black"
+          (click)="retrocederForm()"
+          class="btn"
+          type="submit"
+        >
+          <i class="fa fa-sign-in"></i> Atrás
+        </button>
+      </div>
+      <div class="col">
+        <button
+          style="color: #fec524; background: #8b2131; border-color: black"
+          (click)="empForm.valid ? sendForm() : ''"
+          class="btn"
+          type="submit"
+        >
+          <i class="fa fa-sign-in"></i> Siguiente
+        </button>
       </div>
     </div>
   </form>
@@ -101,31 +162,6 @@
     </div>
   </div>
 
-  <div style="text-align: center; margin-bottom: 10px" class="row mt-3">
-    <!-- Button -->
-    <div class="col">
-      <button
-        style="color: #fec524; background: #8b2131; border-color: black"
-        (click)="retrocederForm()"
-        class="btn "
-        type="submit"
-      >
-        <i class="fa fa-sign-in"></i> Atrás
-      </button>
-    </div>
-    <div class="col">
-      <button
-        [disabled]="empresarialForm.invalid || !cuestionarioEstaLleno()"
-        style="color: #fec524; background: #8b2131; border-color: black"
-        (click)="sendForm()"
-        class="btn "
-        type="submit"
-      >
-        <i class="fa fa-sign-in"></i> Siguiente
-      </button>
-    </div>
-  </div>
-
   <ngx-spinner
     bdColor="rgba(51,51,51,0.8)"
     size="medium"
@@ -134,4 +170,6 @@
   >
     <p style="font-size: 20px; color: white">Cargando...</p>
   </ngx-spinner>
- </div>
+
+  <pre>valid {{ empresarialForm.valid }}</pre>
+</div>
