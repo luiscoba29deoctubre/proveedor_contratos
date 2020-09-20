@@ -7,7 +7,6 @@ import { IdentificacionDto } from "../../../common/dtos/form/IdentificacionDto";
 import { InfoContactoDto } from "../../../common/dtos/form/InfoContactoDto";
 import {
   ParamCanton,
-  Parameter,
   ParamPais,
   ParamParroquia,
   ParamProvincia,
@@ -17,6 +16,14 @@ import { storageList } from "../../../shared/bd/indexedDB";
 import { ProcessIDB } from "../../../shared/bd/process.indexedDB";
 import { NotificationService } from "../../../shared/services/notification.service";
 import { FormularioService } from "./../formulario.service";
+
+export class Technology {
+  constructor(
+    public techId: number,
+    public id: number,
+    public techName: string
+  ) {}
+}
 
 @Component({
   selector: "app-info-contacto",
@@ -35,14 +42,19 @@ export class InfoContactoComponent implements OnInit {
 
   paises: ParamPais[] = [];
 
+  paisSeleccionado: ParamPais;
+
   provincias: ParamProvincia[] = [];
   provinciasCompleto: ParamProvincia[] = [];
+  provinciaSeleccionado: ParamProvincia;
 
   cantones: ParamCanton[] = [];
   cantonesCompleto: ParamCanton[] = [];
+  cantonSeleccionado: ParamCanton;
 
   parroquias: ParamParroquia[] = [];
   parroquiasCompleto: ParamParroquia[] = [];
+  parroquiaSeleccionado: ParamParroquia;
 
   constructor(
     private fb: FormBuilder,
@@ -54,7 +66,13 @@ export class InfoContactoComponent implements OnInit {
     private dbService: NgxIndexedDBService
   ) {
     this.spinner.show();
+    //  this.processIDB = new ProcessIDB(dbService); // creamos una instancia para manejar la base de datos
     this.initForm();
+
+    this.paisSeleccionado = null;
+    this.provinciaSeleccionado = null;
+    this.cantonSeleccionado = null;
+    this.parroquiaSeleccionado = null;
   }
 
   // sacado de https://morioh.com/p/526559a86600 el Toast que muestra mensajes
@@ -72,15 +90,18 @@ export class InfoContactoComponent implements OnInit {
     await this.loadCombos();
 
     this.formsService.getInfoContacto().subscribe(
-      async (infoContactoDto) => {
+      (infoContactoDto) => {
         console.log(" llega allForms", infoContactoDto);
-        // setear por default el pais
 
         if (this.isEmpty(infoContactoDto)) {
           this.setDefaultValuesCombos(infoContactoDto);
         } else {
-          infoContactoDto.pais = this.paises[0]; // a fuerza bruta poner el pais, antes q solo es 1
-          this.infocontactoForm.setValue(infoContactoDto);
+          this.seteoFormulario(infoContactoDto);
+
+          console.log(
+            "this.infocontactoForm.value",
+            this.infocontactoForm.value
+          );
         }
         this.spinner.hide();
       },
@@ -89,6 +110,52 @@ export class InfoContactoComponent implements OnInit {
         this.spinner.hide();
       }
     );
+  }
+
+  seteoFormulario(i: InfoContactoDto) {
+    console.log("entra en seteoFormulario");
+    i.pais = this.paises[0];
+
+    this.paisSeleccionado = this.paises[0];
+
+    this.provincias = this.provinciasCompleto.filter(
+      (provincia) => provincia.idpais === i.pais.id
+    );
+
+    this.provinciaSeleccionado = this.provincias.find(
+      (provincia) => provincia.id === i.provincia.id
+    );
+
+    this.cantones = this.cantonesCompleto.filter(
+      (canton) => canton.idprovincia === i.canton.idprovincia
+    );
+
+    this.cantonSeleccionado = this.cantones.find(
+      (canton) => canton.id === i.canton.id
+    );
+
+    this.parroquias = this.parroquiasCompleto.filter(
+      (parroquia) => parroquia.idcanton === i.parroquia.idcanton
+    );
+
+    this.parroquiaSeleccionado = this.parroquias.find(
+      (parroquia) => parroquia.id === i.parroquia.id
+    );
+
+    this.infocontactoForm.controls["direccion"].setValue(i.direccion);
+    this.infocontactoForm.controls["celular"].setValue(i.celular);
+    this.infocontactoForm.controls["telefono"].setValue(i.telefono);
+    this.infocontactoForm.controls["mailproveedor"].setValue(i.mailproveedor);
+    this.infocontactoForm.controls["contactocomercial"].setValue(
+      i.contactocomercial
+    );
+    this.infocontactoForm.controls["telefonocontactocomercial"].setValue(
+      i.telefonocontactocomercial
+    );
+    this.infocontactoForm.controls["celular1"].setValue(i.celular1);
+    this.infocontactoForm.controls["mail1"].setValue(i.mail1);
+    this.infocontactoForm.controls["celular2"].setValue(i.celular2);
+    this.infocontactoForm.controls["mail2"].setValue(i.mail2);
   }
 
   isEmpty = (obj) => {
@@ -119,7 +186,6 @@ export class InfoContactoComponent implements OnInit {
     );
     const provinciaNoUsada = await this.dbService.getAll(storageList[7]).then(
       (provincias) => {
-        this.provincias = provincias;
         this.provinciasCompleto = provincias;
       },
       (error) => {
@@ -128,7 +194,6 @@ export class InfoContactoComponent implements OnInit {
     );
     const cantonNoUsada = await this.dbService.getAll(storageList[8]).then(
       (cantones) => {
-        this.cantones = cantones;
         this.cantonesCompleto = cantones;
       },
       (error) => {
@@ -137,7 +202,6 @@ export class InfoContactoComponent implements OnInit {
     );
     const parroquiaNoUsada = await this.dbService.getAll(storageList[9]).then(
       (parroquias) => {
-        this.parroquias = parroquias;
         this.parroquiasCompleto = parroquias;
       },
       (error) => {
@@ -165,48 +229,31 @@ export class InfoContactoComponent implements OnInit {
     });
   }
 
-  capturaPais = (pais: Parameter) => {
-    if (pais) {
-      const newProvincias: ParamProvincia[] = [];
-      this.provinciasCompleto.forEach((provincia) => {
-        if (provincia.idpais === pais.id) {
-          const pro: ParamProvincia = new ParamProvincia(
-            provincia.id,
-            provincia.idpais,
-            provincia.name
-          );
-          newProvincias.push(pro);
-        }
-      });
+  loadInfoContacto = (i: InfoContactoDto) => {
+    // cargamos con la informacion inicial al componente
+    this.infocontactoForm.controls["direccion"].setValue(i.direccion);
+    this.infocontactoForm.controls["telefono"].setValue(i.telefono);
+    this.infocontactoForm.controls["celular"].setValue(i.celular);
+    this.infocontactoForm.controls["mailproveedor"].setValue(i.mailproveedor);
+    this.infocontactoForm.controls["contactocomercial"].setValue(
+      i.contactocomercial
+    );
+    this.infocontactoForm.controls["telefonocontactocomercial"].setValue(
+      i.telefonocontactocomercial
+    );
+    this.infocontactoForm.controls["celular1"].setValue(i.celular1);
+    this.infocontactoForm.controls["mail1"].setValue(i.mail1);
+    this.infocontactoForm.controls["celular2"].setValue(i.celular2);
+    this.infocontactoForm.controls["mail2"].setValue(i.mail2);
+  };
 
-      this.provincias = newProvincias;
+  capturaPais = () => {
+    if (this.paisSeleccionado) {
+      this.provincias = this.provinciasCompleto.filter(
+        (provincia) => provincia.idpais === this.paisSeleccionado.id
+      );
 
-      const newCantones: ParamCanton[] = [];
-      this.cantonesCompleto.forEach((canton: ParamCanton) => {
-        if (newProvincias[0].id === canton.idprovincia) {
-          const cc: ParamCanton = new ParamCanton(
-            canton.id,
-            canton.idprovincia,
-            canton.name
-          );
-          newCantones.push(cc);
-        }
-      });
-      this.cantones = newCantones;
-
-      const newParroquas: ParamParroquia[] = [];
-      this.parroquiasCompleto.forEach((parroquia) => {
-        if (newCantones[0].id === parroquia.idcanton) {
-          const cc: ParamParroquia = new ParamParroquia(
-            parroquia.id,
-            parroquia.idcanton,
-            parroquia.name
-          );
-          newParroquas.push(cc);
-        }
-      });
-
-      this.parroquias = newParroquas;
+      this.capturaProvincia();
 
       this.infocontactoForm.controls["provincia"].setValue(null);
       this.infocontactoForm.controls["canton"].setValue(null);
@@ -214,45 +261,26 @@ export class InfoContactoComponent implements OnInit {
     }
   };
 
-  capturaProvincia = (provincia: ParamCanton) => {
-    if (provincia) {
-      const newCantones: ParamCanton[] = [];
-      this.cantonesCompleto.forEach((canton) => {
-        if (canton.idprovincia === provincia.id) {
-          const cant: ParamCanton = new ParamCanton(
-            canton.id,
-            canton.idprovincia,
-            canton.name
-          );
-          newCantones.push(cant);
-        }
-      });
+  capturaProvincia = () => {
+    console.log("provincia", this.provinciaSeleccionado);
+    if (this.provinciaSeleccionado) {
+      this.cantones = this.cantonesCompleto.filter(
+        (canton) => canton.idprovincia === this.provinciaSeleccionado.id
+      );
 
-      this.cantones = newCantones;
-
-      this.capturaCanton(newCantones[0]);
+      this.capturaCanton();
 
       this.infocontactoForm.controls["canton"].setValue(null);
       this.infocontactoForm.controls["parroquia"].setValue(null);
     }
   };
 
-  capturaCanton = (canton: ParamCanton) => {
-    if (canton) {
-      const newParroquias: ParamParroquia[] = [];
-      this.parroquiasCompleto.forEach((parroquia) => {
-        if (parroquia.idcanton === canton.id) {
-          const parroq: ParamParroquia = new ParamParroquia(
-            parroquia.id,
-            parroquia.idcanton,
-            parroquia.name
-          );
-          newParroquias.push(parroq);
-        }
-      });
-
-      this.parroquias = newParroquias;
-
+  capturaCanton = () => {
+    console.log("capturaCanton canton", this.cantonSeleccionado);
+    if (this.cantonSeleccionado) {
+      this.parroquias = this.parroquiasCompleto.filter(
+        (parroquia) => parroquia.idcanton === this.cantonSeleccionado.id
+      );
       this.infocontactoForm.controls["parroquia"].setValue(null);
     }
   };
@@ -268,7 +296,7 @@ export class InfoContactoComponent implements OnInit {
       this.spinner.show();
       this.formsService.saveInfoContacto(this.infocontactoForm.value).subscribe(
         (infoContactoDto: InfoContactoDto) => {
-          console.log("infoContactoDto", infoContactoDto);
+          console.log("infoContactoDtoddd", infoContactoDto);
           this.router.navigate(["/empresarial"]);
 
           this.showToasterSuccess();

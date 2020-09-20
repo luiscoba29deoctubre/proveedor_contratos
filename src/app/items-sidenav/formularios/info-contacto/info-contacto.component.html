@@ -38,7 +38,8 @@
           <div class="form-group">
             <label for="pais">Pais: </label>
             <select
-              (ngModelChange)="capturaPais($event)"
+               (change)="capturaPais()"
+              [(ngModel)]="paisSeleccionado"
               id="pais"
               style="margin-left: 0%"
               formControlName="pais"
@@ -64,7 +65,8 @@
           <div class="form-group">
             <label for="provincia">Provincia: </label>
             <select
-              (ngModelChange)="capturaProvincia($event)"
+              (change)="capturaProvincia()"
+              [(ngModel)]="provinciaSeleccionado"
               id="provincia"
               style="margin-left: 0%"
               formControlName="provincia"
@@ -93,7 +95,8 @@
           <div class="form-group">
             <label for="canton">Cantón: </label>
             <select
-              (ngModelChange)="capturaCanton($event)"
+              (change)="capturaCanton()"
+              [(ngModel)]="cantonSeleccionado"
               style="margin-left: 0%"
               formControlName="canton"
               class="form-control"
@@ -118,6 +121,7 @@
           <div class="form-group">
             <label for="parroquia">Parroquia: </label>
             <select
+            [(ngModel)]="parroquiaSeleccionado"
               #parroquia
               id="parroquia"
               style="margin-left: 0%"
