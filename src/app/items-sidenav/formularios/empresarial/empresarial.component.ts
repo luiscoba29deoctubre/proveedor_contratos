@@ -102,12 +102,9 @@ export class EmpresarialComponent implements OnInit {
   }
 
   seteoInputs = (e: EmpresarialDto) => {
-    this.empresarialForm.controls["actividadeconomicaprincipal"].setValue(
-      e.actividadeconomicaprincipal
-    );
-    this.empresarialForm.controls["actividadeconomicasecundaria"].setValue(
-      e.actividadeconomicasecundaria
-    );
+    this.actividadeconomicaprincipal = e.actividadeconomicaprincipal;
+
+    this.actividadeconomicasecundaria = e.actividadeconomicasecundaria;
 
     const parts = e.fechaaperturaruc.split("-");
     const anio = +parts[0];
@@ -116,7 +113,7 @@ export class EmpresarialComponent implements OnInit {
 
     const fechaParseada = format(new Date(anio, mes - 1, dia), "dd/MM/yyyy");
 
-    this.empresarialForm.controls["fechaaperturaruc"].setValue(fechaParseada);
+    this.fechaaperturaruc = fechaParseada;
   };
 
   isEmpty = (obj) => {
@@ -247,7 +244,7 @@ export class EmpresarialComponent implements OnInit {
     // console.log("AllQuestions", this.allQuestions);
   };
 
-  cuestionarioEstaLleno = () => {
+  /*   cuestionarioEstaLleno = () => {
     const tamanioAllQuestions: number = this.allQuestions.length;
     let acumulador = 0;
     for (let i = 0; i < tamanioAllQuestions; i++) {
@@ -257,12 +254,12 @@ export class EmpresarialComponent implements OnInit {
     }
 
     return acumulador === tamanioAllQuestions ? true : false;
-  };
+  }; */
 
   onItemChange(value: ParamRespuestaSeleccionada, i, j) {
-    /* console.log(" Value is : ", value);
+    /*     console.log(" Value is : ", value);
     console.log(" fila : ", i);
-    console.log(" columna : ", j);*/
+    console.log(" columna : ", j); */
     this.lstRespuestasSeleccionadas[i] = value;
   }
 
@@ -273,41 +270,34 @@ export class EmpresarialComponent implements OnInit {
   sendForm() {
     this.submitted = true;
 
-    if (this.cuestionarioEstaLleno && this.empresarialForm.valid) {
-      this.spinner.show();
-      // console.log(        "this.respuestasSeleccionadas",        this.lstRespuestasSeleccionadas      );
-      // console.log("this.empresarialForm.value", this.empresarialForm.value);
-      const {
-        fechaaperturaruc,
-        actividadeconomicaprincipal,
-        actividadeconomicasecundaria,
-      } = this.empresarialForm.value;
+    console.log("entra en sendForm");
 
-      const empresarialDto: EmpresarialDto = new EmpresarialDto(
-        this.idTipoPerfil,
-        fechaaperturaruc,
-        actividadeconomicaprincipal,
-        actividadeconomicasecundaria
-      );
+    this.spinner.show();
 
-      empresarialDto.lstRespuestaSeleccionada = this.lstRespuestasSeleccionadas;
+    const empresarialDto: EmpresarialDto = new EmpresarialDto(
+      this.idTipoPerfil,
+      this.fechaaperturaruc,
+      this.actividadeconomicaprincipal,
+      this.actividadeconomicasecundaria
+    );
 
-      console.log("empresarialDto enviado", empresarialDto);
+    empresarialDto.lstRespuestaSeleccionada = this.lstRespuestasSeleccionadas;
 
-      this.formsService.saveEmpresarial(empresarialDto).subscribe(
-        (empresarial: EmpresarialDto) => {
-          console.log("llega empresarial ", empresarial);
-          this.router.navigate(["/financiero"]);
+    console.log("empresarialDto enviado", empresarialDto);
 
-          this.showToasterSuccess();
-          this.spinner.hide();
-        },
-        (error) => {
-          this.showToasterError();
-          console.log(error);
-          this.spinner.hide();
-        }
-      );
-    }
+    this.formsService.saveEmpresarial(empresarialDto).subscribe(
+      (empresarial: EmpresarialDto) => {
+        console.log("llega empresarial ", empresarial);
+        this.router.navigate(["/financiero"]);
+
+        this.showToasterSuccess();
+        this.spinner.hide();
+      },
+      (error) => {
+        this.showToasterError();
+        console.log(error);
+        this.spinner.hide();
+      }
+    );
   }
 }

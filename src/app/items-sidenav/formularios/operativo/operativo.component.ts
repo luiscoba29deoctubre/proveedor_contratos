@@ -211,48 +211,32 @@ export class OperativoComponent implements OnInit {
     this.lstRespuestasSeleccionadas[i] = value;
   }
 
-  cuestionarioEstaLleno = () => {
-    const tamanioAllQuestions: number = this.allQuestions.length;
-    let acumulador = 0;
-    for (let i = 0; i < tamanioAllQuestions; i++) {
-      if (this.lstRespuestasSeleccionadas[i]) {
-        acumulador = acumulador + 1;
-      }
-    }
-    return acumulador === tamanioAllQuestions ? true : false;
-  };
-
   retrocederForm() {
     this.router.navigate(["/financiero"]);
   }
   sendForm() {
     this.submitted = true;
-    if (this.cuestionarioEstaLleno) {
-      console.log(
-        "this.respuestasSeleccionadas",
-        this.lstRespuestasSeleccionadas
-      );
-      const operativoDto: OperativoDto = new OperativoDto();
-      operativoDto.idtipoperfil = this.idTipoPerfil;
-      operativoDto.lstRespuestaSeleccionada = this.lstRespuestasSeleccionadas;
 
-      console.log("empresarialDto enviado", operativoDto);
+    const operativoDto: OperativoDto = new OperativoDto();
+    operativoDto.idtipoperfil = this.idTipoPerfil;
+    operativoDto.lstRespuestaSeleccionada = this.lstRespuestasSeleccionadas;
 
-      this.spinner.show();
-      this.formsService.saveOperativo(operativoDto).subscribe(
-        (operativo: OperativoDto) => {
-          console.log("llega empresarial ", operativo);
-          this.router.navigate(["/comercial"]);
+    console.log("empresarialDto enviado", operativoDto);
 
-          this.showToasterSuccess();
-          this.spinner.hide();
-        },
-        (error) => {
-          this.showToasterError();
-          console.log(error);
-          this.spinner.hide();
-        }
-      );
-    }
+    this.spinner.show();
+    this.formsService.saveOperativo(operativoDto).subscribe(
+      (operativo: OperativoDto) => {
+        console.log("llega empresarial ", operativo);
+        this.router.navigate(["/comercial"]);
+
+        this.showToasterSuccess();
+        this.spinner.hide();
+      },
+      (error) => {
+        this.showToasterError();
+        console.log(error);
+        this.spinner.hide();
+      }
+    );
   }
 }

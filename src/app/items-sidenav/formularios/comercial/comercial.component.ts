@@ -221,15 +221,11 @@ export class ComercialComponent implements OnInit {
   };
 
   retrocederForm() {
-    this.router.navigate(["/financiero"]);
+    this.router.navigate(["/operativo"]);
   }
   sendForm() {
     this.submitted = true;
-    if (this.cuestionarioEstaLleno) {
-      console.log(
-        "this.respuestasSeleccionadas",
-        this.lstRespuestasSeleccionadas
-      );
+
       const comercialDto: ComercialDto = new ComercialDto();
       comercialDto.idtipoperfil = this.idTipoPerfil;
       comercialDto.lstRespuestaSeleccionada = this.lstRespuestasSeleccionadas;
@@ -251,6 +247,6 @@ export class ComercialComponent implements OnInit {
           this.spinner.hide();
         }
       );
-    }
+    
   }
 }
