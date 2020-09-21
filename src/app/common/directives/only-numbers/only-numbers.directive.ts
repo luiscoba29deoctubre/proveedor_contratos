@@ -10,7 +10,7 @@ export class OnlyNumbersDirective {
   @Input() appOnlyNumbers: boolean;
 
   @HostListener("keydown", ["$event"]) onKeyDown(event) {
-    let e = <KeyboardEvent>event;
+    const e = <KeyboardEvent>event;
     if (this.appOnlyNumbers) {
       if (
         [46, 8, 9, 27, 13, 110, 190].indexOf(e.keyCode) !== -1 ||
@@ -28,8 +28,8 @@ export class OnlyNumbersDirective {
         // let it happen, don't do anything
         return;
       }
-      let ch = String.fromCharCode(e.keyCode);
-      let regEx = new RegExp(this.regexStr);
+      const ch = String.fromCharCode(e.keyCode);
+      const regEx = new RegExp(this.regexStr);
       if (regEx.test(ch)) return;
       else e.preventDefault();
     }

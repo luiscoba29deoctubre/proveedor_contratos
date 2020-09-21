@@ -38,7 +38,7 @@
           <div class="form-group">
             <label for="pais">Pais: </label>
             <select
-               (change)="capturaPais()"
+              (change)="capturaPais()"
               [(ngModel)]="paisSeleccionado"
               id="pais"
               style="margin-left: 0%"
@@ -121,7 +121,7 @@
           <div class="form-group">
             <label for="parroquia">Parroquia: </label>
             <select
-            [(ngModel)]="parroquiaSeleccionado"
+              [(ngModel)]="parroquiaSeleccionado"
               #parroquia
               id="parroquia"
               style="margin-left: 0%"
@@ -154,19 +154,32 @@
           <div class="form-group">
             <label for="celular">Celular: </label>
             <input
+              style="text-align: right"
+              appOnlyNumbers
               formControlName="celular"
-              type="text"
+              type="phoneNumber"
               class="form-control"
-              placeholder="Teléfono comercial"
+              placeholder="Celular"
               id="celular"
+              maxlength="{{ 10 }}"
+              min="9999999"
             />
             <ng-container
               *ngIf="
                 !infocontactoForm.get('celular').valid && infoForm.submitted
               "
             >
-              <p class="alert alert-danger alert-dismissible">
+              <p
+                *ngIf="!infocontactoForm.get('celular').hasError('required')"
+                class="alert alert-danger alert-dismissible"
+              >
                 Este campo es requerido
+              </p>
+              <p
+                *ngIf="!infocontactoForm.get('celular').hasError('pattern')"
+                class="alert alert-danger alert-dismissible"
+              >
+                Ingrese solo numeros
               </p>
             </ng-container>
           </div>
@@ -176,10 +189,12 @@
             <label for="telefono">Teléfono: </label>
             <input
               formControlName="telefono"
-              type="text"
+              type="phoneNumber"
               class="form-control"
               placeholder="Teléfono"
               id="telefono"
+              maxlength="{{ 10 }}"
+              min="9999999"
             />
             <ng-container
               *ngIf="
@@ -199,7 +214,7 @@
               formControlName="mailproveedor"
               type="text"
               class="form-control"
-              placeholder="Contacto comercial"
+              placeholder="Correo proveedor"
               id="mailproveedor"
             />
             <ng-container
@@ -209,7 +224,7 @@
               "
             >
               <p class="alert alert-danger alert-dismissible">
-                Este campo es requerido
+                ingrese un correo válido
               </p>
             </ng-container>
           </div>
@@ -299,7 +314,7 @@
               *ngIf="!infocontactoForm.get('mail1').valid && infoForm.submitted"
             >
               <p class="alert alert-danger alert-dismissible">
-                Este campo es requerido
+              ingrese un correo válido
               </p>
             </ng-container>
           </div>
@@ -342,7 +357,7 @@
               *ngIf="!infocontactoForm.get('mail2').valid && infoForm.submitted"
             >
               <p class="alert alert-danger alert-dismissible">
-                Este campo es requerido
+                ingrese un correo válido
               </p>
             </ng-container>
           </div>

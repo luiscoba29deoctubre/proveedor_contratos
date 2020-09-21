@@ -2,13 +2,10 @@
   <div class="row justify-content-center">
     <div class="col-sm-12 col-md-6 col-lg-6">
       <div class="card">
-        <h3 class="card-title" style="margin: 10px;">
+        <h3 class="card-title" style="margin: 10px">
           Registro de nuevo usuario
         </h3>
-        <div
-          style="border: 1px solid #cccccc;"
-          class="card-body"
-        >
+        <div style="border: 1px solid #cccccc" class="card-body">
           <form
             class="card"
             novalidate
@@ -140,6 +137,7 @@
               <div class="form-group">
                 <label for="inputPhone">Número telefónico</label>
                 <input
+                  style="text-align: right"
                   appOnlyNumbers="true"
                   formControlName="telefono"
                   type="phoneNumber"
@@ -147,6 +145,7 @@
                   id="inputPhone"
                   placeholder="Número telefónico"
                   maxlength="{{ 10 }}"
+                  min="9999999"
                 />
                 <div
                   *ngIf="
@@ -207,7 +206,7 @@
                   <button
                     [disabled]="registerForm.invalid || errorCorreo"
                     *ngIf="!registrado"
-                    class="btn "
+                    class="btn"
                     type="submit"
                   >
                     <i class="fa fa-floppy-o"></i> Guardar
@@ -249,6 +248,6 @@
     color="#fff"
     type="ball-scale-multiple"
   >
-    <div style="font-size: 20px; color: white;">Cargando...</div>
+    <div style="font-size: 20px; color: white">Cargando...</div>
   </ngx-spinner>
 </div>

@@ -42,13 +42,15 @@
             <div class="form-group">
               <label for="rucrise">RUC / RISE: </label>
               <input
+                style="text-align: right"
+                appOnlyNumbers="true"
                 formControlName="rucrise"
-                type="number"
+                type="phoneNumber"
                 class="form-control"
                 placeholder="RUC / RISE"
                 id="rucrise"
                 maxlength="{{ 13 }}"
-                min="0"
+                min="9999999999"
               />
               <ng-container
                 *ngIf="
