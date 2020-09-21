@@ -8,6 +8,7 @@ import { LoginService } from "../../../logueo/login/login.service";
 import { storageList } from "../../../shared/bd/indexedDB";
 import { NotificationService } from "../../../shared/services/notification.service";
 import { FormularioService } from "../formulario.service";
+import { ApiEndpoints } from "../../../logueo/api.endpoints";
 
 @Component({
   selector: "app-documental",
@@ -25,7 +26,8 @@ export class DocumentalComponent implements OnInit {
     private loginService: LoginService,
     private dbService: NgxIndexedDBService,
     private formsService: FormularioService,
-    private notifyService: NotificationService
+    private notifyService: NotificationService,
+    private endpoints: ApiEndpoints
   ) {}
 
   ngOnInit() {
@@ -102,8 +104,11 @@ export class DocumentalComponent implements OnInit {
       formatsAllowed: ".pdf",
       maxSize: "2", // MB
       uploadAPI: {
-        url: "http://localhost:3003/proveedor-api/v1/forms/upload-pdf/",
+        url: this.endpoints.url_api_upload_pdf,
         method: "POST",
+        headers: {
+          auth: `Bearer ${sessionStorage.getItem("token")}`,
+        },
         params: {
           idDocumento: idDocumento,
         },

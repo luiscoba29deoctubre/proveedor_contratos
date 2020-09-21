@@ -77,11 +77,10 @@ export class ApiEndpoints {
   public url_api_download_pdf: string =
     this.url_api_formulario + "/download-pdf";
 
+  public url_api_upload_pdf: string = this.url_api_formulario + "/upload-pdf";
+
   // Crear nuevo usuario
   public url_api_new_user: string = this.url_api_usuarios + "/";
-
-  // Roles
-  public url_api_roles: string = this.url_api + "/roles";
 
   // guardar identificacion
   public url_api_save_identification: string =
@@ -113,8 +112,6 @@ export class ApiEndpoints {
   public url_api_delete_actividad: string =
     this.url_api_formulario + "/delete-actividad";
 
-
   public url_api_update_perfilFinanciero: string =
     this.url_api_formulario + "/update-perfilFinanciero";
-
 }

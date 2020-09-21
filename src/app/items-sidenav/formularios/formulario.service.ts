@@ -46,7 +46,7 @@ export class FormularioService {
 
   setTokenInHeader() {
     const headerWithToken = new HttpHeaders({
-      auth: "Bearer " + sessionStorage.getItem("token"),
+      auth: `Bearer ${sessionStorage.getItem("token")}`,
     });
     this.headers = headerWithToken;
   }
@@ -58,6 +58,7 @@ export class FormularioService {
    */
   public deleteActividad(id: number): Observable<any> {
     this.setTokenInHeader();
+
     return this.http.get(this.endpoints.url_api_delete_actividad + "/" + id, {
       headers: this.headers,
     });
@@ -65,6 +66,7 @@ export class FormularioService {
 
   public actualizarPerfilFinanciero(cuenta): Observable<FinancieroDto> {
     this.setTokenInHeader();
+
     return this.http
       .put(this.endpoints.url_api_update_perfilFinanciero, cuenta, {
         headers: this.headers,
@@ -84,6 +86,7 @@ export class FormularioService {
    */
   public saveIdentificacion(identificacion): Observable<IdentificacionDto> {
     this.setTokenInHeader();
+
     return this.http
       .post(this.endpoints.url_api_save_identification, identificacion, {
         headers: this.headers,
@@ -98,6 +101,7 @@ export class FormularioService {
 
   public saveEmpresarial(empresarial): Observable<EmpresarialDto> {
     this.setTokenInHeader();
+
     return this.http
       .post(this.endpoints.url_api_save_empresarial, empresarial, {
         headers: this.headers,
@@ -112,6 +116,7 @@ export class FormularioService {
 
   public saveFinancieroJuridico(financieroNatural): Observable<FinancieroDto> {
     this.setTokenInHeader();
+
     return this.http
       .post(
         this.endpoints.url_api_save_financiero_juridico,
@@ -128,6 +133,7 @@ export class FormularioService {
 
   public saveFinancieroNatural(financieroNatural): Observable<FinancieroDto> {
     this.setTokenInHeader();
+
     return this.http
       .post(this.endpoints.url_api_save_financiero_natural, financieroNatural, {
         headers: this.headers,
@@ -147,6 +153,7 @@ export class FormularioService {
    */
   public saveInfoContacto(infoContacto): Observable<InfoContactoDto> {
     this.setTokenInHeader();
+
     return this.http
       .post(this.endpoints.url_api_save_info_contacto, infoContacto, {
         headers: this.headers,
@@ -183,7 +190,6 @@ export class FormularioService {
       })
       .pipe(
         map((comercial: ComercialDto) => {
-          console.log("vienneeeeeee", comercial);
           return comercial;
         }),
         catchError((err) => this.handleError(err))
@@ -307,6 +313,7 @@ export class FormularioService {
    */
   public getInfoContacto(): Observable<InfoContactoDto> {
     this.setTokenInHeader();
+
     return this.http
       .get(this.endpoints.url_api_get_info_contacto, { headers: this.headers })
       .pipe(

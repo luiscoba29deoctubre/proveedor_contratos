@@ -226,27 +226,26 @@ export class ComercialComponent implements OnInit {
   sendForm() {
     this.submitted = true;
 
-      const comercialDto: ComercialDto = new ComercialDto();
-      comercialDto.idtipoperfil = this.idTipoPerfil;
-      comercialDto.lstRespuestaSeleccionada = this.lstRespuestasSeleccionadas;
+    const comercialDto: ComercialDto = new ComercialDto();
+    comercialDto.idtipoperfil = this.idTipoPerfil;
+    comercialDto.lstRespuestaSeleccionada = this.lstRespuestasSeleccionadas;
 
-      console.log("empresarialDto enviado", comercialDto);
+    console.log("empresarialDto enviado", comercialDto);
 
-      this.spinner.show();
-      this.formsService.saveComercial(comercialDto).subscribe(
-        (comercial: ComercialDto) => {
-          console.log("llega comercial ", comercial);
-          this.router.navigate(["/documental"]);
+    this.spinner.show();
+    this.formsService.saveComercial(comercialDto).subscribe(
+      (comercial: ComercialDto) => {
+        console.log("llega comercial ", comercial);
+        this.router.navigate(["/documental"]);
 
-          this.showToasterSuccess();
-          this.spinner.hide();
-        },
-        (error) => {
-          this.showToasterError();
-          console.log(error);
-          this.spinner.hide();
-        }
-      );
-    
+        this.showToasterSuccess();
+        this.spinner.hide();
+      },
+      (error) => {
+        this.showToasterError();
+        console.log(error);
+        this.spinner.hide();
+      }
+    );
   }
 }
