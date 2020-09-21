@@ -13,17 +13,8 @@ import {
 } from "../../../common/dtos/parameters";
 import { LoginService } from "../../../logueo/login/login.service";
 import { storageList } from "../../../shared/bd/indexedDB";
-import { ProcessIDB } from "../../../shared/bd/process.indexedDB";
 import { NotificationService } from "../../../shared/services/notification.service";
 import { FormularioService } from "./../formulario.service";
-
-export class Technology {
-  constructor(
-    public techId: number,
-    public id: number,
-    public techName: string
-  ) {}
-}
 
 @Component({
   selector: "app-info-contacto",
@@ -37,8 +28,6 @@ export class InfoContactoComponent implements OnInit {
   identificacion: IdentificacionDto;
   /** Flag que indica si el formulario 'Identificacion' ya se hizo submit */
   submitted: boolean;
-  /** Objeto processIDB para llenar todos los datos del usuario */
-  processIDB: ProcessIDB;
 
   paises: ParamPais[] = [];
 
@@ -66,7 +55,7 @@ export class InfoContactoComponent implements OnInit {
     private dbService: NgxIndexedDBService
   ) {
     this.spinner.show();
-    //  this.processIDB = new ProcessIDB(dbService); // creamos una instancia para manejar la base de datos
+
     this.initForm();
 
     this.paisSeleccionado = null;
@@ -93,6 +82,17 @@ export class InfoContactoComponent implements OnInit {
       (infoContactoDto) => {
         console.log(" llega allForms", infoContactoDto);
 
+        /*  if (infoContactoDto === "sin identificacion") {
+          Swal.fire(
+            "Faltan datos",
+            "Regrese a llenar la seccion de Identificación",
+            "info"
+          );
+
+          console.log("entra sin identificacion");
+
+          this.router.navigate(["/identificacion"]);
+        } else { */
         if (this.isEmpty(infoContactoDto)) {
           this.setDefaultValuesCombos(infoContactoDto);
         } else {
@@ -102,7 +102,9 @@ export class InfoContactoComponent implements OnInit {
             "this.infocontactoForm.value",
             this.infocontactoForm.value
           );
+          // }
         }
+
         this.spinner.hide();
       },
       (error) => {

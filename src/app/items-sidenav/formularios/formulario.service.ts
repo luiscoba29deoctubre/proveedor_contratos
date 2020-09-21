@@ -311,13 +311,13 @@ export class FormularioService {
    *
    * @param InfoContacto
    */
-  public getInfoContacto(): Observable<InfoContactoDto> {
+  public getInfoContacto(): Observable<any> {
     this.setTokenInHeader();
 
     return this.http
       .get(this.endpoints.url_api_get_info_contacto, { headers: this.headers })
       .pipe(
-        map((infoContactoDto: InfoContactoDto) => {
+        map((infoContactoDto: any) => {
           return infoContactoDto;
         }),
         catchError((err) => this.handleError(err))

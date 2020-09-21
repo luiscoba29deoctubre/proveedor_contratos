@@ -112,6 +112,7 @@ export class FinancieroComponent implements OnInit {
   }
 
   actualizaCuentaOnServer(cuentaAactualizar: ParamPerfilFinanciero) {
+    console.log("cuentaAactualizar", cuentaAactualizar);
     this.loginService.checkExpirationToken();
     this.formsService.actualizarPerfilFinanciero(cuentaAactualizar).subscribe(
       (financieroDto: FinancieroDto) => {
