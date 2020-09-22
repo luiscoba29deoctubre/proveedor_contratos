@@ -155,7 +155,7 @@
             <label for="celular">Celular: </label>
             <input
               style="text-align: right"
-              appOnlyNumbers
+              appOnlyNumbers="true"
               formControlName="celular"
               type="phoneNumber"
               class="form-control"
@@ -314,7 +314,7 @@
               *ngIf="!infocontactoForm.get('mail1').valid && infoForm.submitted"
             >
               <p class="alert alert-danger alert-dismissible">
-              ingrese un correo válido
+                ingrese un correo válido
               </p>
             </ng-container>
           </div>
