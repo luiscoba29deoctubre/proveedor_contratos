@@ -170,16 +170,16 @@
               "
             >
               <p
-                *ngIf="!infocontactoForm.get('celular').hasError('required')"
+                *ngIf="infocontactoForm.get('celular').hasError('required')"
                 class="alert alert-danger alert-dismissible"
               >
                 Este campo es requerido
               </p>
               <p
-                *ngIf="!infocontactoForm.get('celular').hasError('pattern')"
+                *ngIf="infocontactoForm.get('celular').hasError('pattern')"
                 class="alert alert-danger alert-dismissible"
               >
-                Ingrese solo numeros
+                Ingrese solo números
               </p>
             </ng-container>
           </div>
@@ -188,6 +188,7 @@
           <div class="form-group">
             <label for="telefono">Teléfono: </label>
             <input
+              appOnlyNumbers="true"
               formControlName="telefono"
               type="phoneNumber"
               class="form-control"
@@ -203,6 +204,12 @@
             >
               <p class="alert alert-danger alert-dismissible">
                 Este campo es requerido
+              </p>
+              <p
+                *ngIf="infocontactoForm.get('telefono').hasError('pattern')"
+                class="alert alert-danger alert-dismissible"
+              >
+                Ingrese solo números
               </p>
             </ng-container>
           </div>
@@ -258,6 +265,7 @@
           <div class="form-group">
             <label for="telefonocontactocomercial">Teléfono comercial: </label>
             <input
+              appOnlyNumbers="true"
               formControlName="telefonocontactocomercial"
               type="text"
               class="form-control"
@@ -273,6 +281,16 @@
               <p class="alert alert-danger alert-dismissible">
                 Este campo es requerido
               </p>
+              <p
+                *ngIf="
+                  infocontactoForm
+                    .get('telefonocontactocomercial')
+                    .hasError('pattern')
+                "
+                class="alert alert-danger alert-dismissible"
+              >
+                Ingrese solo números
+              </p>
             </ng-container>
           </div>
         </div>
@@ -283,6 +301,7 @@
           <div class="form-group">
             <label for="celular1">Celular 1: </label>
             <input
+              appOnlyNumbers="true"
               formControlName="celular1"
               type="text"
               class="form-control"
@@ -296,6 +315,12 @@
             >
               <p class="alert alert-danger alert-dismissible">
                 Este campo es requerido
+              </p>
+              <p
+                *ngIf="infocontactoForm.get('celular1').hasError('pattern')"
+                class="alert alert-danger alert-dismissible"
+              >
+                Ingrese solo números
               </p>
             </ng-container>
           </div>
@@ -326,6 +351,7 @@
           <div class="form-group">
             <label for="celular2">Celular 2: </label>
             <input
+              appOnlyNumbers="true"
               formControlName="celular2"
               type="text"
               class="form-control"
@@ -339,6 +365,12 @@
             >
               <p class="alert alert-danger alert-dismissible">
                 Este campo es requerido
+              </p>
+              <p
+                *ngIf="infocontactoForm.get('celular2').hasError('pattern')"
+                class="alert alert-danger alert-dismissible"
+              >
+                Ingrese solo números
               </p>
             </ng-container>
           </div>

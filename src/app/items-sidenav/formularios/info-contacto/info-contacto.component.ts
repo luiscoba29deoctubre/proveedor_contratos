@@ -215,8 +215,8 @@ export class InfoContactoComponent implements OnInit {
   private initForm() {
     this.infocontactoForm = this.fb.group({
       direccion: [null, [Validators.required]],
-      telefono: [null, [Validators.required]],
       celular: [null, [Validators.required, Validators.pattern("[0-9]*")]],
+      telefono: [null, [Validators.required, Validators.pattern("[0-9]*")]],
       mailproveedor: [
         null,
         [
@@ -225,8 +225,11 @@ export class InfoContactoComponent implements OnInit {
         ],
       ],
       contactocomercial: [null, [Validators.required]],
-      telefonocontactocomercial: [null, [Validators.required]],
-      celular1: [null, [Validators.required]],
+      telefonocontactocomercial: [
+        null,
+        [Validators.required, Validators.pattern("[0-9]*")],
+      ],
+      celular1: [null, [Validators.required, Validators.pattern("[0-9]*")]],
       mail1: [
         null,
         [
@@ -234,7 +237,7 @@ export class InfoContactoComponent implements OnInit {
           Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$"),
         ],
       ],
-      celular2: [null, [Validators.required]],
+      celular2: [null, [Validators.required, Validators.pattern("[0-9]*")]],
       mail2: [
         null,
         [
