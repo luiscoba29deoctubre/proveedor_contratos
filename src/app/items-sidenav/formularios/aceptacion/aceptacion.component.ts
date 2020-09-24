@@ -80,19 +80,15 @@ export class AceptacionComponent implements OnInit {
     );
   }
 
+  showToasterError(subtitulo, titulo) {
+    this.notifyService.showError(subtitulo, titulo);
+  }
+
   private initForm() {
     this.aceptacionForm = this.fb.group({
       aceptacion: [null, [Validators.required]],
       autorizacion: [null, [Validators.required]],
     });
-  }
-
-  showToasterSuccess() {
-    this.notifyService.showSuccess("guardada exitosamente", "Identificación");
-  }
-
-  showToasterError() {
-    this.notifyService.showError("Error al guardar identificación", "Error");
   }
 
   docUpload(env) {
@@ -133,15 +129,15 @@ export class AceptacionComponent implements OnInit {
     };
   };
 
-  finalizar(valid: boolean) {
-    if (valid) {
-      console.log("entraaaaaaaaaaaaaaaa en finalizar ");
+  finalizar(value: any, valid: boolean) {
+    console.log("entraaaaaaaaaaaaaaaa en finalizar ");
 
+    if (valid) {
       this.spinner.show();
 
       console.log("this.aceptacionForm.value", this.aceptacionForm.value);
 
-/*       this.formsService.saveAceptacion(this.aceptacionForm.value).subscribe(
+      /*       this.formsService.saveAceptacion(this.aceptacionForm.value).subscribe(
         (response: any) => {
           // this.router.navigate(["/infocontacto"]);
 
@@ -163,6 +159,11 @@ export class AceptacionComponent implements OnInit {
           this.spinner.hide();
         }
       ); */
+    } else {
+      this.showToasterError(
+        "por favor complete todos los campos obligatorios",
+        "Campos obligatorios"
+      );
     }
   }
 }

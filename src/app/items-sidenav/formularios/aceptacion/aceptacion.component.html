@@ -163,9 +163,7 @@
             style="color: #fec524; background: #8b2131; border-color: black"
             class="btn"
             type="submit"
-            (click)="
-              aceptacionForm.valid ? finalizar(aceptacionForm.value) : ''
-            "
+            (click)="finalizar(aceptacionForm.value, aceptacionForm.valid)"
           >
             <i class="fa fa-sign-in"></i> Finalizar
           </button>
