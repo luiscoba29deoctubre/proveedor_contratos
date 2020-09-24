@@ -84,8 +84,8 @@ export class ComercialComponent implements OnInit {
     this.notifyService.showSuccess("guardada exitosamente", "Identificación");
   }
 
-  showToasterError() {
-    this.notifyService.showError("Error al guardar identificación", "Error");
+  showToasterError(subtitulo, titulo) {
+    this.notifyService.showError(subtitulo, titulo);
   }
 
   isEmpty = (obj) => {
@@ -223,29 +223,40 @@ export class ComercialComponent implements OnInit {
   retrocederForm() {
     this.router.navigate(["/operativo"]);
   }
-  sendForm() {
+
+  sendForm(valid: boolean) {
     this.submitted = true;
 
-    const comercialDto: ComercialDto = new ComercialDto();
-    comercialDto.idtipoperfil = this.idTipoPerfil;
-    comercialDto.lstRespuestaSeleccionada = this.lstRespuestasSeleccionadas;
+    if (valid) {
+      const comercialDto: ComercialDto = new ComercialDto();
+      comercialDto.idtipoperfil = this.idTipoPerfil;
+      comercialDto.lstRespuestaSeleccionada = this.lstRespuestasSeleccionadas;
 
-    console.log("empresarialDto enviado", comercialDto);
+      console.log("empresarialDto enviado", comercialDto);
 
-    this.spinner.show();
-    this.formsService.saveComercial(comercialDto).subscribe(
-      (comercial: ComercialDto) => {
-        console.log("llega comercial ", comercial);
-        this.router.navigate(["/documental"]);
+      this.spinner.show();
+      this.formsService.saveComercial(comercialDto).subscribe(
+        (comercial: ComercialDto) => {
+          console.log("llega comercial ", comercial);
+          this.router.navigate(["/documental"]);
 
-        this.showToasterSuccess();
-        this.spinner.hide();
-      },
-      (error) => {
-        this.showToasterError();
-        console.log(error);
-        this.spinner.hide();
-      }
-    );
+          this.showToasterSuccess();
+          this.spinner.hide();
+        },
+        (error) => {
+          this.showToasterError(
+            "Error al guardar el perfil comercial",
+            "Error"
+          );
+
+          this.spinner.hide();
+        }
+      );
+    } else {
+      this.showToasterError(
+        "por favor complete todos los campos obligatorios",
+        "Campos obligatorios"
+      );
+    }
   }
 }

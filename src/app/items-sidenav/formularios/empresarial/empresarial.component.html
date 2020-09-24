@@ -153,7 +153,7 @@
       <div class="col">
         <button
           style="color: #fec524; background: #8b2131; border-color: black"
-          (click)="empForm.valid ? sendForm() : ''"
+          (click)="sendForm(empForm.valid) "
           class="btn"
           type="submit"
         >

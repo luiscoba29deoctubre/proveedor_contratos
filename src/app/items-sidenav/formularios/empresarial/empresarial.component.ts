@@ -137,8 +137,8 @@ export class EmpresarialComponent implements OnInit {
     this.notifyService.showSuccess("guardada exitosamente", "Identificación");
   }
 
-  showToasterError() {
-    this.notifyService.showError("Error al guardar identificación", "Error");
+  showToasterError(subtitulo, titulo) {
+    this.notifyService.showError(subtitulo, titulo);
   }
 
   loadPreguntasRespuestas = async () => {
@@ -267,37 +267,44 @@ export class EmpresarialComponent implements OnInit {
     this.router.navigate(["/infocontacto"]);
   }
 
-  sendForm() {
+  sendForm(valid: boolean) {
     this.submitted = true;
 
     console.log("entra en sendForm");
 
-    this.spinner.show();
+    if (valid) {
+      this.spinner.show();
 
-    const empresarialDto: EmpresarialDto = new EmpresarialDto(
-      this.idTipoPerfil,
-      this.fechaaperturaruc,
-      this.actividadeconomicaprincipal,
-      this.actividadeconomicasecundaria
-    );
+      const empresarialDto: EmpresarialDto = new EmpresarialDto(
+        this.idTipoPerfil,
+        this.fechaaperturaruc,
+        this.actividadeconomicaprincipal,
+        this.actividadeconomicasecundaria
+      );
 
-    empresarialDto.lstRespuestaSeleccionada = this.lstRespuestasSeleccionadas;
+      empresarialDto.lstRespuestaSeleccionada = this.lstRespuestasSeleccionadas;
 
-    console.log("empresarialDto enviado", empresarialDto);
+      console.log("empresarialDto enviado", empresarialDto);
 
-    this.formsService.saveEmpresarial(empresarialDto).subscribe(
-      (empresarial: EmpresarialDto) => {
-        console.log("llega empresarial ", empresarial);
-        this.router.navigate(["/financiero"]);
+      this.formsService.saveEmpresarial(empresarialDto).subscribe(
+        (empresarial: EmpresarialDto) => {
+          console.log("llega empresarial ", empresarial);
+          this.router.navigate(["/financiero"]);
 
-        this.showToasterSuccess();
-        this.spinner.hide();
-      },
-      (error) => {
-        this.showToasterError();
-        console.log(error);
-        this.spinner.hide();
-      }
-    );
+          this.showToasterSuccess();
+          this.spinner.hide();
+        },
+        (error) => {
+          this.showToasterError("Error al guardar informacion empresarial", "Error");
+          console.log(error);
+          this.spinner.hide();
+        }
+      );
+    } else {
+      this.showToasterError(
+        "por favor complete todos los campos obligatorios",
+        "Campos obligatorios"
+      );
+    }
   }
 }

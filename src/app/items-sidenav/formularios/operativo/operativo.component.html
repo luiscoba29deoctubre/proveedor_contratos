@@ -34,7 +34,8 @@
                       />
                       <ng-container
                         *ngIf="
-                          !lstRespuestasSeleccionadas[i] && operativoForm.submitted
+                          !lstRespuestasSeleccionadas[i] &&
+                          operativoForm.submitted
                         "
                       >
                         <p class="alert alert-danger alert-dismissible">
@@ -66,9 +67,8 @@
       </div>
       <div class="col">
         <button
-
           style="color: #fec524; background: #8b2131; border-color: black"
-          (click)="operativoForm.valid ? sendForm() : ''"
+          (click)="sendForm(operativoForm.valid)"
           class="btn"
           type="submit"
         >
@@ -77,6 +77,8 @@
       </div>
     </div>
   </form>
+
+  <pre>valid {{ operativoForm.valid }}</pre>
 
   <ngx-spinner
     bdColor="rgba(51,51,51,0.8)"

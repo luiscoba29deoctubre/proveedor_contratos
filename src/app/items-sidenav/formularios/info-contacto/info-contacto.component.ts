@@ -9,7 +9,7 @@ import {
   ParamCanton,
   ParamPais,
   ParamParroquia,
-  ParamProvincia,
+  ParamProvincia
 } from "../../../common/dtos/parameters";
 import { LoginService } from "../../../logueo/login/login.service";
 import { storageList } from "../../../shared/bd/indexedDB";
@@ -69,8 +69,8 @@ export class InfoContactoComponent implements OnInit {
     this.notifyService.showSuccess("guardada exitosamente", "Identificación");
   }
 
-  showToasterError() {
-    this.notifyService.showError("Error al guardar identificación", "Error");
+  showToasterError(subtitulo, titulo) {
+    this.notifyService.showError(subtitulo, titulo);
   }
 
   async ngOnInit(): Promise<void> {
@@ -326,10 +326,15 @@ export class InfoContactoComponent implements OnInit {
           this.spinner.hide();
         },
         (error) => {
-          this.showToasterError();
+          this.showToasterError("Error al guardar información de contacto", "Error");
           console.log(error);
           this.spinner.hide();
         }
+      );
+    } else {
+      this.showToasterError(
+        "por favor complete todos los campos obligatorios",
+        "Campos obligatorios"
       );
     }
   }

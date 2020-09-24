@@ -535,10 +535,11 @@ export class IdentificacionComponent implements OnInit {
             this.spinner.hide();
           }
         );
+    } else {
+      this.showToasterError(
+        "por favor complete todos los campos obligatorios",
+        "Campos obligatorios"
+      );
     }
-  }
-
-  hayError(entra) {
-    console.log("informa de error", entra);
   }
 }

@@ -8,7 +8,7 @@ import {
   ParamAllQuestions,
   ParamPregunta,
   ParamRespuesta,
-  ParamRespuestaSeleccionada,
+  ParamRespuestaSeleccionada
 } from "../../../common/dtos/parameters";
 import { LoginService } from "../../../logueo/login/login.service";
 import { storageList } from "../../../shared/bd/indexedDB";
@@ -86,8 +86,8 @@ export class OperativoComponent implements OnInit {
     this.notifyService.showSuccess("guardada exitosamente", "Identificación");
   }
 
-  showToasterError() {
-    this.notifyService.showError("Error al guardar identificación", "Error");
+  showToasterError(subtitulo, titulo) {
+    this.notifyService.showError(subtitulo, titulo);
   }
 
   isEmpty = (obj) => {
@@ -214,29 +214,37 @@ export class OperativoComponent implements OnInit {
   retrocederForm() {
     this.router.navigate(["/financiero"]);
   }
-  sendForm() {
+
+  sendForm(valid: boolean) {
     this.submitted = true;
 
-    const operativoDto: OperativoDto = new OperativoDto();
-    operativoDto.idtipoperfil = this.idTipoPerfil;
-    operativoDto.lstRespuestaSeleccionada = this.lstRespuestasSeleccionadas;
+    if (valid) {
+      const operativoDto: OperativoDto = new OperativoDto();
+      operativoDto.idtipoperfil = this.idTipoPerfil;
+      operativoDto.lstRespuestaSeleccionada = this.lstRespuestasSeleccionadas;
 
-    console.log("empresarialDto enviado", operativoDto);
+      console.log("empresarialDto enviado", operativoDto);
 
-    this.spinner.show();
-    this.formsService.saveOperativo(operativoDto).subscribe(
-      (operativo: OperativoDto) => {
-        console.log("llega empresarial ", operativo);
-        this.router.navigate(["/comercial"]);
+      this.spinner.show();
+      this.formsService.saveOperativo(operativoDto).subscribe(
+        (operativo: OperativoDto) => {
+          console.log("llega empresarial ", operativo);
+          this.router.navigate(["/comercial"]);
 
-        this.showToasterSuccess();
-        this.spinner.hide();
-      },
-      (error) => {
-        this.showToasterError();
-        console.log(error);
-        this.spinner.hide();
-      }
-    );
+          this.showToasterSuccess();
+          this.spinner.hide();
+        },
+        (error) => {
+          this.showToasterError("Error al guardar perfil operativo", "Error");
+   
+          this.spinner.hide();
+        }
+      );
+    } else {
+      this.showToasterError(
+        "por favor complete todos los campos obligatorios",
+        "Campos obligatorios"
+      );
+    }
   }
 }

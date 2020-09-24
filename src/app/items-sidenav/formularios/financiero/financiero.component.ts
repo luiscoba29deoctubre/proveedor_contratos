@@ -4,10 +4,11 @@ import { MatDialog } from "@angular/material";
 import { Router } from "@angular/router";
 import { NgxIndexedDBService } from "ngx-indexed-db";
 import { NgxSpinnerService } from "ngx-spinner";
+import Swal from "sweetalert2";
 import { FinancieroDto } from "../../../common/dtos/form/FinancieroDto";
 import {
   ParamCuenta,
-  ParamPerfilFinanciero,
+  ParamPerfilFinanciero
 } from "../../../common/dtos/parameters";
 import { LoginService } from "../../../logueo/login/login.service";
 import { storageList } from "../../../shared/bd/indexedDB";
@@ -56,11 +57,11 @@ export class FinancieroComponent implements OnInit {
         console.log("llega financieroDto", financieroDto);
 
         this.currentYear = financieroDto.anioActual;
-        this.tipoPersona = financieroDto.tipoPersona.toUpperCase();
 
         console.log("this.tipoPersona", this.tipoPersona);
 
         if (this.tipoPersona) {
+          this.tipoPersona = financieroDto.tipoPersona.toUpperCase();
           this.idTipoPersona = financieroDto.idTipoPersona;
           await this.loadCuentas();
 
@@ -69,7 +70,12 @@ export class FinancieroComponent implements OnInit {
             this.setCuentas(financieroDto.lstCuentas);
           }
         } else {
-          this.showToasterError();
+          this.spinner.hide();
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Debe elegir 'tipo Persona' en identificación",
+          });
         }
 
         this.spinner.hide();

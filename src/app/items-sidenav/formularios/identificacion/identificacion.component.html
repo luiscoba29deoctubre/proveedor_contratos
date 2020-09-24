@@ -329,9 +329,7 @@
             <!-- arreglar esta validacion -->
             <button
               (click)="
-                identificaForm.valid
-                  ? sendForm(identificacionForm.value, identificacionForm.valid)
-                  : ''
+                sendForm(identificacionForm.value, identificacionForm.valid)
               "
               style="color: #fec524; background: #8b2131; border-color: black"
               class="btn"

@@ -409,11 +409,7 @@
         </div>
         <div class="col">
           <button
-            (click)="
-              infoForm.valid
-                ? sendForm(infocontactoForm.value, infocontactoForm.valid)
-                : ''
-            "
+            (click)="sendForm(infocontactoForm.value, infocontactoForm.valid)"
             style="color: #fec524; background: #8b2131; border-color: black"
             class="btn button-guardar"
             type="submit"
