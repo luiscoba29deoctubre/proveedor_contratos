@@ -102,6 +102,9 @@ export class ApiEndpoints {
   public url_api_save_comercial: string =
     this.url_api_formulario + "/save-comercial";
 
+  public url_api_save_aceptacion: string =
+    this.url_api_formulario + "/save-aceptacion";
+
   // guardar el perfil financiero de persona Juridico
   public url_api_save_financiero_juridico: string =
     this.url_api_formulario + "/save-financiero-juridico";

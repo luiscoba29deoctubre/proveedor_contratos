@@ -319,7 +319,7 @@ export class InfoContactoComponent implements OnInit {
       this.spinner.show();
       this.formsService.saveInfoContacto(this.infocontactoForm.value).subscribe(
         (infoContactoDto: InfoContactoDto) => {
-          console.log("infoContactoDtoddd", infoContactoDto);
+          console.log("infoContactoDto", infoContactoDto);
           this.router.navigate(["/empresarial"]);
 
           this.showToasterSuccess();

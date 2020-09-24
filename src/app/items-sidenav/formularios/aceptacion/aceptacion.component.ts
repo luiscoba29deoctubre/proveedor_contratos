@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { saveAs } from "file-saver";
 import { BsLocaleService } from "ngx-bootstrap/datepicker";
@@ -26,19 +26,20 @@ export class AceptacionComponent implements OnInit {
 
   documento: ParamDocumento;
 
+  aceptacionForm: FormGroup;
+
   constructor(
     private http: HttpClient,
-    private router: Router,
     private endpoints: ApiEndpoints,
     private fb: FormBuilder,
     private spinner: NgxSpinnerService,
     private loginService: LoginService,
-    private dbService: NgxIndexedDBService,
-    private localeService: BsLocaleService,
     private formsService: FormularioService,
     private notifyService: NotificationService
   ) {
-    this.spinner.show();
+    this.initForm();
+
+    this.documento = new ParamDocumento();
   }
 
   download_pdf = () => {
@@ -56,6 +57,7 @@ export class AceptacionComponent implements OnInit {
   };
 
   ngOnInit() {
+    this.spinner.show();
     this.loginService.checkExpirationToken();
 
     this.formsService.getAceptacion().subscribe(
@@ -65,7 +67,9 @@ export class AceptacionComponent implements OnInit {
         this.autorizacion = aceptacionDto.autorizacion;
         this.declaracion = aceptacionDto.declaracion;
 
+        this.documento.name = aceptacionDto.nombre;
         this.documento.numero = aceptacionDto.numero;
+        this.documento.lstDocumentoPerfilDocumental = [];
 
         this.spinner.hide();
       },
@@ -74,6 +78,13 @@ export class AceptacionComponent implements OnInit {
         this.spinner.hide();
       }
     );
+  }
+
+  private initForm() {
+    this.aceptacionForm = this.fb.group({
+      aceptacion: [null, [Validators.required]],
+      autorizacion: [null, [Validators.required]],
+    });
   }
 
   showToasterSuccess() {
@@ -122,12 +133,36 @@ export class AceptacionComponent implements OnInit {
     };
   };
 
-  finalizar() {
-    Swal.fire({
-      icon: "info",
-      title: "Registro exitoso",
-      text:
-        "En los próximos dias se le notificará si se aprueba su calificación",
-    });
+  finalizar(valid: boolean) {
+    if (valid) {
+      console.log("entraaaaaaaaaaaaaaaa en finalizar ");
+
+      this.spinner.show();
+
+      console.log("this.aceptacionForm.value", this.aceptacionForm.value);
+
+/*       this.formsService.saveAceptacion(this.aceptacionForm.value).subscribe(
+        (response: any) => {
+          // this.router.navigate(["/infocontacto"]);
+
+          Swal.fire({
+            icon: "info",
+            title: "Registro exitoso",
+            text:
+              "En los próximos dias se le notificará si se aprueba su calificación",
+          });
+          this.spinner.hide();
+        },
+        (error) => {
+          Swal.fire({
+            icon: "error",
+            title: "Erro al registrar",
+            text: "Se produjo un error al intentar finalizar",
+          });
+          console.log(error);
+          this.spinner.hide();
+        }
+      ); */
+    }
   }
 }

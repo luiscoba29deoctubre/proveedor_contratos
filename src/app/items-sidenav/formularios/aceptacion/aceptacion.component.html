@@ -1,5 +1,12 @@
 <div class="card">
-  <form novalidate class="card" form #aceptaForm="ngForm" role="form">
+  <form
+    novalidate
+    class="card"
+    form
+    #aceptaForm="ngForm"
+    [formGroup]="aceptacionForm"
+    role="form"
+  >
     <div class="card">
       <h3 class="card-title" style="margin: 10px; text-align: center">
         ACEPTACIÓN
@@ -16,13 +23,23 @@
             <div class="checkbox" style="text-align: center">
               <label
                 ><input
-                  formControlName="autorizacionCheck"
+                  formControlName="aceptacion"
                   type="checkbox"
                   style="margin-right: 10px"
                 /><strong
                   >He leído los terminos y acepto las condiciones</strong
                 ></label
               >
+              <ng-container
+                *ngIf="
+                  !aceptacionForm.get('aceptacion').value &&
+                  aceptaForm.submitted
+                "
+              >
+                <p class="alert alert-danger alert-dismissible">
+                  Este campo es requerido
+                </p>
+              </ng-container>
             </div>
           </div>
         </div>
@@ -43,13 +60,23 @@
               <div class="checkbox" style="text-align: center">
                 <label>
                   <input
-                    formControlName="autorizacionCheck"
+                    formControlName="autorizacion"
                     type="checkbox"
                     style="margin-right: 10px"
                   /><strong
                     >He leído los terminos y acepto las condiciones</strong
                   ></label
                 >
+                <ng-container
+                  *ngIf="
+                    !aceptacionForm.get('autorizacion').value &&
+                    aceptaForm.submitted
+                  "
+                >
+                  <p class="alert alert-danger alert-dismissible">
+                    Este campo es requerido
+                  </p>
+                </ng-container>
               </div>
             </div>
           </div>
@@ -85,9 +112,6 @@
       <div class="card">
         <div class="card-body" style="text-align: center">
           <div class="row">
-            <div class="col">Subir documento firmado:</div>
-          </div>
-          <div class="row">
             <div class="col">
               <div class="border">
                 {{ documento.name }}
@@ -99,14 +123,12 @@
                   (ApiResponse)="docUpload($event)"
                 >
                 </angular-file-uploader>
-                <ng-container
-                  *ngIf="
-                    documento.lstDocumentoPerfilDocumental.length <
-                      documento.numero && aceptaForm.submitted
-                  "
-                >
+                <ng-container *ngIf="aceptaForm.submitted">
                   <p
-                    *ngIf="documento.numero == 1"
+                    *ngIf="
+                      documento.lstDocumentoPerfilDocumental.length <
+                        documento.numero && documento.numero == 1
+                    "
                     class="alert alert-danger alert-dismissible"
                   >
                     Es un documento requerido
@@ -141,7 +163,9 @@
             style="color: #fec524; background: #8b2131; border-color: black"
             class="btn"
             type="submit"
-            (click)="finalizar()"
+            (click)="
+              aceptacionForm.valid ? finalizar(aceptacionForm.value) : ''
+            "
           >
             <i class="fa fa-sign-in"></i> Finalizar
           </button>
@@ -149,6 +173,8 @@
       </div>
     </div>
   </form>
+
+  <!-- <pre>valid {{ aceptacionForm.valid }}</pre> -->
 
   <ngx-spinner
     bdColor="rgba(51,51,51,0.8)"

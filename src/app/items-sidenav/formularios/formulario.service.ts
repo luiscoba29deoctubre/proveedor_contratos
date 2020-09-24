@@ -196,6 +196,21 @@ export class FormularioService {
       );
   }
 
+  public saveAceptacion(comercialDto): Observable<ComercialDto> {
+    this.setTokenInHeader();
+
+    return this.http
+      .post(this.endpoints.url_api_save_aceptacion, comercialDto, {
+        headers: this.headers,
+      })
+      .pipe(
+        map((comercial: ComercialDto) => {
+          return comercial;
+        }),
+        catchError((err) => this.handleError(err))
+      );
+  }
+
   /**
    * Obtiene el formulario Identificacion
    *
