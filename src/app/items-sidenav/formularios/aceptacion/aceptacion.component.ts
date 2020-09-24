@@ -6,6 +6,8 @@ import { saveAs } from "file-saver";
 import { BsLocaleService } from "ngx-bootstrap/datepicker";
 import { NgxIndexedDBService } from "ngx-indexed-db";
 import { NgxSpinnerService } from "ngx-spinner";
+import Swal from "sweetalert2";
+import { ApiEndpoints } from "../../../logueo/api.endpoints";
 import { LoginService } from "../../../logueo/login/login.service";
 import { NotificationService } from "../../../shared/services/notification.service";
 import { FormularioService } from "../formulario.service";
@@ -23,7 +25,7 @@ export class AceptacionComponent implements OnInit {
     formatsAllowed: ".pdf",
     maxSize: "2", // MB
     uploadAPI: {
-      url: "http://localhost:3003/proveedor-api/v1/forms/upload-pdf/",
+      url: this.endpoints.url_api_upload_pdf_firmado,
       method: "POST",
       params: {
         page: "1",
@@ -46,9 +48,14 @@ export class AceptacionComponent implements OnInit {
       sizeLimit: "Tamaño máximo",
     },
   };
+
+  declaracion = "";
+  autorizacion = "";
+
   constructor(
     private http: HttpClient,
     private router: Router,
+    private endpoints: ApiEndpoints,
     private fb: FormBuilder,
     private spinner: NgxSpinnerService,
     private loginService: LoginService,
@@ -64,7 +71,7 @@ export class AceptacionComponent implements OnInit {
     console.log("dio click");
 
     this.http
-      .get("http://localhost:3003/proveedor-api/v1/forms/download-pdf", {
+      .get(this.endpoints.url_api_download_aceptacion, {
         responseType: "blob",
       }) // set response Type properly (it is not part of headers)
       .toPromise()
@@ -81,29 +88,8 @@ export class AceptacionComponent implements OnInit {
       async (aceptacionDto) => {
         console.log("llega aceptacionDto", aceptacionDto);
 
-        /*this.idTipoPerfil = empresarialDto.idtipoperfil;
-
-        await this.loadPreguntasRespuestas();
-
-        if (this.isEmpty(empresarialDto.lstRespuestaSeleccionada)) {
-          this.seteoRespuestaSinSeleccionar();
-
-          this.seteoEstructuraAllQuestions();
-        } else {
-          this.seteoInputs(empresarialDto);
-
-          this.seteoIdRespuestaSeleccionada(
-            empresarialDto.lstRespuestaSeleccionada
-          );
-          this.seteoEstructuraAllQuestions();
-
-          this.seteoLstRespuestaSeleccionada(
-            empresarialDto.lstRespuestaSeleccionada
-          );
-
-        }
-
-          */
+        this.autorizacion = aceptacionDto.autorizacion;
+        this.declaracion = aceptacionDto.declaracion;
 
         this.spinner.hide();
       },
@@ -128,46 +114,12 @@ export class AceptacionComponent implements OnInit {
     return true;
   }
 
-  sendForm() {
-    /*
-    this.submitted = true;
-
-    if (this.cuestionarioEstaLleno && this.empresarialForm.valid) {
-      this.spinner.show();
-      // console.log(        "this.respuestasSeleccionadas",        this.lstRespuestasSeleccionadas      );
-      // console.log("this.empresarialForm.value", this.empresarialForm.value);
-      const {
-        fechaaperturaruc,
-        actividadeconomicaprincipal,
-        actividadeconomicasecundaria,
-      } = this.empresarialForm.value;
-
-      const empresarialDto: EmpresarialDto = new EmpresarialDto(
-        this.idTipoPerfil,
-        fechaaperturaruc,
-        actividadeconomicaprincipal,
-        actividadeconomicasecundaria
-      );
-
-      empresarialDto.lstRespuestaSeleccionada = this.lstRespuestasSeleccionadas;
-
-      console.log("empresarialDto enviado", empresarialDto);
-
-      this.formsService.saveEmpresarial(empresarialDto).subscribe(
-        (empresarial: EmpresarialDto) => {
-          console.log("llega empresarial ", empresarial);
-          this.router.navigate(["/financiero"]);
-
-          this.showToasterSuccess();
-          this.spinner.hide();
-        },
-        (error) => {
-          this.showToasterError();
-          console.log(error);
-          this.spinner.hide();
-        }
-      );
-    }
-    */
+  finalizar() {
+    Swal.fire({
+      icon: "info",
+      title: "Registro exitoso",
+      text:
+        "En los próximos dias se le notificará si se aprueba su calificación",
+    });
   }
 }

@@ -311,6 +311,12 @@ export class AngularFileUploaderComponent implements OnChanges {
   }
 
   removeFile(i: any, sf_na: any) {
+    console.log("i ", i);
+    console.log("sf_na ", sf_na);
+
+    console.log("this.Caption", this.Caption[i]);
+    console.log("this.allowedFiles", this.allowedFiles[i]);
+    
     if (sf_na === "sf") {
       this.allowedFiles.splice(i, 1);
       this.Caption.splice(i, 1);

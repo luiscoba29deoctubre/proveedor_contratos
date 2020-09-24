@@ -22,12 +22,12 @@ export class DocumentalComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private endpoints: ApiEndpoints,
     private spinner: NgxSpinnerService,
     private loginService: LoginService,
     private dbService: NgxIndexedDBService,
     private formsService: FormularioService,
-    private notifyService: NotificationService,
-    private endpoints: ApiEndpoints
+    private notifyService: NotificationService
   ) {}
 
   ngOnInit() {
@@ -55,6 +55,14 @@ export class DocumentalComponent implements OnInit {
         this.spinner.hide();
       }
     );
+  }
+
+  showToasterSuccess(subtitulo, titulo) {
+    this.notifyService.showSuccess(subtitulo, titulo);
+  }
+
+  showToasterError(subtitulo, titulo) {
+    this.notifyService.showError(subtitulo, titulo);
   }
 
   isEmpty = (obj) => {
@@ -136,5 +144,9 @@ export class DocumentalComponent implements OnInit {
     console.log(env);
     console.log("entraaaaaaa", env);
     return true;
+  }
+
+  siguienteForm() {
+    let faltanDatos = false;
   }
 }

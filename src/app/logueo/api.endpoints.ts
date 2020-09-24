@@ -79,6 +79,12 @@ export class ApiEndpoints {
 
   public url_api_upload_pdf: string = this.url_api_formulario + "/upload-pdf";
 
+  public url_api_upload_pdf_firmado: string =
+    this.url_api_formulario + "/upload-pdf-firmado";
+
+  public url_api_download_aceptacion: string =
+    this.url_api_formulario + "/download-pdf";
+
   // Crear nuevo usuario
   public url_api_new_user: string = this.url_api_usuarios + "/";
 

@@ -7,19 +7,7 @@
       <div class="card-body">
         <div class="row">
           <div class="col" style="text-align: justify">
-            Declaro que toda la información y documentación proporcionada a la
-            Cooperativa 29 de Octubre Ltda., es verídica y está sujeta a
-            verificación y comprobación, cuando así lo requiera para los fines
-            internos y de acuerdo a las normativas externas establecidas, por lo
-            que en caso de detectarse errores, omisiones o alteraciones, el
-            proveedor está sujeto a que la Cooperativa tome las acciones
-            pertinentes y sea causal suficiente para no ser considerado en la
-            base de proveedores que puedan prestar servicios o entregar bienes a
-            la Cooperativa, así también, en caso de requerir por parte de la
-            institución un Plan de Contingencia, éste deberá contener de forma
-            clara y detallada: cómo se garantizará la continuidad del servicio,
-            de qué manera se va actuar en caso de una contigencia y cuáles serán
-            los tiempos de respuesta para solventar el inconveniente.
+            {{ declaracion }}
           </div>
         </div>
         <div class="row mt-3">
@@ -42,11 +30,7 @@
         <div class="card-body">
           <div class="row">
             <div class="col" style="text-align: justify">
-              Autorizo a la Cooperativa de Ahorro y Crédito 29 de Octubre Ltda.,
-              a través del proceso de calificación de proveedores, para que se
-              revise y analice el buró crediticio de mi respectivo giro de
-              negocio, el cual estoy conciente de que servirá para medir mi
-              situación económica y financiera.
+              {{ autorizacion }}
             </div>
           </div>
           <div class="row mt-3">
@@ -78,7 +62,7 @@
                   border-color: black;
                   width: 140px !important;
                 "
-                class="btn "
+                class="btn"
               >
                 <i class="fa fa-sign-in"></i> Descargue
               </button>
@@ -112,17 +96,17 @@
         <div class="col">
           <button
             style="color: #fec524; background: #8b2131; border-color: black"
-            class="btn "
-            type="submit"
+            class="btn"
           >
-            <i class="fa fa-sign-in"></i> Atras
+            <i class="fa fa-sign-in"></i> Atrás
           </button>
         </div>
         <div class="col">
           <button
             style="color: #fec524; background: #8b2131; border-color: black"
-            class="btn "
+            class="btn"
             type="submit"
+            (click)="finalizar()"
           >
             <i class="fa fa-sign-in"></i> Finalizar
           </button>
