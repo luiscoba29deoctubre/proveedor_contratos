@@ -131,8 +131,6 @@ export class DocumentalComponent implements OnInit {
         selectFileBtn: "Seleccionar archivos",
         resetBtn: "Quitar archivos",
         uploadBtn: "Subir archivos",
-        dragNDropBox: "Drag N Drop",
-        attachPinBtn: "Attach Files...",
         afterUploadMsg_success: "Carga exitosa !",
         afterUploadMsg_error: "Error al intentar subir archivos !",
         sizeLimit: "Tamaño máximo",

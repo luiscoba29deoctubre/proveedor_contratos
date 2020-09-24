@@ -24,8 +24,17 @@
                       subeDocumento.numero && documentalForm.submitted
                   "
                 >
-                  <p class="alert alert-danger alert-dismissible">
-                    Faltan documentos por subir
+                  <p
+                    *ngIf="subeDocumento.numero == 1"
+                    class="alert alert-danger alert-dismissible"
+                  >
+                    Es un documento requerido
+                  </p>
+                  <p
+                    *ngIf="subeDocumento.numero > 1"
+                    class="alert alert-danger alert-dismissible"
+                  >
+                    Son {{ subeDocumento.numero }} documentos requeridos
                   </p>
                 </ng-container>
               </div>

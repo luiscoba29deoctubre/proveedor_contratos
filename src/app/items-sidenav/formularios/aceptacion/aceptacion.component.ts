@@ -11,6 +11,7 @@ import { ApiEndpoints } from "../../../logueo/api.endpoints";
 import { LoginService } from "../../../logueo/login/login.service";
 import { NotificationService } from "../../../shared/services/notification.service";
 import { FormularioService } from "../formulario.service";
+import { ParamDocumento } from "../../../common/dtos/parameters";
 
 @Component({
   selector: "app-aceptacion",
@@ -20,37 +21,10 @@ import { FormularioService } from "../formulario.service";
 export class AceptacionComponent implements OnInit {
   resetUpload: boolean;
 
-  afuConfig = {
-    multiple: true,
-    formatsAllowed: ".pdf",
-    maxSize: "2", // MB
-    uploadAPI: {
-      url: this.endpoints.url_api_upload_pdf_firmado,
-      method: "POST",
-      params: {
-        page: "1",
-      },
-      responseType: "blob",
-    },
-
-    hideProgressBar: false,
-    hideResetBtn: true,
-    hideSelectBtn: false,
-    fileNameIndex: true,
-    replaceTexts: {
-      selectFileBtn: "Seleccionar archivos",
-      resetBtn: "Reset",
-      uploadBtn: "Subir archivos",
-      dragNDropBox: "Drag N Drop",
-      attachPinBtn: "Attach Files...",
-      afterUploadMsg_success: "Carga exitosa !",
-      afterUploadMsg_error: "Error al intentar subir archivos !",
-      sizeLimit: "Tamaño máximo",
-    },
-  };
-
   declaracion = "";
   autorizacion = "";
+
+  documento: ParamDocumento;
 
   constructor(
     private http: HttpClient,
@@ -91,6 +65,8 @@ export class AceptacionComponent implements OnInit {
         this.autorizacion = aceptacionDto.autorizacion;
         this.declaracion = aceptacionDto.declaracion;
 
+        this.documento.numero = aceptacionDto.numero;
+
         this.spinner.hide();
       },
       (error) => {
@@ -114,11 +90,39 @@ export class AceptacionComponent implements OnInit {
     return true;
   }
 
+  setIdAfuConfig = (idDocumento: number) => {
+    return {
+      multiple: true,
+      formatsAllowed: ".pdf",
+      maxSize: "2", // MB
+      uploadAPI: {
+        url: this.endpoints.url_api_upload_pdf,
+        method: "POST",
+        headers: {
+          auth: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+        params: {
+          idDocumento: idDocumento,
+        },
+        responseType: "blob",
+      },
+
+      hideProgressBar: false,
+      hideResetBtn: false,
+      hideSelectBtn: false,
+      fileNameIndex: true,
+      replaceTexts: {
+        selectFileBtn: "Seleccionar archivos",
+        resetBtn: "Quitar archivos",
+        uploadBtn: "Subir archivos",
+        afterUploadMsg_success: "Carga exitosa !",
+        afterUploadMsg_error: "Error al intentar subir archivos !",
+        sizeLimit: "Tamaño máximo",
+      },
+    };
+  };
+
   finalizar() {
-
-
-
-    
     Swal.fire({
       icon: "info",
       title: "Registro exitoso",

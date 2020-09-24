@@ -1,5 +1,5 @@
 <div class="card">
-  <form novalidate class="card" form #empForm="ngForm" role="form">
+  <form novalidate class="card" form #aceptaForm="ngForm" role="form">
     <div class="card">
       <h3 class="card-title" style="margin: 10px; text-align: center">
         ACEPTACIÓN
@@ -20,7 +20,7 @@
                   type="checkbox"
                   style="margin-right: 10px"
                 /><strong
-                  >He leido los terminos y acepto las condiciones</strong
+                  >He leído los terminos y acepto las condiciones</strong
                 ></label
               >
             </div>
@@ -47,7 +47,7 @@
                     type="checkbox"
                     style="margin-right: 10px"
                   /><strong
-                    >He leido los terminos y acepto las condiciones</strong
+                    >He leído los terminos y acepto las condiciones</strong
                   ></label
                 >
               </div>
@@ -59,7 +59,9 @@
       <div class="card">
         <div class="card-body" style="text-align: center">
           <div class="row">
-            <div class="col">Descargue documento para firmar:</div>
+            <div class="col" style="margin-bottom: 8px">
+              Descargue documento para firmar:
+            </div>
           </div>
           <div class="row">
             <div class="col">
@@ -87,12 +89,36 @@
           </div>
           <div class="row">
             <div class="col">
-              <angular-file-uploader
-                [resetUpload]="resetUpload"
-                [config]="afuConfig"
-                (ApiResponse)="docUpload($event)"
-              >
-              </angular-file-uploader>
+              <div class="border">
+                {{ documento.name }}
+                <angular-file-uploader
+                  [numberFileUpload]="documento.numero"
+                  [allowedFiles]="documento.lstDocumentoPerfilDocumental"
+                  [resetUpload]="resetUpload"
+                  [config]="setIdAfuConfig(documento.id)"
+                  (ApiResponse)="docUpload($event)"
+                >
+                </angular-file-uploader>
+                <ng-container
+                  *ngIf="
+                    documento.lstDocumentoPerfilDocumental.length <
+                      documento.numero && aceptaForm.submitted
+                  "
+                >
+                  <p
+                    *ngIf="documento.numero == 1"
+                    class="alert alert-danger alert-dismissible"
+                  >
+                    Es un documento requerido
+                  </p>
+                  <p
+                    *ngIf="documento.numero > 1"
+                    class="alert alert-danger alert-dismissible"
+                  >
+                    Son {{ documento.numero }} documentos requeridos
+                  </p>
+                </ng-container>
+              </div>
             </div>
             <br />
             <br />
