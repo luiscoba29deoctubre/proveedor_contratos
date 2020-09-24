@@ -1,9 +1,10 @@
 <div class="card">
-  <form>
+  <form novalidate class="card" form #empForm="ngForm" role="form">
     <div class="card">
       <h3 class="card-title" style="margin: 10px; text-align: center">
         ACEPTACIÓN
       </h3>
+
       <div class="card-body">
         <div class="row">
           <div class="col" style="text-align: justify">
@@ -14,7 +15,11 @@
           <div class="col">
             <div class="checkbox" style="text-align: center">
               <label
-                ><input type="checkbox" style="margin-right: 10px" /><strong
+                ><input
+                  formControlName="autorizacionCheck"
+                  type="checkbox"
+                  style="margin-right: 10px"
+                /><strong
                   >He leido los terminos y acepto las condiciones</strong
                 ></label
               >
@@ -37,7 +42,11 @@
             <div class="col">
               <div class="checkbox" style="text-align: center">
                 <label>
-                  <input type="checkbox" style="margin-right: 10px" /><strong
+                  <input
+                    formControlName="autorizacionCheck"
+                    type="checkbox"
+                    style="margin-right: 10px"
+                  /><strong
                     >He leido los terminos y acepto las condiciones</strong
                   ></label
                 >

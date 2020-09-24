@@ -115,6 +115,10 @@ export class AceptacionComponent implements OnInit {
   }
 
   finalizar() {
+
+
+
+    
     Swal.fire({
       icon: "info",
       title: "Registro exitoso",
