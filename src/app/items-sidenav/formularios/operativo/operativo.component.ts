@@ -8,7 +8,7 @@ import {
   ParamAllQuestions,
   ParamPregunta,
   ParamRespuesta,
-  ParamRespuestaSeleccionada
+  ParamRespuestaSeleccionada,
 } from "../../../common/dtos/parameters";
 import { LoginService } from "../../../logueo/login/login.service";
 import { storageList } from "../../../shared/bd/indexedDB";
@@ -236,7 +236,6 @@ export class OperativoComponent implements OnInit {
         },
         (error) => {
           this.showToasterError("Error al guardar perfil operativo", "Error");
-   
           this.spinner.hide();
         }
       );

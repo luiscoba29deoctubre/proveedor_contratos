@@ -64,11 +64,7 @@ export class AceptacionComponent implements OnInit {
       async (aceptacionDto) => {
         console.log("llega aceptacionDto", aceptacionDto);
 
-        this.autorizacion = aceptacionDto.autorizacion;
-        this.declaracion = aceptacionDto.declaracion;
 
-        this.documento.name = aceptacionDto.nombre;
-        this.documento.numero = aceptacionDto.numero;
         this.documento.lstDocumentoPerfilDocumental = [];
 
         this.spinner.hide();

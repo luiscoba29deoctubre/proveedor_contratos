@@ -1,11 +1,8 @@
 export class AceptacionDto {
   constructor(
-    public idaceptacion?: number,
-    public nombre?: string,
-    public declaracion?: string,
-    public autorizacion?: string,
-    public siautorizo?: boolean,
+    public idperfildocumental?: number,
+
     public sideclaro?: boolean,
-    public numero?: number
+    public siautorizo?: boolean
   ) {}
 }

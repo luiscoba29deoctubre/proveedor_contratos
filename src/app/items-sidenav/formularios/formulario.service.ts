@@ -51,6 +51,12 @@ export class FormularioService {
     this.headers = headerWithToken;
   }
 
+  private saveToken(token: string): void {
+    sessionStorage.setItem("token", token);
+
+    console.log('se guarda el nuevo token', token);
+  }
+
   /**
    * Eliminamos una actividad de la lista de actividades
    *
@@ -222,7 +228,9 @@ export class FormularioService {
     return this.http
       .get(this.endpoints.url_api_get_identificacion, { headers: this.headers })
       .pipe(
-        map((identificacionDto: IdentificacionDto) => {
+        map((identificacionDto) => {
+          this.saveToken(identificacionDto.token);
+
           return identificacionDto;
         }),
         catchError((err) => this.handleError(err))
@@ -361,7 +369,7 @@ export class FormularioService {
   }
 
   showToasterError() {
-    this.notifyService.showError(
+    this.notifyService.showInfo(
       "Por favor, vuelva a loguearse",
       "Sesión caducada"
     );

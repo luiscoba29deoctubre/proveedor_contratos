@@ -119,7 +119,7 @@ export class UsuarioService {
   }
 
   showToasterError() {
-    this.notifyService.showError(
+    this.notifyService.showInfo(
       "Por favor, vuelva a loguearse",
       "Sesión caducada"
     );
