@@ -154,22 +154,8 @@ export class DocumentalComponent implements OnInit {
     console.log("entra en sendForm");
 
     if (this.valido) {
-      console.log("empresarialDto enviado");
-
       this.spinner.show();
-      /* this.formsService.saveOperativo(operativoDto).subscribe(
-        (operativo: OperativoDto) => {
-          console.log("llega empresarial ", operativo);
-          this.router.navigate(["/comercial"]);
-
-          this.showToasterSuccess();
-          this.spinner.hide();
-        },
-        (error) => {
-          this.showToasterError("Error al guardar perfil operativo", "Error");
-          this.spinner.hide();
-        }
-      ); */
+      this.router.navigate(["/aceptacion"]);
       this.spinner.hide();
     } else {
       this.showToasterError(
