@@ -95,8 +95,8 @@ export class IdentificacionComponent implements OnInit {
     this.loginService.checkExpirationToken(); // para que salga, cuando el token expire
 
     this.formsService.getIdentificacion().subscribe(
-      async (identificacionDto) => {
-        console.log("llega allForms", identificacionDto);
+      async (response) => {
+        const identificacionDto: IdentificacionDto = response.body;
 
         await this.loadProveedor();
         await this.loadPersonaContribuyente();

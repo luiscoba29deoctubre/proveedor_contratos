@@ -301,12 +301,15 @@
           <div class="form-group">
             <label for="celular1">Celular 1: </label>
             <input
+              style="text-align: right"
               appOnlyNumbers="true"
               formControlName="celular1"
-              type="text"
+              type="phoneNumber"
               class="form-control"
               placeholder="Celular 1"
               id="celular1"
+              maxlength="{{ 10 }}"
+              min="0"
             />
             <ng-container
               *ngIf="
@@ -351,12 +354,15 @@
           <div class="form-group">
             <label for="celular2">Celular 2: </label>
             <input
+              style="text-align: right"
               appOnlyNumbers="true"
               formControlName="celular2"
-              type="text"
+              type="phoneNumber"
               class="form-control"
               placeholder="Celular 2"
               id="celular2"
+              maxlength="{{ 10 }}"
+              min="0"
             />
             <ng-container
               *ngIf="

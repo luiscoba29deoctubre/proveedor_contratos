@@ -79,10 +79,12 @@ export class InfoContactoComponent implements OnInit {
     await this.loadCombos();
 
     this.formsService.getInfoContacto().subscribe(
-      (infoContactoDto) => {
+      async (response) => {
+        const infoContactoDto: InfoContactoDto = response.body;
+
         console.log(" llega allForms", infoContactoDto);
 
-        if (infoContactoDto.body) {
+        if (this.isEmpty(infoContactoDto)) {
           this.setDefaultValuesCombos(infoContactoDto);
         } else {
           this.seteoFormulario(infoContactoDto);
@@ -91,7 +93,6 @@ export class InfoContactoComponent implements OnInit {
             "this.infocontactoForm.value",
             this.infocontactoForm.value
           );
-          // }
         }
 
         this.spinner.hide();
@@ -103,6 +104,14 @@ export class InfoContactoComponent implements OnInit {
     );
   }
 
+  isEmpty = (obj) => {
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        return false;
+      }
+    }
+    return true;
+  };
   seteoFormulario(i: InfoContactoDto) {
     console.log("entra en seteoFormulario");
     i.pais = this.paises[0];
