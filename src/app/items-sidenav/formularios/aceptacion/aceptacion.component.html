@@ -24,17 +24,17 @@
               <label
                 ><input
                   required
-                  formControlName="aceptacion"
+                  formControlName="acepta"
                   type="checkbox"
                   style="margin-right: 10px"
+                  id="acepta"
                 /><strong
                   >He leído los terminos y acepto las condiciones</strong
                 ></label
               >
               <ng-container
                 *ngIf="
-                  !aceptacionForm.get('aceptacion').value &&
-                  aceptaForm.submitted
+                  !aceptacionForm.get('acepta').value && aceptaForm.submitted
                 "
               >
                 <p class="alert alert-danger alert-dismissible">
@@ -62,16 +62,17 @@
                 <label>
                   <input
                     required
-                    formControlName="autorizacion"
+                    formControlName="autoriza"
                     type="checkbox"
                     style="margin-right: 10px"
+                    id="autoriza"
                   /><strong
                     >He leído los terminos y acepto las condiciones</strong
                   ></label
                 >
                 <ng-container
                   *ngIf="
-                    !aceptacionForm.get('autorizacion').value &&
+                    !aceptacionForm.get('autoriza').value &&
                     aceptaForm.submitted
                   "
                 >
@@ -100,7 +101,7 @@
             style="color: #fec524; background: #8b2131; border-color: black"
             class="btn"
             type="submit"
-            (click)="finalizar(aceptacionForm.value, aceptacionForm.valid)"
+            (click)="finalizar(aceptacionForm.value)"
           >
             <i class="fa fa-sign-in"></i> Finalizar
           </button>
@@ -109,7 +110,15 @@
     </div>
   </form>
 
-  <pre>valid {{ aceptacionForm.valid }}</pre>
+  <pre>aceptacionForm.valid {{ aceptacionForm.valid }}</pre>
+  <pre>
+aceptacionForm.get("autoriza").value {{
+      aceptacionForm.get("autoriza").value
+    }}</pre
+  >
+  <pre>
+aceptacionForm.get("acepta").value {{ aceptacionForm.get("acepta").value }}</pre
+  >
 
   <ngx-spinner
     bdColor="rgba(51,51,51,0.8)"

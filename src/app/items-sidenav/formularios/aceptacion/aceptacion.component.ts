@@ -72,8 +72,8 @@ export class AceptacionComponent implements OnInit {
     );
   }
   seteoValores(a: AceptacionDto) {
-    this.aceptacionForm.controls["autorizacion"].setValue(a.autorizacion);
-    this.aceptacionForm.controls["aceptacion"].setValue(a.declaracion);
+    this.aceptacionForm.controls["autoriza"].setValue(a.autorizacion);
+    this.aceptacionForm.controls["acepta"].setValue(a.declaracion);
   }
 
   showToasterError(subtitulo, titulo) {
@@ -82,8 +82,8 @@ export class AceptacionComponent implements OnInit {
 
   private initForm() {
     this.aceptacionForm = this.fb.group({
-      aceptacion: [null, [Validators.required]],
-      autorizacion: [null, [Validators.required]],
+      acepta: [null, [Validators.required]],
+      autoriza: [null, [Validators.required]],
     });
   }
 
@@ -93,10 +93,18 @@ export class AceptacionComponent implements OnInit {
     return true;
   }
 
-  finalizar(value: any, valid: boolean) {
+  finalizar(value: any) {
     console.log("entraaaaaaaaaaaaaaaa en finalizar ");
 
-    if (valid) {
+    const acepta = this.aceptacionForm.get("acepta").value;
+    const autoriza = this.aceptacionForm.get("autoriza").value;
+
+    if (acepta === false || autoriza === false) {
+      this.showToasterError(
+        "por favor complete todos los campos obligatorios",
+        "Campos obligatorios"
+      );
+    } else {
       this.spinner.show();
 
       console.log("value", value);
@@ -114,17 +122,12 @@ export class AceptacionComponent implements OnInit {
         (error) => {
           Swal.fire({
             icon: "error",
-            title: "Erro al registrar",
+            title: "Error al registrar",
             text: "Se produjo un error al intentar finalizar",
           });
           console.log(error);
           this.spinner.hide();
         }
-      );
-    } else {
-      this.showToasterError(
-        "por favor complete todos los campos obligatorios",
-        "Campos obligatorios"
       );
     }
   }
