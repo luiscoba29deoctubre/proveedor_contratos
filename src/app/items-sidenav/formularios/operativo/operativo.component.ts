@@ -51,8 +51,9 @@ export class OperativoComponent implements OnInit {
     this.loginService.checkExpirationToken();
 
     this.formsService.getOperativo().subscribe(
-      async (operativoDto) => {
-        console.log("llega allForms empresarialDto", operativoDto);
+      async (response) => {
+        const operativoDto: OperativoDto = response.body;
+        console.log("llega allForms operativoDto", operativoDto);
 
         this.idTipoPerfil = operativoDto.idtipoperfil;
 

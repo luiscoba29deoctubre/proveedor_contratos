@@ -49,8 +49,9 @@ export class ComercialComponent implements OnInit {
     this.loginService.checkExpirationToken();
 
     this.formsService.getComercial().subscribe(
-      async (comercialDto) => {
-        console.log("llega allForms empresarialDto", comercialDto);
+      async (response) => {
+        const comercialDto: ComercialDto = response.body;
+        console.log("llega allForms comercialDto", comercialDto);
 
         this.idTipoPerfil = comercialDto.idtipoperfil;
 

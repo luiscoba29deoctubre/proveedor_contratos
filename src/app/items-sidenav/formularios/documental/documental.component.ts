@@ -39,7 +39,9 @@ export class DocumentalComponent implements OnInit {
     this.loginService.checkExpirationToken();
 
     this.formsService.getDocumental().subscribe(
-      async (documentalDto) => {
+      async (response) => {
+        const documentalDto: DocumentalDto = response.body;
+
         console.log("llega documentalDto", documentalDto);
 
         await this.loadDocuments();
