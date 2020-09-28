@@ -226,11 +226,11 @@ export class FormularioService {
         catchError((err) => this.handleError(err))
       );
   }
-  public saveAceptacion(comercialDto): Observable<any> {
+  public saveAceptacion(aceptacionValues): Observable<any> {
     this.setTokenInHeader();
 
     return this.http
-      .post<any>(this.endpoints.url_api_save_aceptacion, comercialDto, {
+      .post<any>(this.endpoints.url_api_save_aceptacion, aceptacionValues, {
         headers: this.headers,
         observe: "response",
       })

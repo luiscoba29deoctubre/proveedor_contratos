@@ -3,6 +3,8 @@ export class AceptacionDto {
     public idperfildocumental?: number,
 
     public sideclaro?: boolean,
-    public siautorizo?: boolean
+    public siautorizo?: boolean,
+    public autorizacion?: string,
+    public declaracion?: string
   ) {}
 }

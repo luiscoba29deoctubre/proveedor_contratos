@@ -1,17 +1,14 @@
+import Swal from "sweetalert2";
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
 import { saveAs } from "file-saver";
-import { BsLocaleService } from "ngx-bootstrap/datepicker";
-import { NgxIndexedDBService } from "ngx-indexed-db";
 import { NgxSpinnerService } from "ngx-spinner";
-import Swal from "sweetalert2";
+import { AceptacionDto } from "../../../common/dtos/form/AceptacionDto";
 import { ApiEndpoints } from "../../../logueo/api.endpoints";
 import { LoginService } from "../../../logueo/login/login.service";
 import { NotificationService } from "../../../shared/services/notification.service";
 import { FormularioService } from "../formulario.service";
-import { ParamDocumento } from "../../../common/dtos/parameters";
 
 @Component({
   selector: "app-aceptacion",
@@ -23,8 +20,6 @@ export class AceptacionComponent implements OnInit {
 
   declaracion = "";
   autorizacion = "";
-
-  documento: ParamDocumento;
 
   aceptacionForm: FormGroup;
 
@@ -38,8 +33,6 @@ export class AceptacionComponent implements OnInit {
     private notifyService: NotificationService
   ) {
     this.initForm();
-
-    this.documento = new ParamDocumento();
   }
 
   download_pdf = () => {
@@ -61,11 +54,12 @@ export class AceptacionComponent implements OnInit {
     this.loginService.checkExpirationToken();
 
     this.formsService.getAceptacion().subscribe(
-      async (aceptacionDto) => {
-        console.log("llega aceptacionDto", aceptacionDto);
+      async (response) => {
+        console.log("llega aceptacionDto", response);
+        const aceptacionDto: AceptacionDto = response.body;
 
-
-        this.documento.lstDocumentoPerfilDocumental = [];
+        this.autorizacion = aceptacionDto.autorizacion;
+        this.declaracion = aceptacionDto.declaracion;
 
         this.spinner.hide();
       },
@@ -93,38 +87,6 @@ export class AceptacionComponent implements OnInit {
     return true;
   }
 
-  setIdAfuConfig = (idDocumento: number) => {
-    return {
-      multiple: true,
-      formatsAllowed: ".pdf",
-      maxSize: "2", // MB
-      uploadAPI: {
-        url: this.endpoints.url_api_upload_pdf,
-        method: "POST",
-        headers: {
-          auth: `Bearer ${sessionStorage.getItem("token")}`,
-        },
-        params: {
-          idDocumento: idDocumento,
-        },
-        responseType: "blob",
-      },
-
-      hideProgressBar: false,
-      hideResetBtn: false,
-      hideSelectBtn: false,
-      fileNameIndex: true,
-      replaceTexts: {
-        selectFileBtn: "Seleccionar archivos",
-        resetBtn: "Quitar archivos",
-        uploadBtn: "Subir archivos",
-        afterUploadMsg_success: "Carga exitosa !",
-        afterUploadMsg_error: "Error al intentar subir archivos !",
-        sizeLimit: "Tamaño máximo",
-      },
-    };
-  };
-
   finalizar(value: any, valid: boolean) {
     console.log("entraaaaaaaaaaaaaaaa en finalizar ");
 
@@ -133,15 +95,13 @@ export class AceptacionComponent implements OnInit {
 
       console.log("this.aceptacionForm.value", this.aceptacionForm.value);
 
-      /*       this.formsService.saveAceptacion(this.aceptacionForm.value).subscribe(
+      this.formsService.saveAceptacion(this.aceptacionForm.value).subscribe(
         (response: any) => {
-          // this.router.navigate(["/infocontacto"]);
-
           Swal.fire({
             icon: "info",
             title: "Registro exitoso",
             text:
-              "En los próximos dias se le notificará si se aprueba su calificación",
+              "En los próximos dias se le notificará la apruebación de su calificación",
           });
           this.spinner.hide();
         },
@@ -154,7 +114,7 @@ export class AceptacionComponent implements OnInit {
           console.log(error);
           this.spinner.hide();
         }
-      ); */
+      );
     } else {
       this.showToasterError(
         "por favor complete todos los campos obligatorios",
