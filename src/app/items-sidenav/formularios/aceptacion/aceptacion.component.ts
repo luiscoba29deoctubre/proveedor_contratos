@@ -61,6 +61,8 @@ export class AceptacionComponent implements OnInit {
         this.autorizacion = aceptacionDto.autorizacion;
         this.declaracion = aceptacionDto.declaracion;
 
+        this.seteoValores(aceptacionDto);
+
         this.spinner.hide();
       },
       (error) => {
@@ -68,6 +70,10 @@ export class AceptacionComponent implements OnInit {
         this.spinner.hide();
       }
     );
+  }
+  seteoValores(a: AceptacionDto) {
+    this.aceptacionForm.controls["autorizacion"].setValue(a.autorizacion);
+    this.aceptacionForm.controls["aceptacion"].setValue(a.declaracion);
   }
 
   showToasterError(subtitulo, titulo) {
@@ -93,15 +99,15 @@ export class AceptacionComponent implements OnInit {
     if (valid) {
       this.spinner.show();
 
-      console.log("this.aceptacionForm.value", this.aceptacionForm.value);
+      console.log("value", value);
 
-      this.formsService.saveAceptacion(this.aceptacionForm.value).subscribe(
+      this.formsService.saveAceptacion(value).subscribe(
         (response: any) => {
           Swal.fire({
             icon: "info",
             title: "Registro exitoso",
             text:
-              "En los próximos dias se le notificará la apruebación de su calificación",
+              "En los próximos dias se le notificará la aprobación de su calificación",
           });
           this.spinner.hide();
         },
