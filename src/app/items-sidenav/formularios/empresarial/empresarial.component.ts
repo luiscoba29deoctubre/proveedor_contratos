@@ -68,7 +68,9 @@ export class EmpresarialComponent implements OnInit {
     this.loginService.checkExpirationToken();
 
     this.formsService.getEmpresarial().subscribe(
-      async (empresarialDto) => {
+      async (response) => {
+        const empresarialDto: EmpresarialDto = response.body;
+
         console.log("llega allForms empresarialDto", empresarialDto);
 
         this.idTipoPerfil = empresarialDto.idtipoperfil;
@@ -241,7 +243,6 @@ export class EmpresarialComponent implements OnInit {
 
       this.allQuestions.push(parameterAllQuestions);
     }
-
   };
 
   onItemChange(value: ParamRespuestaSeleccionada, i, j) {
