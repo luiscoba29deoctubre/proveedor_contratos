@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 import { FinancieroDto } from "../../../common/dtos/form/FinancieroDto";
 import {
   ParamCuenta,
-  ParamPerfilFinanciero
+  ParamPerfilFinanciero,
 } from "../../../common/dtos/parameters";
 import { LoginService } from "../../../logueo/login/login.service";
 import { storageList } from "../../../shared/bd/indexedDB";
@@ -53,15 +53,16 @@ export class FinancieroComponent implements OnInit {
     this.loginService.checkExpirationToken(); // para que salga, cuando el token expire
 
     this.formsService.getFinanciero().subscribe(
-      async (financieroDto: FinancieroDto) => {
+      async (response) => {
+        const financieroDto: FinancieroDto = response.body;
+
         console.log("llega financieroDto", financieroDto);
 
         this.currentYear = financieroDto.anioActual;
 
-        console.log("this.tipoPersona", this.tipoPersona);
-
-        if (this.tipoPersona) {
+        if (financieroDto.tipoPersona) {
           this.tipoPersona = financieroDto.tipoPersona.toUpperCase();
+          console.log("this.tipoPersona", this.tipoPersona);
           this.idTipoPersona = financieroDto.idTipoPersona;
           await this.loadCuentas();
 

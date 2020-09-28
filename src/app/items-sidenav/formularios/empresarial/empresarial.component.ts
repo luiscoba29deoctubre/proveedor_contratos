@@ -241,20 +241,8 @@ export class EmpresarialComponent implements OnInit {
 
       this.allQuestions.push(parameterAllQuestions);
     }
-    // console.log("AllQuestions", this.allQuestions);
+
   };
-
-  /*   cuestionarioEstaLleno = () => {
-    const tamanioAllQuestions: number = this.allQuestions.length;
-    let acumulador = 0;
-    for (let i = 0; i < tamanioAllQuestions; i++) {
-      if (this.lstRespuestasSeleccionadas[i]) {
-        acumulador = acumulador + 1;
-      }
-    }
-
-    return acumulador === tamanioAllQuestions ? true : false;
-  }; */
 
   onItemChange(value: ParamRespuestaSeleccionada, i, j) {
     /*     console.log(" Value is : ", value);
@@ -295,7 +283,10 @@ export class EmpresarialComponent implements OnInit {
           this.spinner.hide();
         },
         (error) => {
-          this.showToasterError("Error al guardar informacion empresarial", "Error");
+          this.showToasterError(
+            "Error al guardar informacion empresarial",
+            "Error"
+          );
           console.log(error);
           this.spinner.hide();
         }

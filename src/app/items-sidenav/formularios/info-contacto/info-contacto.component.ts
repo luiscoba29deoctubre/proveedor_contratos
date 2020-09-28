@@ -9,7 +9,7 @@ import {
   ParamCanton,
   ParamPais,
   ParamParroquia,
-  ParamProvincia
+  ParamProvincia,
 } from "../../../common/dtos/parameters";
 import { LoginService } from "../../../logueo/login/login.service";
 import { storageList } from "../../../shared/bd/indexedDB";
@@ -82,18 +82,7 @@ export class InfoContactoComponent implements OnInit {
       (infoContactoDto) => {
         console.log(" llega allForms", infoContactoDto);
 
-        /*  if (infoContactoDto === "sin identificacion") {
-          Swal.fire(
-            "Faltan datos",
-            "Regrese a llenar la seccion de Identificación",
-            "info"
-          );
-
-          console.log("entra sin identificacion");
-
-          this.router.navigate(["/identificacion"]);
-        } else { */
-        if (this.isEmpty(infoContactoDto)) {
+        if (infoContactoDto.body) {
           this.setDefaultValuesCombos(infoContactoDto);
         } else {
           this.seteoFormulario(infoContactoDto);
@@ -159,15 +148,6 @@ export class InfoContactoComponent implements OnInit {
     this.infocontactoForm.controls["celular2"].setValue(i.celular2);
     this.infocontactoForm.controls["mail2"].setValue(i.mail2);
   }
-
-  isEmpty = (obj) => {
-    for (const key in obj) {
-      if (obj.hasOwnProperty(key)) {
-        return false;
-      }
-    }
-    return true;
-  };
 
   setDefaultValuesCombos = (i) => {
     i.pais = null;
@@ -326,7 +306,10 @@ export class InfoContactoComponent implements OnInit {
           this.spinner.hide();
         },
         (error) => {
-          this.showToasterError("Error al guardar información de contacto", "Error");
+          this.showToasterError(
+            "Error al guardar información de contacto",
+            "Error"
+          );
           console.log(error);
           this.spinner.hide();
         }
