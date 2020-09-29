@@ -15,6 +15,7 @@ import {
 import { saveAs } from "file-saver";
 import Swal from "sweetalert2";
 import { ApiEndpoints } from "../../../../../../logueo/api.endpoints";
+import { ParamDocumentoPerfilDocumental } from "../../../../../../common/dtos/parameters";
 import {
   AngularFileUploaderConfig,
   ReplaceTexts,
@@ -332,18 +333,24 @@ export class AngularFileUploaderComponent implements OnChanges {
   }
 
   downloadFile(i: any) {
-    console.log("this.allowedFiles", this.allowedFiles[i]);
+    let documento: ParamDocumentoPerfilDocumental = this.allowedFiles[i];
+
+    console.log("this.allowedFiles", documento);
 
     this.http
-      .get(this.endpoints.url_api_download_document_pdf, {
+      .get(this.endpoints.url_api_download_pdf + "/" + documento.id, {
+        headers: {
+          auth: `Bearer ${sessionStorage.getItem("token")}`,
+        },
         responseType: "blob",
       }) // set response Type properly (it is not part of headers)
       .toPromise()
       .then((blob) => {
-        saveAs(blob, this.allowedFiles[i].name + ".docx");
+        saveAs(blob, documento.name + ".pdf");
       })
       .catch((err) => console.error("download error = ", err));
   }
+
   convertSize(fileSize: number): string {
     return fileSize < 1024000
       ? (fileSize / 1024).toFixed(2) + " KB"
