@@ -1,15 +1,15 @@
 import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { NgxIndexedDBService } from "ngx-indexed-db";
 import { NgxSpinnerService } from "ngx-spinner";
 import { DocumentalDto } from "../../../common/dtos/form/DocumentalDto";
 import { ParamDocumento } from "../../../common/dtos/parameters";
+import { ApiEndpoints } from "../../../logueo/api.endpoints";
 import { LoginService } from "../../../logueo/login/login.service";
 import { storageList } from "../../../shared/bd/indexedDB";
 import { NotificationService } from "../../../shared/services/notification.service";
 import { FormularioService } from "../formulario.service";
-import { ApiEndpoints } from "../../../logueo/api.endpoints";
-import { FormGroup, Validators, FormBuilder } from "@angular/forms";
 
 @Component({
   selector: "app-documental",
@@ -39,6 +39,7 @@ export class DocumentalComponent implements OnInit {
 
     this.initForm();
   }
+
   ngOnInit() {
     this.spinner.show();
     this.loginService.checkExpirationToken();
@@ -156,8 +157,7 @@ export class DocumentalComponent implements OnInit {
   };
 
   docUpload(env) {
-    console.log(env);
-    console.log("entraaaaaaa", env);
+    // console.log("entraaaaaaa", env);
     return true;
   }
 
@@ -170,6 +170,7 @@ export class DocumentalComponent implements OnInit {
       this.spinner.hide();
     }
   }
+
   faltanArchivos() {
     let siFaltan = false;
     this.lstDocumentos.forEach((documento) => {
@@ -178,10 +179,5 @@ export class DocumentalComponent implements OnInit {
       }
     });
     return siFaltan;
-  }
-
-  Clicked(valor: boolean) {
-    this.valido = valor;
-    console.log("se activa ", this.valido);
   }
 }
