@@ -16,6 +16,9 @@ import { saveAs } from "file-saver";
 import Swal from "sweetalert2";
 import { ApiEndpoints } from "../../../../../../logueo/api.endpoints";
 import { ParamDocumentoPerfilDocumental } from "../../../../../../common/dtos/parameters";
+import { FormularioService } from "../../../../formulario.service";
+import { NotificationService } from "../../../../../../shared/services/notification.service";
+import { NgxSpinnerService } from "ngx-spinner";
 import {
   AngularFileUploaderConfig,
   ReplaceTexts,
@@ -84,7 +87,13 @@ export class AngularFileUploaderComponent implements OnChanges {
 
   private idDate: number = +new Date();
 
-  constructor(private http: HttpClient, private endpoints: ApiEndpoints) {}
+  constructor(
+    private http: HttpClient,
+    private endpoints: ApiEndpoints,
+    private spinner: NgxSpinnerService,
+    private formsService: FormularioService,
+    private notifyService: NotificationService
+  ) {}
 
   ngOnChanges(changes: SimpleChanges) {
     // Track changes in Configuration and see if user has even provided Configuration.
@@ -314,22 +323,49 @@ export class AngularFileUploaderComponent implements OnChanges {
   }
 
   removeFile(i: any, sf_na: any) {
-    console.log("i ", i);
-    console.log("sf_na ", sf_na);
+    let documento: ParamDocumentoPerfilDocumental = this.allowedFiles[i];
 
-    console.log("this.Caption", this.Caption[i]);
-    console.log("this.allowedFiles", this.allowedFiles[i]);
+    Swal.fire({
+      title: "Está seguro?",
+      text: "No podrá revertir esto!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, eliminarlo!",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.formsService.removeDocumento(documento.id).subscribe(
+          (response) => {
+            //     this.showToasterSuccess("eliminado exitosamente", "Eliminación");
+            Swal.fire("Eliminado!", "Tu archivo ha sido eliminado", "success");
 
-    if (sf_na === "sf") {
-      this.allowedFiles.splice(i, 1);
-      this.Caption.splice(i, 1);
-    } else {
-      this.notAllowedFiles.splice(i, 1);
-    }
+            if (sf_na === "sf") {
+              this.allowedFiles.splice(i, 1);
+              this.Caption.splice(i, 1);
+            } else {
+              this.notAllowedFiles.splice(i, 1);
+            }
+          },
+          (error) => {
+            this.showToasterError("Error al eliminar el documento", "Error");
+          }
+        );
+      }
+    });
 
     if (this.allowedFiles.length === 0) {
       this.enableUploadBtn = false;
     }
+  }
+
+  showToasterSuccess(subtitulo, titulo) {
+    this.notifyService.showSuccess(subtitulo, titulo);
+  }
+
+  showToasterError(subtitulo, titulo) {
+    this.notifyService.showError(subtitulo, titulo);
   }
 
   downloadFile(i: any) {

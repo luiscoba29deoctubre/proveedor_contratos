@@ -22,14 +22,14 @@
     [accept]="formatsAllowed"
     [attr.multiple]="multiple ? '' : null"
   />
-  <button
+  <!-- <button
     style="color: #fec524; background: #8b2131; border-color: black"
     class="btn btn-info btn-sm resetBtn afu-reset-btn"
     (click)="resetFileUpload()"
     *ngIf="!hideResetBtn"
   >
     {{ replaceTexts?.resetBtn }}
-  </button>
+  </button> -->
   <br *ngIf="!hideSelectBtn" />
   <p class="constraints-info afu-constraints-info">
     ({{ formatsAllowed }}) {{ replaceTexts?.sizeLimit }}:
@@ -40,10 +40,8 @@
     class="row afu-valid-file"
     *ngFor="let sf of allowedFiles; let i = index"
   >
-    <p class="col-xs-3 textOverflow">
-      <span
-      (click)="downloadFile(i)"
-      class="text-primary">{{ sf.name }} </span>
+    <p style="cursor: pointer" class="col-xs-3 textOverflow">
+      <span (click)="downloadFile(i)" class="text-primary">{{ sf.name }} </span>
     </p>
     <p class="col-xs-3 padMarg sizeC">
       <strong>({{ convertSize(sf.size) }})</strong

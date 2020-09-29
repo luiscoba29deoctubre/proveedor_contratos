@@ -60,6 +60,14 @@ export class FormularioService {
     });
   }
 
+  public removeDocumento(id: number): Observable<any> {
+    this.setTokenInHeader();
+
+    return this.http.get(this.endpoints.url_api_remove_pdf + "/" + id, {
+      headers: this.headers,
+    });
+  }
+
   public actualizarPerfilFinanciero(cuenta): Observable<any> {
     this.setTokenInHeader();
 

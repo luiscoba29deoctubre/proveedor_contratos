@@ -77,6 +77,9 @@ export class ApiEndpoints {
   public url_api_download_pdf: string =
     this.url_api_formulario + "/download-proveedor-pdf";
 
+  public url_api_remove_pdf: string =
+    this.url_api_formulario + "/remove-proveedor-pdf";
+
   public url_api_upload_pdf: string = this.url_api_formulario + "/upload-pdf";
 
   public url_api_upload_pdf_firmado: string =
