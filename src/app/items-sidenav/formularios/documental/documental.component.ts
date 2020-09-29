@@ -9,6 +9,7 @@ import { storageList } from "../../../shared/bd/indexedDB";
 import { NotificationService } from "../../../shared/services/notification.service";
 import { FormularioService } from "../formulario.service";
 import { ApiEndpoints } from "../../../logueo/api.endpoints";
+import { FormGroup, Validators, FormBuilder } from "@angular/forms";
 
 @Component({
   selector: "app-documental",
@@ -16,6 +17,8 @@ import { ApiEndpoints } from "../../../logueo/api.endpoints";
   styleUrls: ["./documental.component.css"],
 })
 export class DocumentalComponent implements OnInit {
+  documentalForm: FormGroup;
+
   resetUpload: boolean;
 
   lstDocumentos: ParamDocumento[] = [];
@@ -24,6 +27,7 @@ export class DocumentalComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private fb: FormBuilder,
     private endpoints: ApiEndpoints,
     private spinner: NgxSpinnerService,
     private loginService: LoginService,
@@ -31,9 +35,10 @@ export class DocumentalComponent implements OnInit {
     private formsService: FormularioService,
     private notifyService: NotificationService
   ) {
-    this.valido = false;
-  }
+    this.valido = true;
 
+    this.initForm();
+  }
   ngOnInit() {
     this.spinner.show();
     this.loginService.checkExpirationToken();
@@ -61,6 +66,12 @@ export class DocumentalComponent implements OnInit {
         this.spinner.hide();
       }
     );
+  }
+
+  private initForm() {
+    this.documentalForm = this.fb.group({
+      uploader: [null, [Validators.required]],
+    });
   }
 
   showToasterSuccess(subtitulo, titulo) {
@@ -151,17 +162,26 @@ export class DocumentalComponent implements OnInit {
   }
 
   sendForm() {
-    console.log("entra en sendForm");
-
-    if (this.valido) {
+    if (this.faltanArchivos()) {
+      this.showToasterError("faltan archivos por subir", "Subir archivos");
+    } else {
       this.spinner.show();
       this.router.navigate(["/aceptacion"]);
       this.spinner.hide();
-    } else {
-      this.showToasterError(
-        "por favor complete todos los campos obligatorios",
-        "Campos obligatorios"
-      );
     }
+  }
+  faltanArchivos() {
+    let siFaltan = false;
+    this.lstDocumentos.forEach((documento) => {
+      if (documento.lstDocumentoPerfilDocumental.length < documento.numero) {
+        siFaltan = true;
+      }
+    });
+    return siFaltan;
+  }
+
+  Clicked(valor: boolean) {
+    this.valido = valor;
+    console.log("se activa ", this.valido);
   }
 }

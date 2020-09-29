@@ -61,8 +61,8 @@ export class IdentificacionComponent implements OnInit {
    * @param notifyService
    */
   constructor(
-    private fb: FormBuilder,
     private router: Router,
+    private fb: FormBuilder,
     private spinner: NgxSpinnerService,
     private formsService: FormularioService,
     private notifyService: NotificationService,
