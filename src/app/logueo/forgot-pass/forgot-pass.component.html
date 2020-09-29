@@ -1,11 +1,18 @@
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-sm-12 col-md-6 col-lg-6">
-      <div class="card" style="margin-top: 70px">
-        <h5 class="card-title" style="margin: 10px">
+      <div class="card" style="margin-top: 70px; box-shadow: 1px 1px 5px gray">
+        <img
+          src="../../../assets/images/la_29_logo-1.png"
+          style="width: fit-content"
+        />
+        <h3
+          class="card-title"
+          style="margin: 10px; text-align: center; color: #8b2131"
+        >
           ¿Olvidaste la contraseña?
-        </h5>
-        <div style="border: 1px solid #cccccc" class="card-body">
+        </h3>
+        <div class="card-body">
           <form
             novalidate
             [formGroup]="forgotForm"
@@ -18,9 +25,9 @@
             </p>
             <div style="margin-top: 25px" class="form-group">
               <div class="input-group">
-                <span class="input-group-addon">
-                  <i class="glyphicon glyphicon-envelope"></i>
-                </span>
+                <span class="input-group-text" id="basic-addon1"
+                  ><i class="fa fa-envelope-open-o" aria-hidden="true"></i
+                ></span>
                 <input
                   formControlName="correo"
                   type="email"
@@ -101,7 +108,7 @@
                 </div>
               </div>
             </div>
-            <div class="row justify-content-center">
+            <div class="row justify-content-center mt-3">
               <div class="col d-flex justify-content-center">
                 <button
                   style="
@@ -132,7 +139,7 @@
                 </button>
               </div>
             </div>
-            <div class="row justify-content-center">
+            <div class="row justify-content-center mt-3">
               <div class="col d-flex justify-content-center">
                 <button
                   *ngIf="enviado"

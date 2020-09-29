@@ -41,7 +41,9 @@
     *ngFor="let sf of allowedFiles; let i = index"
   >
     <p class="col-xs-3 textOverflow">
-      <span class="text-primary">{{ sf.name }} </span>
+      <span
+      (click)="downloadFile(i)"
+      class="text-primary">{{ sf.name }} </span>
     </p>
     <p class="col-xs-3 padMarg sizeC">
       <strong>({{ convertSize(sf.size) }})</strong

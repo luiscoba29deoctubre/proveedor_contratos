@@ -24,9 +24,9 @@ export class AceptacionComponent implements OnInit {
   aceptacionForm: FormGroup;
 
   constructor(
+    private fb: FormBuilder,
     private http: HttpClient,
     private endpoints: ApiEndpoints,
-    private fb: FormBuilder,
     private spinner: NgxSpinnerService,
     private loginService: LoginService,
     private formsService: FormularioService,
@@ -111,6 +111,8 @@ export class AceptacionComponent implements OnInit {
 
       this.formsService.saveAceptacion(value).subscribe(
         (response: any) => {
+          console.log("response", response);
+
           Swal.fire({
             icon: "info",
             title: "Registro exitoso",

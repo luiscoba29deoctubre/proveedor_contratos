@@ -2,10 +2,18 @@
   <div class="row justify-content-center">
     <div class="col-sm-12 col-md-6 col-lg-6">
       <div class="card">
-        <h3 class="card-title" style="margin: 10px">
+        <img
+          src="../../../assets/images/la_29_logo-1.png"
+          style="width: fit-content"
+        />
+
+        <h3
+          class="card-title"
+          style="margin: 10px; text-align: center; color: #8b2131"
+        >
           Registro de nuevo usuario
         </h3>
-        <div style="border: 1px solid #cccccc" class="card-body">
+        <div style="border: 1px solid white" class="card-body">
           <form
             class="card"
             novalidate
@@ -13,9 +21,11 @@
             role="form"
             (ngSubmit)="saveRegister(registerForm.value, registerForm.valid)"
           >
-            <div class="card-body">
+            <div style="border: 1px solid white" class="card-body">
               <div class="form-group">
-                <label for="inputEmail">Correo electrónico</label>
+                <label style="color: #8b2131" for="inputEmail"
+                  >Correo electrónico</label
+                >
                 <input
                   formControlName="correo"
                   type="email"
@@ -78,7 +88,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputName">Nombre</label>
+                <label style="color: #8b2131" for="inputName">Nombre</label>
                 <input
                   formControlName="nombre"
                   type="text"
@@ -106,7 +116,9 @@
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputApellidos">Apellidos</label>
+                <label style="color: #8b2131" for="inputApellidos"
+                  >Apellidos</label
+                >
                 <input
                   formControlName="apellidos"
                   type="text"
@@ -135,9 +147,11 @@
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputPhone">Número telefónico</label>
+                <label style="color: #8b2131" for="inputPhone"
+                  >Número telefónico</label
+                >
                 <input
-                  style="text-align: right"
+                  style="text-align: lef"
                   appOnlyNumbers="true"
                   formControlName="telefono"
                   type="phoneNumber"
@@ -207,6 +221,7 @@
                     [disabled]="registerForm.invalid || errorCorreo"
                     *ngIf="!registrado"
                     class="btn"
+                    style="background: #8b2131; color: white"
                     type="submit"
                   >
                     <i class="fa fa-floppy-o"></i> Guardar
@@ -216,6 +231,7 @@
                   <button
                     *ngIf="!registrado"
                     class="btn btn-warning"
+                    style="color: #8b2131"
                     type="button"
                     routerLink="/"
                   >
@@ -228,6 +244,7 @@
                   <button
                     *ngIf="registrado"
                     class="btn btn-primary"
+                    style="color: #8b2131"
                     type="button"
                     routerLink="/"
                   >

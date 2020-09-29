@@ -12,7 +12,9 @@ import {
   Output,
   SimpleChanges,
 } from "@angular/core";
+import { saveAs } from "file-saver";
 import Swal from "sweetalert2";
+import { ApiEndpoints } from "../../../../../../logueo/api.endpoints";
 import {
   AngularFileUploaderConfig,
   ReplaceTexts,
@@ -81,7 +83,7 @@ export class AngularFileUploaderComponent implements OnChanges {
 
   private idDate: number = +new Date();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private endpoints: ApiEndpoints) {}
 
   ngOnChanges(changes: SimpleChanges) {
     // Track changes in Configuration and see if user has even provided Configuration.
@@ -316,7 +318,7 @@ export class AngularFileUploaderComponent implements OnChanges {
 
     console.log("this.Caption", this.Caption[i]);
     console.log("this.allowedFiles", this.allowedFiles[i]);
-    
+
     if (sf_na === "sf") {
       this.allowedFiles.splice(i, 1);
       this.Caption.splice(i, 1);
@@ -329,6 +331,19 @@ export class AngularFileUploaderComponent implements OnChanges {
     }
   }
 
+  downloadFile(i: any) {
+    console.log("this.allowedFiles", this.allowedFiles[i]);
+
+    this.http
+      .get(this.endpoints.url_api_download_document_pdf, {
+        responseType: "blob",
+      }) // set response Type properly (it is not part of headers)
+      .toPromise()
+      .then((blob) => {
+        saveAs(blob, this.allowedFiles[i].name + ".docx");
+      })
+      .catch((err) => console.error("download error = ", err));
+  }
   convertSize(fileSize: number): string {
     return fileSize < 1024000
       ? (fileSize / 1024).toFixed(2) + " KB"

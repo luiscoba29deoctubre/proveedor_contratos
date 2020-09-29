@@ -74,8 +74,8 @@ export class ApiEndpoints {
   public url_api_get_aceptacion: string =
     this.url_api_formulario + "/get-aceptacion";
 
-  public url_api_download_pdf: string =
-    this.url_api_formulario + "/download-pdf";
+  public url_api_download_document_pdf: string =
+    this.url_api_formulario + "/download-document-pdf";
 
   public url_api_upload_pdf: string = this.url_api_formulario + "/upload-pdf";
 

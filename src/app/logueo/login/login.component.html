@@ -1,15 +1,18 @@
 <div class="container">
-  <div class="row center-block justify-content-center align-item-center">
-    <div style="margin-top: 70px">
-      <div class="card" style="background-color: #dad8d1">
-        <img src="../../../assets/images/la_29_logo-1.png" />
+  <div class="row justify-content-center">
+    <div class="col-sm-12 col-md-6 col-lg-6" style="margin-top: 70px">
+      <div class="card" style="background-color: white">
+        <img
+          src="../../../assets/images/la_29_logo-1.png"
+          style="width: fit-content"
+        />
 
         <h4 class="titulo-ingreso" style="margin-left: 10px">
           <strong> Ingreso al sistema de proveedores </strong>
         </h4>
 
         <div
-          style="padding-top: 30px; border: 1px solid #cccccc"
+          style="padding-top: 30px; border: 1px solid white"
           class="card-body"
         >
           <form
@@ -17,85 +20,36 @@
             (ngSubmit)="login(loginForm.value, loginForm.valid)"
             role="form"
           >
-            <div class="form-group">
-              <div style="margin-bottom: 25px" class="input-group">
-                <span class="input-group-addon">
-                  <i class="glyphicon glyphicon-envelope"></i>
-                </span>
-                <input
-                  formControlName="email"
-                  type="email"
-                  class="form-control"
-                  id="inputEmail"
-                  placeholder="Correo"
-                />
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"
+                  ><i class="fa fa-envelope-open-o" aria-hidden="true"></i
+                ></span>
               </div>
-              <div
-                *ngIf="loginForm.get('email').hasError('required') && submitted"
-                class="alert alert-danger alert-dismissible"
-                role="alert"
-              >
-                <button
-                  type="button"
-                  class="close"
-                  data-dismiss="alert"
-                  aria-label="Close"
-                  (click)="closeError()"
-                >
-                  <span aria-hidden="true">&times;</span>
-                </button>
-                Ingrese su Correo
-              </div>
-              <div
-                *ngIf="loginForm.get('email').hasError('pattern') && submitted"
-                class="alert alert-danger alert-dismissible"
-                role="alert"
-              >
-                <button
-                  type="button"
-                  class="close"
-                  data-dismiss="alert"
-                  aria-label="Close"
-                  (click)="closeError()"
-                >
-                  <span aria-hidden="true">&times;</span>
-                </button>
-                Formato de Email Invalido
-              </div>
+              <input
+                formControlName="email"
+                type="email"
+                class="form-control"
+                id="inputEmail"
+                placeholder="Correo"
+              />
             </div>
-            <div class="form-group">
-              <div style="margin-bottom: 25px" class="input-group">
-                <span class="input-group-addon">
-                  <i class="glyphicon glyphicon-lock"></i>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">
+                  <i class="fa fa-user-circle-o" aria-hidden="true"></i>
                 </span>
-                <input
-                  id="login-password"
-                  formControlName="password"
-                  type="password"
-                  class="form-control"
-                  name="password"
-                  placeholder="Clave"
-                />
               </div>
-              <div
-                *ngIf="
-                  loginForm.get('password').hasError('required') && submitted
-                "
-                class="alert alert-danger alert-dismissible"
-                role="alert"
-              >
-                <button
-                  type="button"
-                  class="close"
-                  data-dismiss="alert"
-                  aria-label="Close"
-                  (click)="closeError()"
-                >
-                  <span aria-hidden="true">&times;</span>
-                </button>
-                Ingrese su Password
-              </div>
+              <input
+                id="login-password"
+                formControlName="password"
+                type="password"
+                class="form-control"
+                name="password"
+                placeholder="Clave"
+              />
             </div>
+
             <div
               style="margin-top: 10px; text-align: center"
               class="form-group"
