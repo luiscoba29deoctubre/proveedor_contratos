@@ -161,6 +161,10 @@ export class DocumentalComponent implements OnInit {
     return true;
   }
 
+  retrocederForm() {
+    this.router.navigate(["/comercial"]);
+  }
+
   sendForm() {
     if (this.faltanArchivos()) {
       this.showToasterError("faltan archivos por subir", "Subir archivos");

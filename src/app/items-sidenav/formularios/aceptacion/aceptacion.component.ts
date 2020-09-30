@@ -9,6 +9,7 @@ import { ApiEndpoints } from "../../../logueo/api.endpoints";
 import { LoginService } from "../../../logueo/login/login.service";
 import { NotificationService } from "../../../shared/services/notification.service";
 import { FormularioService } from "../formulario.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-aceptacion",
@@ -24,6 +25,7 @@ export class AceptacionComponent implements OnInit {
   aceptacionForm: FormGroup;
 
   constructor(
+    private router: Router,
     private fb: FormBuilder,
     private http: HttpClient,
     private endpoints: ApiEndpoints,
@@ -87,10 +89,8 @@ export class AceptacionComponent implements OnInit {
     });
   }
 
-  docUpload(env) {
-    console.log(env);
-    console.log("entraaaaaaa", env);
-    return true;
+  retrocederForm() {
+    this.router.navigate(["/documental"]);
   }
 
   finalizar(value: any) {
