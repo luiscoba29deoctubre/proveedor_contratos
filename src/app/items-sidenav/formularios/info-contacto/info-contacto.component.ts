@@ -46,13 +46,13 @@ export class InfoContactoComponent implements OnInit {
   parroquiaSeleccionado: ParamParroquia;
 
   constructor(
-    private fb: FormBuilder,
     private router: Router,
+    private fb: FormBuilder,
     private spinner: NgxSpinnerService,
     private loginService: LoginService,
-    private notifyService: NotificationService,
+    private dbService: NgxIndexedDBService,
     private formsService: FormularioService,
-    private dbService: NgxIndexedDBService
+    private notifyService: NotificationService
   ) {
     this.spinner.show();
 

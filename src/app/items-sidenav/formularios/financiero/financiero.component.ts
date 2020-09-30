@@ -22,7 +22,7 @@ import { DialogBoxComponent } from "./dialog-box/dialog-box.component";
   styleUrls: ["./financiero.component.css"],
 })
 export class FinancieroComponent implements OnInit {
-  displayedColumns: string[] = ["cuenta", "resultado", "resultado2", "action"];
+  displayedColumns: string[] = ["cuenta", "resultado2", "action"];
   dataSource;
 
   submitted: boolean;

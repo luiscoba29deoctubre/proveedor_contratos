@@ -1,9 +1,8 @@
 import { NgxIndexedDBService } from "ngx-indexed-db";
 import {
+  ParamPais,
   ParamPregunta,
   ParamRespuesta,
-  Parameter,
-  ParamPais,
 } from "../../common/dtos/parameters";
 import { storageList } from "./indexedDB";
 

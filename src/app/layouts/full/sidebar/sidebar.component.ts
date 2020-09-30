@@ -1,14 +1,5 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  NgZone,
-  OnDestroy,
-  ViewChild,
-  HostListener,
-  Directive,
-  AfterViewInit,
-} from "@angular/core";
 import { MediaMatcher } from "@angular/cdk/layout";
+import { ChangeDetectorRef, Component, OnDestroy } from "@angular/core";
 import { MenuItems } from "../../../shared/menu-items/menu-items";
 @Component({
   selector: "app-sidebar",
