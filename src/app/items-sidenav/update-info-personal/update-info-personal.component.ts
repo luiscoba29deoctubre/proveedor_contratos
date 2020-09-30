@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NgxSpinnerService } from "ngx-spinner";
 import { Usuario } from "../../common/domain/usuario";
 import { UsuarioService } from "../../common/services/usuario.service";
+import { LoginService } from "../../logueo/login/login.service";
 
 /**
  * Componente del formulario de actualización de datos del usuario
@@ -33,9 +34,11 @@ export class UpdateInfoPersonalComponent implements OnInit {
    */
   constructor(
     private fb: FormBuilder,
+    private loginService: LoginService,
     private spinner: NgxSpinnerService,
     private usuarioService: UsuarioService
   ) {
+    this.loginService.checkExpirationToken();
     this.initForm();
     this.loadInfoUsuario();
   }

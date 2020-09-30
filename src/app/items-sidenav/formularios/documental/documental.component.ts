@@ -36,13 +36,12 @@ export class DocumentalComponent implements OnInit {
     private notifyService: NotificationService
   ) {
     this.valido = true;
-
+    this.loginService.checkExpirationToken();
     this.initForm();
   }
 
   ngOnInit() {
     this.spinner.show();
-    this.loginService.checkExpirationToken();
 
     this.formsService.getDocumental().subscribe(
       async (response) => {

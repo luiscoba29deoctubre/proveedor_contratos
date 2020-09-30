@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NgxSpinnerService } from "ngx-spinner";
 import { Usuario } from "../../common/domain/usuario";
 import { UsuarioService } from "../../common/services/usuario.service";
+import { LoginService } from '../../logueo/login/login.service';
 
 /**
  * Componente para la actualización de password de usuarios
@@ -34,9 +35,11 @@ export class ChangePasswordComponent implements OnInit {
    */
   constructor(
     private fb: FormBuilder,
+    private loginService: LoginService,
     private spinner: NgxSpinnerService,
     private usuarioService: UsuarioService
   ) {
+    this.loginService.checkExpirationToken();
     this.initForm();
   }
 

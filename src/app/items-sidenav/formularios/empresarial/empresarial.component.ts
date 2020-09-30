@@ -55,6 +55,7 @@ export class EmpresarialComponent implements OnInit {
     private formsService: FormularioService,
     private notifyService: NotificationService
   ) {
+    this.loginService.checkExpirationToken();
     this.spinner.show();
     this.initForm();
     this.processIDB = new ProcessIDB(dbService); // creamos una instancia para manejar la base de datos
@@ -65,8 +66,6 @@ export class EmpresarialComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.loginService.checkExpirationToken();
-
     this.formsService.getEmpresarial().subscribe(
       async (response) => {
         const empresarialDto: EmpresarialDto = response.body;
