@@ -200,7 +200,7 @@ export class FinancieroComponent implements OnInit {
     let faltanDatos = false;
 
     this.lstCuentas.forEach((cuenta) => {
-      if (cuenta.resultadoPenultimo === 0 || cuenta.resultadoUltimo === 0) {
+      if (cuenta.resultadoUltimo === 0) {
         faltanDatos = true;
       }
     });
