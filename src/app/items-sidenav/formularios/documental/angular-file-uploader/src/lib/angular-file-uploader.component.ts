@@ -19,6 +19,7 @@ import { ParamDocumentoPerfilDocumental } from "../../../../../../common/dtos/pa
 import { FormularioService } from "../../../../formulario.service";
 import { NotificationService } from "../../../../../../shared/services/notification.service";
 import { NgxSpinnerService } from "ngx-spinner";
+import { LoginService } from '../../../../../../logueo/login/login.service';
 import {
   AngularFileUploaderConfig,
   ReplaceTexts,
@@ -89,6 +90,7 @@ export class AngularFileUploaderComponent implements OnChanges {
 
   constructor(
     private http: HttpClient,
+    private loginService: LoginService,
     private endpoints: ApiEndpoints,
     private spinner: NgxSpinnerService,
     private formsService: FormularioService,
@@ -323,6 +325,8 @@ export class AngularFileUploaderComponent implements OnChanges {
   }
 
   removeFile(i: any, sf_na: any) {
+    this.loginService.checkExpirationToken();
+
     let documento: ParamDocumentoPerfilDocumental = this.allowedFiles[i];
 
     Swal.fire({

@@ -156,6 +156,8 @@ export class IdentificacionComponent implements OnInit {
   }
 
   removeActividad(i) {
+    this.loginService.checkExpirationToken();
+
     const vectorActividades: any[] = this.identificacionForm.get(
       "lstActividades"
     ).value;
