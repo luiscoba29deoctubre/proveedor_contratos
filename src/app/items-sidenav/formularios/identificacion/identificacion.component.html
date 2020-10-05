@@ -14,7 +14,7 @@
     >
       <div class="card-body">
         <div class="row">
-          <div class="col-sm-12 col-md-6 col-lg-6">
+          <div class="col-sm-12 col-md-12 col-lg-12">
             <div class="form-group">
               <label for="nombrerazonsocial">
                 <strong> Nombre o Razón Social: </strong>
@@ -29,34 +29,6 @@
               <ng-container
                 *ngIf="
                   !identificacionForm.get('nombrerazonsocial').valid &&
-                  identificaForm.submitted
-                "
-              >
-                <p class="alert alert-danger alert-dismissible">
-                  Este campo es requerido
-                </p>
-              </ng-container>
-            </div>
-          </div>
-          <div class="col-sm-12 col-md-6 col-lg-6">
-            <div class="form-group">
-              <label for="rucrise">RUC / RISE: </label>
-              <input
-                style="text-align: left"
-                appOnlyNumbers="true"
-                formControlName="rucrise"
-                name="rucrise"
-                id="rucrise"
-                type="number"
-                class="form-control"
-                placeholder="RUC / RISE"
-                id="rucrise"
-                maxlength="{{ 13 }}"
-                min="0"
-              />
-              <ng-container
-                *ngIf="
-                  !identificacionForm.get('rucrise').valid &&
                   identificaForm.submitted
                 "
               >
@@ -115,65 +87,6 @@
         </div>
 
         <div class="row">
-          <div class="col-sm-12 col-md-6 col-lg-5">
-            <div class="form-group">
-              <label for="persona">Persona: </label>
-              <select
-                style="margin-left: 0%"
-                formControlName="persona"
-                class="form-control"
-                (change)="capturaPersona()"
-                [(ngModel)]="personaSeleccionado"
-              >
-                <option [ngValue]="null" disabled>Escoger persona</option>
-                <option *ngFor="let persona of personas" [ngValue]="persona">
-                  {{ persona.name }}
-                </option>
-              </select>
-              <ng-container
-                *ngIf="
-                  !identificacionForm.get('persona').valid &&
-                  identificaForm.submitted
-                "
-              >
-                <p class="alert alert-danger alert-dismissible">
-                  Este campo es requerido
-                </p>
-              </ng-container>
-            </div>
-          </div>
-
-          <div class="col-sm-12 col-md-12 col-lg-7">
-            <div class="form-group">
-              <label for="contribuyente">Contribuyente: </label>
-              <select
-                style="margin-left: 0%"
-                formControlName="contribuyente"
-                class="form-control"
-              >
-                <option [ngValue]="null" disabled>Escoger contribuyente</option>
-                <option
-                  *ngFor="let contribuyente of contribuyentesPorPersona"
-                  [ngValue]="contribuyente"
-                >
-                  {{ contribuyente.name }}
-                </option>
-              </select>
-              <ng-container
-                *ngIf="
-                  !identificacionForm.get('contribuyente').valid &&
-                  identificaForm.submitted
-                "
-              >
-                <p class="alert alert-danger alert-dismissible">
-                  Este campo es requerido
-                </p>
-              </ng-container>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
           <div class="col-sm-6 col-md-6 col-lg-6">
             <div class="form-group">
               <label for="proveedor">Proveedor: </label>
@@ -202,8 +115,94 @@
               </ng-container>
             </div>
           </div>
+          <div class="col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+              <label for="rucrise">RUC / RISE: </label>
+              <input
+                style="text-align: left"
+                appOnlyNumbers="true"
+                formControlName="rucrise"
+                name="rucrise"
+                id="rucrise"
+                type="number"
+                class="form-control"
+                placeholder="RUC / RISE"
+                id="rucrise"
+                maxlength="{{ 13 }}"
+                min="0"
+              />
+              <ng-container
+                *ngIf="
+                  !identificacionForm.get('rucrise').valid &&
+                  identificaForm.submitted
+                "
+              >
+                <p class="alert alert-danger alert-dismissible">
+                  Este campo es requerido
+                </p>
+              </ng-container>
+            </div>
+          </div>
         </div>
 
+        <div class="row">
+          <div class="col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+              <label for="persona">Persona: </label>
+              <select
+                style="margin-left: 0%"
+                formControlName="persona"
+                class="form-control"
+                (change)="capturaPersona()"
+                [(ngModel)]="personaSeleccionado"
+              >
+                <option [ngValue]="null" disabled>Escoger persona</option>
+                <option *ngFor="let persona of personas" [ngValue]="persona">
+                  {{ persona.name }}
+                </option>
+              </select>
+              <ng-container
+                *ngIf="
+                  !identificacionForm.get('persona').valid &&
+                  identificaForm.submitted
+                "
+              >
+                <p class="alert alert-danger alert-dismissible">
+                  Este campo es requerido
+                </p>
+              </ng-container>
+            </div>
+          </div>
+
+          <div class="col-sm-12 col-md-12 col-lg-6">
+            <div class="form-group">
+              <label for="contribuyente">Contribuyente: </label>
+              <select
+                style="margin-left: 0%"
+                formControlName="contribuyente"
+                class="form-control"
+              >
+                <option [ngValue]="null" disabled>Escoger contribuyente</option>
+                <option
+                  *ngFor="let contribuyente of contribuyentesPorPersona"
+                  [ngValue]="contribuyente"
+                >
+                  {{ contribuyente.name }}
+                </option>
+              </select>
+              <ng-container
+                *ngIf="
+                  !identificacionForm.get('contribuyente').valid &&
+                  identificaForm.submitted
+                "
+              >
+                <p class="alert alert-danger alert-dismissible">
+                  Este campo es requerido
+                </p>
+              </ng-container>
+            </div>
+          </div>
+        </div>
         <div class="card">
           <div class="card-body">
             <div formArrayName="lstActividades">
