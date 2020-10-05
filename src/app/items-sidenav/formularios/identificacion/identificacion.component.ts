@@ -137,12 +137,9 @@ export class IdentificacionComponent implements OnInit {
 
   private initForm() {
     this.identificacionForm = this.fb.group({
-      rucrise: [null, [Validators.required]],
+      rucrise: [null, [Validators.required, startsWithCapitalValidator()]],
       nombrerazonsocial: [null, [Validators.required]],
-      nombrecomercial: [
-        null,
-        [Validators.required, startsWithCapitalValidator()],
-      ],
+      nombrecomercial: [null, [Validators.required]],
       persona: [null, [Validators.required]],
       contribuyente: [null, [Validators.required]],
       proveedor: [null, [Validators.required]],

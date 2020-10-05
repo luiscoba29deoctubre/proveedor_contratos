@@ -185,9 +185,13 @@ export function startsWithCapitalValidator(): ValidatorFn {
   ],
 })
 export class StartsWithCapitalValidatorDirective implements Validator {
-  @Input("startsWithCapital") isActive: boolean;
-
+  @Input("startsWithCapital") isActive: string;
   validate(control: AbstractControl): ValidationErrors | null {
-    return !this.isActive ? null : startsWithCapitalValidator()(control);
+    // return !this.isActive ? null : startsWithCapitalValidator()(control);
+    if (this.isActive === "Nacional") {
+      return startsWithCapitalValidator()(control);
+    } else {
+      return null;
+    }
   }
 }

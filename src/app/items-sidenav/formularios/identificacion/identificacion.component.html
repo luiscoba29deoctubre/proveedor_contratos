@@ -65,15 +65,6 @@
                 >
                   Este campo es requerido
                 </p>
-                <p
-                  *ngIf="
-                    identificacionForm.get('nombrecomercial').errors
-                      .startsWithCapital
-                  "
-                  class="alert alert-danger alert-dismissible"
-                >
-                  ruuuuuuuuuuuuuuuuucccccccc
-                </p>
               </ng-container>
               <!-- <ng-container
                 *ngIf="identificacionForm.get('nombrecomercial').errors.valid"
@@ -120,16 +111,15 @@
               <label for="rucrise">RUC / RISE: </label>
               <input
                 style="text-align: left"
-                appOnlyNumbers="true"
                 formControlName="rucrise"
                 name="rucrise"
                 id="rucrise"
-                type="number"
+                type="text"
                 class="form-control"
                 placeholder="RUC / RISE"
                 id="rucrise"
                 maxlength="{{ 13 }}"
-                min="0"
+                startsWithCapital="Nacional"
               />
               <ng-container
                 *ngIf="
@@ -137,7 +127,20 @@
                   identificaForm.submitted
                 "
               >
-                <p class="alert alert-danger alert-dismissible">
+                <p
+                  *ngIf="
+                    identificacionForm.get('proveedor').value.name ==
+                      'Nacional' &&
+                    identificacionForm.get('rucrise').errors.startsWithCapital
+                  "
+                  class="alert alert-danger alert-dismissible"
+                >
+                  RUC INVALIDO!!!
+                </p>
+                <p
+                  *ngIf="!identificacionForm.get('rucrise').value"
+                  class="alert alert-danger alert-dismissible"
+                >
                   Este campo es requerido
                 </p>
               </ng-container>
