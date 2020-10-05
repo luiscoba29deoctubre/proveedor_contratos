@@ -33,6 +33,7 @@ import { AngularFileUploaderModule } from "./formularios/documental/angular-file
 import { FileSaverModule } from "ngx-filesaver";
 import { DialogBoxComponent } from "./formularios/financiero/dialog-box/dialog-box.component";
 import { OnlyNumbersDirective } from '../common/directives/only-numbers/only-numbers.directive';
+import { StartsWithCapitalValidatorDirective } from '../common/directives/valida-ruc/startsWithCapital.directive';
 
 export function tokenGetter() {
   return sessionStorage.getItem("token");
@@ -87,6 +88,7 @@ export function tokenGetter() {
     DialogBoxComponent,
 
     OnlyNumbersDirective,
+    StartsWithCapitalValidatorDirective,
   ],
 })
 export class SidenavModule {}

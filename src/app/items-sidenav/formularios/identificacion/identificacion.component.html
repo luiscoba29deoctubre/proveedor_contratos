@@ -45,6 +45,8 @@
                 style="text-align: left"
                 appOnlyNumbers="true"
                 formControlName="rucrise"
+                name="rucrise"
+                id="rucrise"
                 type="number"
                 class="form-control"
                 placeholder="RUC / RISE"
@@ -83,10 +85,31 @@
                   identificaForm.submitted
                 "
               >
-                <p class="alert alert-danger alert-dismissible">
+                <p
+                  *ngIf="
+                    identificacionForm.get('nombrecomercial').errors.required
+                  "
+                  class="alert alert-danger alert-dismissible"
+                >
                   Este campo es requerido
                 </p>
+                <p
+                  *ngIf="
+                    identificacionForm.get('nombrecomercial').errors
+                      .startsWithCapital
+                  "
+                  class="alert alert-danger alert-dismissible"
+                >
+                  ruuuuuuuuuuuuuuuuucccccccc
+                </p>
               </ng-container>
+              <!-- <ng-container
+                *ngIf="identificacionForm.get('nombrecomercial').errors.valid"
+              >
+                <p class="alert alert-danger alert-dismissible">
+                  ruc no es valido
+                </p>
+              </ng-container> -->
             </div>
           </div>
         </div>

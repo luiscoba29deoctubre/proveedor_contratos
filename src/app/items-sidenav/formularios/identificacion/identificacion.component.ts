@@ -15,6 +15,9 @@ import { ProcessIDB } from "../../../shared/bd/process.indexedDB";
 import { NotificationService } from "../../../shared/services/notification.service";
 import { FormularioService } from "../formulario.service";
 import { IdentificacionDto } from "./../../../common/dtos/form/IdentificacionDto";
+import { ValidaRucDirective } from "../../../common/directives/valida-ruc/valida-ruc.directive";
+import { validaRuc } from "../../../common/directives/valida-ruc/my-directive.directive";
+import { startsWithCapitalValidator } from "../../../common/directives/valida-ruc/startsWithCapital.directive";
 
 @Component({
   selector: "app-identificacion",
@@ -136,7 +139,10 @@ export class IdentificacionComponent implements OnInit {
     this.identificacionForm = this.fb.group({
       rucrise: [null, [Validators.required]],
       nombrerazonsocial: [null, [Validators.required]],
-      nombrecomercial: [null, [Validators.required]],
+      nombrecomercial: [
+        null,
+        [Validators.required, startsWithCapitalValidator()],
+      ],
       persona: [null, [Validators.required]],
       contribuyente: [null, [Validators.required]],
       proveedor: [null, [Validators.required]],
@@ -156,8 +162,6 @@ export class IdentificacionComponent implements OnInit {
   }
 
   removeActividad(i) {
-    this.loginService.checkExpirationToken();
-
     const vectorActividades: any[] = this.identificacionForm.get(
       "lstActividades"
     ).value;
