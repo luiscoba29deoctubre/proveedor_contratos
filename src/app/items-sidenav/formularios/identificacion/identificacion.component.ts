@@ -3,11 +3,12 @@ import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { NgxIndexedDBService } from "ngx-indexed-db";
 import { NgxSpinnerService } from "ngx-spinner";
+import { startsWithCapitalValidator } from "../../../common/directives/valida-ruc/startsWithCapital.directive";
 import {
   ParamCatalogoCategoria,
   ParamCategoria,
   ParamContribuyente,
-  Parameter,
+  Parameter
 } from "../../../common/dtos/parameters";
 import { LoginService } from "../../../logueo/login/login.service";
 import { storageList } from "../../../shared/bd/indexedDB";
@@ -15,9 +16,6 @@ import { ProcessIDB } from "../../../shared/bd/process.indexedDB";
 import { NotificationService } from "../../../shared/services/notification.service";
 import { FormularioService } from "../formulario.service";
 import { IdentificacionDto } from "./../../../common/dtos/form/IdentificacionDto";
-import { ValidaRucDirective } from "../../../common/directives/valida-ruc/valida-ruc.directive";
-import { validaRuc } from "../../../common/directives/valida-ruc/my-directive.directive";
-import { startsWithCapitalValidator } from "../../../common/directives/valida-ruc/startsWithCapital.directive";
 
 @Component({
   selector: "app-identificacion",
