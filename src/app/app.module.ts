@@ -19,7 +19,7 @@ import { MaterialModule } from "./material-module";
 import { dbConfig } from "./shared/bd/indexedDB";
 import { SharedModule } from "./shared/shared.module";
 import { SpinnerComponent } from "./shared/spinner.component";
-import { ValidaRucDirective } from './common/directives/valida-ruc/valida-ruc.directive';
+import { RucValidatorDirective } from "./common/directives/valida-ruc/valida-ruc.directive";
 
 export function tokenGetter() {
   return sessionStorage.getItem("token");
@@ -32,7 +32,6 @@ export function tokenGetter() {
     AppHeaderComponent,
     SpinnerComponent,
     AppSidebarComponent,
-    ValidaRucDirective,
   ],
   exports: [LogueoModule],
 

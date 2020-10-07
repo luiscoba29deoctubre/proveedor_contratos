@@ -1,56 +1,28 @@
+import {
+  ValidatorFn,
+  AbstractControl,
+  ValidationErrors,
+  NG_VALIDATORS,
+  Validator,
+} from "@angular/forms";
 import { Directive, Input } from "@angular/core";
 import { validarCedula } from "./validar-cedula";
-import {
-  AbstractControl,
-  NG_VALIDATORS,
-  ValidationErrors,
-  Validator,
-  ValidatorFn,
-} from "@angular/forms";
 
-@Directive({
-  selector: "[appValidaRuc]",
-  providers: [
-    { provide: NG_VALIDATORS, useExisting: ValidaRucDirective, multi: true },
-  ],
-})
-export class ValidaRucDirective implements Validator {
-  constructor() {}
-  validate(control: AbstractControl): ValidationErrors {
-    const ruc = <string>control.value;
-    let valid: boolean;
-
-    console.log("entra en la validacion jejeje ");
-
-    const noTieneTreceDigitos = ruc.length !== 13;
-    if (noTieneTreceDigitos) {
-      valid = false; // { valida: { message: "ruc incorrecto" } }; // false;
-    }
-    const noTieneCeroCeroUnoAlFinal = !(ruc.substring(10) === "001");
-    if (noTieneCeroCeroUnoAlFinal) {
-      valid = false; // return { valida: { message: "ruc incorrecto" } }; // false;
-    }
-
-    valid = this.validarDigitoVerificador(ruc);
-
-    return valid ? null : { startsWithCapital: { value: control.value } };
-  }
-
-  validarDigitoVerificador(ruc: string): any {
-    // boolean {
+export function validaRuc(): ValidatorFn {
+  function validarDigitoVerificador(ruc: string): boolean {
     const diezDigitosIniciales = ruc.substring(0, 10);
     const tercerDigito = Number(ruc.substring(2, 3));
     switch (tercerDigito) {
       case 6:
-        return this.validarTercerDigitoSeis(diezDigitosIniciales);
+        return validarTercerDigitoSeis(diezDigitosIniciales);
       case 9:
-        return this.validaTercerDigitoNueve(diezDigitosIniciales);
+        return validaTercerDigitoNueve(diezDigitosIniciales);
       default:
         return validarCedula(diezDigitosIniciales);
     }
   }
 
-  validarTercerDigitoSeis(diezDigitosIniciales: string) {
+  function validarTercerDigitoSeis(diezDigitosIniciales: string) {
     const digitoUno = Number(diezDigitosIniciales.substring(0, 1));
     const digitoUnoMultiplicado = digitoUno * 3;
     const digitoDos = Number(diezDigitosIniciales.substring(1, 2));
@@ -69,26 +41,16 @@ export class ValidaRucDirective implements Validator {
     const digitoOchoMultiplicado = digitoOcho * 2;
     const digitoNueve = Number(diezDigitosIniciales.substring(8, 9));
 
-    const digitoUnoMultiplicadoYSumado = this.sumaDigito(digitoUnoMultiplicado);
-    const digitoDosMultiplicadoYSumado = this.sumaDigito(digitoDosMultiplicado);
-    const digitoTresMultiplicadoYSumado = this.sumaDigito(
-      digitoTresMultiplicado
-    );
-    const digitoCuatroMultiplicadoYSumado = this.sumaDigito(
+    const digitoUnoMultiplicadoYSumado = sumaDigito(digitoUnoMultiplicado);
+    const digitoDosMultiplicadoYSumado = sumaDigito(digitoDosMultiplicado);
+    const digitoTresMultiplicadoYSumado = sumaDigito(digitoTresMultiplicado);
+    const digitoCuatroMultiplicadoYSumado = sumaDigito(
       digitoCuatroMultiplicado
     );
-    const digitoCincoMultiplicadoYSumado = this.sumaDigito(
-      digitoCincoMultiplicado
-    );
-    const digitoSeisMultiplicadoYSumado = this.sumaDigito(
-      digitoSeisMultiplicado
-    );
-    const digitoSieteMultiplicadoYSumado = this.sumaDigito(
-      digitoSieteMultiplicado
-    );
-    const digitoOchoMultiplicadoYSumado = this.sumaDigito(
-      digitoOchoMultiplicado
-    );
+    const digitoCincoMultiplicadoYSumado = sumaDigito(digitoCincoMultiplicado);
+    const digitoSeisMultiplicadoYSumado = sumaDigito(digitoSeisMultiplicado);
+    const digitoSieteMultiplicadoYSumado = sumaDigito(digitoSieteMultiplicado);
+    const digitoOchoMultiplicadoYSumado = sumaDigito(digitoOchoMultiplicado);
     const sumaDePersonasNaturales =
       digitoUnoMultiplicadoYSumado +
       digitoDosMultiplicadoYSumado +
@@ -119,14 +81,13 @@ export class ValidaRucDirective implements Validator {
       verificadorDePersonasNaturales === digitoNueve ||
       verificadorDeSociedades === digitoNueve
     ) {
-      return; // { valida: { message: "ruc correcto" } }; // true;
+      return true;
     } else {
       return validarCedula(diezDigitosIniciales);
     }
   }
 
-  validaTercerDigitoNueve(diezDigitosIniciales: string): any {
-    // boolean {
+  function validaTercerDigitoNueve(diezDigitosIniciales: string): boolean {
     const digitoUno = Number(diezDigitosIniciales.substring(0, 1));
     const digitoUnoMultiplicado = digitoUno * 4;
     const digitoDos = Number(diezDigitosIniciales.substring(1, 2));
@@ -164,14 +125,14 @@ export class ValidaRucDirective implements Validator {
     }
 
     if (verificador === 10) {
-      return { valida: { message: "ruc incorrecto" } }; // false;
+      return false;
     } else if (verificador === digitoDiez) {
-      return; // { valida: { message: "ruc correcto" } }; // true;
+      return true;
     }
-    return { valida: { message: "ruc incorrecto" } }; // false;
+    return false;
   }
 
-  sumaDigito(digito: number) {
+  function sumaDigito(digito: number) {
     let sumaDigitos = digito;
     let valorUno = 0;
     let valorDos = 0;
@@ -180,9 +141,57 @@ export class ValidaRucDirective implements Validator {
       valorDos = Number(digito.toString().substring(1, 2));
       sumaDigitos = valorUno + valorDos;
       if (sumaDigitos > 9) {
-        sumaDigitos = this.sumaDigito(sumaDigitos);
+        sumaDigitos = sumaDigito(sumaDigitos);
       }
     }
     return sumaDigitos;
+  }
+
+  return (control: AbstractControl): ValidationErrors | null => {
+    const ruc = <string>control.value;
+
+    if (!control.value) {
+      return null;
+    }
+
+    let valid: boolean;
+
+    const noTieneTreceDigitos = ruc.length !== 13;
+    if (noTieneTreceDigitos) {
+      // valid = false;
+      return valid ? null : { valida_ruc: { value: control.value } };
+    }
+    const noTieneCeroCeroUnoAlFinal = !(ruc.substring(10) === "001");
+    if (noTieneCeroCeroUnoAlFinal) {
+      // valid = false;
+      return valid ? null : { valida_ruc: { value: control.value } };
+    }
+
+    valid = validarDigitoVerificador(ruc);
+
+    return valid ? null : { valida_ruc: { value: control.value } };
+  };
+}
+
+@Directive({
+  // tslint:disable-next-line: directive-selector
+  selector: "[valida_ruc]",
+  providers: [
+    {
+      provide: NG_VALIDATORS,
+      useExisting: RucValidatorDirective,
+      multi: true,
+    },
+  ],
+})
+export class RucValidatorDirective implements Validator {
+  @Input("valida_ruc") isActive: string;
+  validate(control: AbstractControl): ValidationErrors | null {
+    // return !this.isActive ? null : startsWithCapitalValidator()(control);
+    if (this.isActive === "Nacional") {
+      return validaRuc()(control);
+    } else {
+      return null;
+    }
   }
 }

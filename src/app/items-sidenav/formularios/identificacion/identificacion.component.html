@@ -120,9 +120,7 @@
                 "
               >
                 <p
-                  *ngIf="
-                    identificacionForm.get('rucrise').errors.startsWithCapital
-                  "
+                  *ngIf="identificacionForm.get('rucrise').errors.valida_ruc"
                   class="alert alert-danger alert-dismissible"
                 >
                   RUC INVALIDO!!!

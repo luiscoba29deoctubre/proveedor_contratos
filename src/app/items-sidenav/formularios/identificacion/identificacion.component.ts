@@ -3,7 +3,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { NgxIndexedDBService } from "ngx-indexed-db";
 import { NgxSpinnerService } from "ngx-spinner";
-import { startsWithCapitalValidator } from "../../../common/directives/valida-ruc/startsWithCapital.directive";
+import { validaRuc } from "../../../common/directives/valida-ruc/valida-ruc.directive";
 import {
   ParamCatalogoCategoria,
   ParamCategoria,
@@ -135,7 +135,7 @@ export class IdentificacionComponent implements OnInit {
 
   private initForm() {
     this.identificacionForm = this.fb.group({
-      rucrise: [null, [Validators.required, startsWithCapitalValidator()]],
+      rucrise: [null, [Validators.required, validaRuc()]],
       nombrerazonsocial: [null, [Validators.required]],
       nombrecomercial: [null, [Validators.required]],
       persona: [null, [Validators.required]],

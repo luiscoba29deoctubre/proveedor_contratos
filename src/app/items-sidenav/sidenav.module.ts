@@ -32,8 +32,8 @@ import { BsDatepickerModule } from "ngx-bootstrap/datepicker";
 import { AngularFileUploaderModule } from "./formularios/documental/angular-file-uploader/src/lib/angular-file-uploader.module";
 import { FileSaverModule } from "ngx-filesaver";
 import { DialogBoxComponent } from "./formularios/financiero/dialog-box/dialog-box.component";
-import { OnlyNumbersDirective } from '../common/directives/only-numbers/only-numbers.directive';
-import { StartsWithCapitalValidatorDirective } from '../common/directives/valida-ruc/startsWithCapital.directive';
+import { OnlyNumbersDirective } from "../common/directives/only-numbers/only-numbers.directive";
+import { RucValidatorDirective } from "../common/directives/valida-ruc/valida-ruc.directive";
 
 export function tokenGetter() {
   return sessionStorage.getItem("token");
@@ -88,7 +88,7 @@ export function tokenGetter() {
     DialogBoxComponent,
 
     OnlyNumbersDirective,
-    StartsWithCapitalValidatorDirective,
+    RucValidatorDirective,
   ],
 })
 export class SidenavModule {}
